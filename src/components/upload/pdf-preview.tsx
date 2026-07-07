@@ -72,8 +72,8 @@ export function PdfPreview({ file }: PdfPreviewProps) {
     if (!ctx) return;
 
     const container = canvasRef.current.parentElement;
-    const maxWidth = container ? Math.min(600, container.clientWidth - 40) : 600;
-    const scale = 1.5;
+    const maxWidth = container ? container.clientWidth - 32 : 800;
+    const scale = 2.0;
 
     pdfDoc.getPage(pageNumber).then((page: any) => {
       const viewport = page.getViewport({ scale });
@@ -171,7 +171,7 @@ export function PdfPreview({ file }: PdfPreviewProps) {
       </div>
 
       {/* PDF Viewer */}
-      <div className="bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center min-h-[300px] max-h-[500px] overflow-auto">
+      <div className="bg-zinc-200/50 dark:bg-zinc-900/50 flex items-start justify-center aspect-[1/1.414] w-full overflow-auto p-4">
         {error ? (
           <div className="text-center p-6">
             <svg
