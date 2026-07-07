@@ -15,6 +15,7 @@ interface GenericDiagramProps {
 export function GenericDiagram({ mermaidSyntax, title = "diagram" }: GenericDiagramProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isRendered, setIsRendered] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isDownloading, setIsDownloading] = useState(false);
 
@@ -112,13 +113,13 @@ export function GenericDiagram({ mermaidSyntax, title = "diagram" }: GenericDiag
   }
 
   return (
-    <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 overflow-hidden relative group">
+    <div className={`${isFullscreen ? 'fixed inset-0 z-[100] rounded-none border-0' : 'rounded-xl border border-zinc-200 dark:border-zinc-800 relative group'} bg-white dark:bg-zinc-950 overflow-hidden flex flex-col`}>
       {!isRendered && (
         <div className="flex items-center justify-center py-24 text-sm text-zinc-400 animate-pulse h-[600px]">
           Merender diagram...
         </div>
       )}
-      <div className={`w-full h-[600px] min-h-[400px] max-h-[85vh] resize-y overflow-hidden cursor-grab active:cursor-grabbing ${!isRendered ? "hidden" : ""}`}>
+      <div className={`w-full ${isFullscreen ? 'flex-1 h-full' : 'h-[600px] min-h-[400px] max-h-[85vh] resize-y'} overflow-hidden cursor-grab active:cursor-grabbing ${!isRendered ? "hidden" : ""}`}>
         <TransformWrapper
           initialScale={1}
           minScale={0.2}
@@ -154,7 +155,14 @@ export function GenericDiagram({ mermaidSyntax, title = "diagram" }: GenericDiag
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </button>
                 <button onClick={() => resetTransform()} className="p-2 bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-sm hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors" title="Reset View">
-                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                </button>
+                <button onClick={() => setIsFullscreen(!isFullscreen)} className="p-2 bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-sm hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors" title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}>
+                  {isFullscreen ? (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
+                  ) : (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+                  )}
                 </button>
               </div>
 
