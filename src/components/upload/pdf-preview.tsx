@@ -36,23 +36,32 @@ export function PdfPreview({ file }: PdfPreviewProps) {
     setPageNumber(1);
 
     const pdfjs = pdfjsRef.current;
-    const fileUrl = URL.createObjectURL(file);
 
-    pdfjs
-      .getDocument(fileUrl)
-      .promise.then((doc: any) => {
-        setPdfDoc(doc);
-        setNumPages(doc.numPages);
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const arrayBuffer = e.target?.result as ArrayBuffer;
+      if (!arrayBuffer) {
         setIsLoading(false);
-      })
-      .catch((err: Error) => {
-        setIsLoading(false);
-        setError(`Gagal memuat PDF: ${err.message}`);
-      });
-
-    return () => {
-      URL.revokeObjectURL(fileUrl);
+        setError("Gagal membaca file PDF");
+        return;
+      }
+      pdfjs
+        .getDocument({ data: arrayBuffer })
+        .promise.then((doc: any) => {
+          setPdfDoc(doc);
+          setNumPages(doc.numPages);
+          setIsLoading(false);
+        })
+        .catch((err: Error) => {
+          setIsLoading(false);
+          setError(`Gagal memuat PDF: ${err.message}`);
+        });
     };
+    reader.onerror = function () {
+      setIsLoading(false);
+      setError("Gagal membaca file PDF");
+    };
+    reader.readAsArrayBuffer(file);
   }, [file]);
 
   // Render halaman ke canvas
