@@ -126,6 +126,7 @@ export function GenericDiagram({ mermaidSyntax, title = "diagram" }: GenericDiag
           maxScale={4}
           centerOnInit
           wheel={{ step: 0.1 }}
+          limitToBounds={false}
         >
           {({ zoomIn, zoomOut, resetTransform }) => (
             <>

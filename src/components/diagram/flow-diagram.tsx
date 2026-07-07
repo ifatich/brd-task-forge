@@ -370,6 +370,7 @@ export function FlowDiagram({ mermaidSyntax, showLegend = true, nodeDetails }: F
           maxScale={4}
           centerOnInit
           wheel={{ step: 0.1 }}
+          limitToBounds={false}
         >
           {({ zoomIn, zoomOut, resetTransform }) => (
             <>
