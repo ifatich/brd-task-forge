@@ -118,7 +118,7 @@ export function GenericDiagram({ mermaidSyntax, title = "diagram" }: GenericDiag
           Merender diagram...
         </div>
       )}
-      <div className={`w-full h-[600px] cursor-grab active:cursor-grabbing ${!isRendered ? "hidden" : ""}`}>
+      <div className={`w-full h-[600px] min-h-[400px] max-h-[85vh] resize-y overflow-hidden cursor-grab active:cursor-grabbing ${!isRendered ? "hidden" : ""}`}>
         <TransformWrapper
           initialScale={1}
           minScale={0.2}

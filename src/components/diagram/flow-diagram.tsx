@@ -361,8 +361,7 @@ export function FlowDiagram({ mermaidSyntax, showLegend = true, nodeDetails }: F
         </div>
       )}
 
-      {/* Diagram SVG */}
-      <div className={`w-full h-[600px] cursor-grab active:cursor-grabbing group ${!isRendered ? "hidden" : ""}`}>
+      <div className={`w-full h-[600px] min-h-[400px] max-h-[85vh] resize-y overflow-hidden cursor-grab active:cursor-grabbing group ${!isRendered ? "hidden" : ""}`}>
         <TransformWrapper
           initialScale={1}
           minScale={0.2}
