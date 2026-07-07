@@ -35,9 +35,9 @@ function getPriorityColor(priority: string): string {
 
 function getPriorityLabel(priority: string): string {
   switch (priority) {
-    case "high": return "Tinggi";
-    case "medium": return "Sedang";
-    case "low": return "Rendah";
+    case "high": return "High";
+    case "medium": return "Medium";
+    case "low": return "Low";
     default: return priority;
   }
 }
@@ -54,7 +54,7 @@ export function TaskList({ projectId }: TaskListProps) {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    fetch(`/api/projects/${projectId}/tasks`)
+    fetch(`/api/projects/${projectId}/tasks?t=${Date.now()}`)
       .then((res) => res.ok ? res.json() : null)
       .then((data) => {
         setAllTasks(data?.tasks ?? []);
@@ -115,7 +115,7 @@ export function TaskList({ projectId }: TaskListProps) {
             type="text"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            placeholder="Cari tugas..."
+            placeholder="Search tasks..."
             className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 pl-9 pr-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
           />
         </div>
@@ -125,7 +125,7 @@ export function TaskList({ projectId }: TaskListProps) {
           {/* Status filter */}
           <div className="flex items-center gap-1">
             {([
-              { value: "all", label: "Semua" },
+              { value: "all", label: "All" },
               { value: "todo", label: "To Do" },
               { value: "in-progress", label: "In Progress" },
               { value: "done", label: "Done" },
@@ -157,10 +157,10 @@ export function TaskList({ projectId }: TaskListProps) {
             }
             className="text-xs rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-2 py-1 text-zinc-600 dark:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
           >
-            <option value="all">Semua Prioritas</option>
-            <option value="high">Tinggi</option>
-            <option value="medium">Sedang</option>
-            <option value="low">Rendah</option>
+            <option value="all">All Priorities</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
           </select>
         </div>
       </div>
@@ -168,7 +168,7 @@ export function TaskList({ projectId }: TaskListProps) {
       {/* Task list */}
       {loading ? (
         <div className="px-4 py-8 text-center">
-          <p className="text-sm text-zinc-400 dark:text-zinc-500">Memuat tugas...</p>
+          <p className="text-sm text-zinc-400 dark:text-zinc-500">Loading tasks...</p>
         </div>
       ) : tasks.length > 0 ? (
         <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
@@ -190,7 +190,7 @@ export function TaskList({ projectId }: TaskListProps) {
                   </p>
                   {task.subTasks.length > 0 && (
                     <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5 line-clamp-1">
-                      {task.subTasks.length} sub-task • {task.subTasks.filter(s => s.done).length} selesai
+                      {task.subTasks.length} sub-tasks • {task.subTasks.filter(s => s.done).length} done
                     </p>
                   )}
                 </div>
@@ -211,7 +211,7 @@ export function TaskList({ projectId }: TaskListProps) {
                 {task.assignee ? (
                   <span>Assignee: {task.assignee.replace("_", " ")}</span>
                 ) : (
-                  <span className="italic">Belum ditugaskan</span>
+                  <span className="italic">Unassigned</span>
                 )}
                 <span className="font-mono">{task.id}</span>
               </div>
@@ -222,8 +222,8 @@ export function TaskList({ projectId }: TaskListProps) {
         <div className="px-4 py-8 text-center">
           <p className="text-sm text-zinc-400 dark:text-zinc-500">
             {searchText
-              ? "Tidak ada tugas yang cocok dengan pencarian"
-              : "Belum ada tugas untuk proyek ini"}
+              ? "No tasks match your search"
+              : "No tasks yet for this project"}
           </p>
         </div>
       )}

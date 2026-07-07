@@ -95,7 +95,14 @@ export function MasterData() {
 
   const handleAddMember = async (values: Record<string, string>) => {
     const id = values.name.toLowerCase().replace(/\s+/g, "_");
-    const newMember = { id, name: values.name, avatar: values.name.charAt(0).toUpperCase(), role: values.role || "Member" };
+    const newMember = { 
+      id, 
+      name: values.name, 
+      avatar: values.name.charAt(0).toUpperCase(), 
+      role: values.role || "Member",
+      email: values.email || "",
+      password: values.password || "",
+    };
     try {
       await fetch("/api/team", {
         method: "POST",
@@ -114,13 +121,20 @@ export function MasterData() {
       fields: [
         { key: "name", label: "Name", value: member.name, placeholder: "Full name" },
         { key: "role", label: "Role", value: member.role, placeholder: "Position / Role" },
+        { key: "email", label: "Email", value: (member as any).email || "", placeholder: "Email address" },
+        { key: "password", label: "Password (leave blank to keep)", value: "", placeholder: "New password" },
       ],
       onSave: async (values) => {
         try {
           await fetch(`/api/team/${member.id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name: values.name, role: values.role || member.role }),
+            body: JSON.stringify({ 
+              name: values.name, 
+              role: values.role || member.role,
+              email: values.email || "",
+              ...(values.password ? { password: values.password } : {})
+            }),
           });
         } catch {}
         await fetchInitialData();
@@ -265,6 +279,8 @@ export function MasterData() {
                 fields: [
                   { key: "name", label: "Name", value: "", placeholder: "Full name" },
                   { key: "role", label: "Role", value: "", placeholder: "Position / role" },
+                  { key: "email", label: "Email", value: "", placeholder: "Email address" },
+                  { key: "password", label: "Password", value: "", placeholder: "Password" },
                 ],
                 onSave: handleAddMember,
               })}
@@ -668,8 +684,8 @@ function FormModal({ title, fields, onSave, onClose }: {
             <div key={f.key}>
               <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1">{f.label}</label>
               <input
-                type="text" value={values[f.key]} onChange={(e) => setValues({ ...values, [f.key]: e.target.value })}
-                placeholder={f.placeholder} autoFocus
+                type={f.key === "password" ? "password" : "text"} value={values[f.key]} onChange={(e) => setValues({ ...values, [f.key]: e.target.value })}
+                placeholder={f.placeholder} autoFocus={f.key === "name"}
                 onKeyDown={(e) => e.key === "Enter" && isValid && onSave(values)}
                 className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
               />

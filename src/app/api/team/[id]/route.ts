@@ -43,8 +43,23 @@ export async function PATCH(
         name: body.name,
         avatar: body.avatar,
         role: body.role,
+        ...(body.email !== undefined ? { email: body.email } : {}),
       },
     });
+
+    if (body.email && body.password) {
+      // Upsert User for authentication
+      await prisma.user.upsert({
+        where: { email: body.email },
+        update: { passwordHash: body.password },
+        create: {
+          email: body.email,
+          passwordHash: body.password,
+          name: body.name || member.name,
+        }
+      });
+    }
+
     return NextResponse.json(member);
   } catch (error) {
     console.error("Failed to update member:", error);

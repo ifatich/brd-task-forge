@@ -36,7 +36,7 @@ export function DeleteDialog({
   const handleDelete = async () => {
     if (!canDelete) return;
     setIsDeleting(true);
-    // Simulasi hapus — di fase berikutnya bakal panggil API
+    // Simulate delete — in the next phase this will call an API
     await new Promise((r) => setTimeout(r, 1200));
     setIsDeleting(false);
     onClose();
@@ -61,7 +61,7 @@ export function DeleteDialog({
               </svg>
             </div>
             <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
-              Hapus Proyek
+              Delete Project
             </h2>
           </div>
           <button
@@ -78,16 +78,16 @@ export function DeleteDialog({
         <div className="p-5 space-y-4">
           <div>
             <p className="text-sm text-zinc-700 dark:text-zinc-300">
-              Anda akan menghapus <strong>{projectName}</strong> beserta seluruh {taskCount} tugas dan diagramnya.
+              You are about to delete <strong>{projectName}</strong> along with all {taskCount} tasks and diagrams.
             </p>
             <p className="text-xs text-red-600 dark:text-red-400 mt-2">
-              Tindakan ini tidak dapat dibatalkan.
+              This action cannot be undone.
             </p>
           </div>
 
           <div>
             <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300 block mb-1.5">
-              Ketik nama proyek untuk konfirmasi
+              Type the project name to confirm
             </label>
             <input
               ref={inputRef}
@@ -110,17 +110,17 @@ export function DeleteDialog({
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-spin">
                     <path d="M21 12a9 9 0 11-6.219-8.56" />
                   </svg>
-                  Menghapus...
+                  Deleting...
                 </>
               ) : (
-                "Hapus Proyek"
+                "Delete Project"
               )}
             </button>
             <button
               onClick={onClose}
               className="px-4 py-2.5 text-sm text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
             >
-              Batal
+              Cancel
             </button>
           </div>
         </div>

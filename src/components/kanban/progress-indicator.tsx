@@ -55,7 +55,7 @@ export function ProgressIndicator({ projectId, taskSummary }: ProgressIndicatorP
               {percentage}%
             </div>
             <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
-              Progres keseluruhan
+              Overall Progress
             </div>
           </div>
           <div
@@ -153,7 +153,7 @@ export function ProgressIndicator({ projectId, taskSummary }: ProgressIndicatorP
           {stats.done}
         </div>
         <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
-          Selesai
+          Done
         </div>
         <div className="mt-3 h-2 rounded-full bg-zinc-200 dark:bg-zinc-700">
           <div

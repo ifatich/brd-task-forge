@@ -32,7 +32,7 @@ export function ProjectHistory({ projectId }: ProjectHistoryProps) {
     <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
       {loading ? (
         <div className="px-5 py-8 text-center">
-          <p className="text-sm text-zinc-400 dark:text-zinc-500">Memuat riwayat...</p>
+          <p className="text-sm text-zinc-400 dark:text-zinc-500">Loading history...</p>
         </div>
       ) : logs.length > 0 ? (
         <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
@@ -49,14 +49,14 @@ export function ProjectHistory({ projectId }: ProjectHistoryProps) {
                   <span className="text-[10px] text-zinc-400 dark:text-zinc-500">{log.createdAt}</span>
                 </div>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">{log.detail}</p>
-                <span className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-1 inline-block">oleh {log.user}</span>
+                <span className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-1 inline-block">by {log.user}</span>
               </div>
             </div>
           ))}
         </div>
       ) : (
         <div className="px-5 py-8 text-center">
-          <p className="text-sm text-zinc-400 dark:text-zinc-500">Belum ada riwayat aktivitas.</p>
+          <p className="text-sm text-zinc-400 dark:text-zinc-500">No activity history yet.</p>
         </div>
       )}
     </div>

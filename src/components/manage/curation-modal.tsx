@@ -151,7 +151,7 @@ export function CurationModal({ projectId, drafts, currentTasks, onClose, onSave
       });
 
       if (!res.ok) {
-        throw new Error("Gagal menyimpan hasil kurasi");
+        throw new Error("Failed to save curation results");
       }
 
       onSaved();
@@ -167,9 +167,9 @@ export function CurationModal({ projectId, drafts, currentTasks, onClose, onSave
     <Dialog open={true} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-4xl max-h-[85vh] flex flex-col p-0 overflow-hidden">
         <DialogHeader className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-800">
-          <DialogTitle>Kurasi Daftar Tugas</DialogTitle>
+          <DialogTitle>Curate Task List</DialogTitle>
           <DialogDescription>
-            Tentukan spesifikasi mana yang akan dipertahankan. Daftar ini adalah gabungan lengkap dari semua tugas yang diusulkan oleh ke-5 model AI.
+            Determine which specifications to keep. This list is a complete combination of all tasks proposed by all 5 AI models.
           </DialogDescription>
         </DialogHeader>
         
@@ -240,7 +240,7 @@ export function CurationModal({ projectId, drafts, currentTasks, onClose, onSave
             disabled={isSaving}
             className="px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
           >
-            Batal
+            Cancel
           </button>
           <button
             onClick={handleSave}
@@ -253,10 +253,10 @@ export function CurationModal({ projectId, drafts, currentTasks, onClose, onSave
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Menyimpan...
+                Saving...
               </>
             ) : (
-              "Simpan Hasil Kurasi"
+              "Save Curation Results"
             )}
           </button>
         </DialogFooter>

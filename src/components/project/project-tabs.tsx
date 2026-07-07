@@ -69,11 +69,11 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
         fetchDiagram();
         router.refresh(); // Refresh to update server-side project props
       } else {
-        alert("Gagal memperbarui diagram");
+        alert("Failed to update diagram");
       }
     } catch (error) {
       console.error(error);
-      alert("Terjadi kesalahan saat memperbarui diagram");
+      alert("An error occurred while updating the diagram");
     } finally {
       setIsRegenerating(false);
     }
@@ -131,9 +131,9 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
   }, [tasks]);
 
   const tabs: { id: TabId; label: string; count?: number }[] = [
-    { id: "board", label: "Papan Tugas", count: totalTasks },
-    { id: "diagram", label: "Diagram Alur" },
-    { id: "manage", label: "Manajemen" },
+    { id: "board", label: "Task Board", count: totalTasks },
+    { id: "diagram", label: "Flow Diagram" },
+    { id: "manage", label: "Manage" },
   ];
 
   return (
@@ -171,7 +171,7 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
                 onClick={() => setDiagramTab("arch")}
                 className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${diagramTab === "arch" ? "bg-white dark:bg-zinc-800 shadow-sm text-zinc-900 dark:text-zinc-100" : "text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"}`}
               >
-                Arsitektur Modul
+                Module Architecture
               </button>
               <button
                 onClick={() => setDiagramTab("flow")}
@@ -183,7 +183,7 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
                 onClick={() => setDiagramTab("erd")}
                 className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${diagramTab === "erd" ? "bg-white dark:bg-zinc-800 shadow-sm text-zinc-900 dark:text-zinc-100" : "text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"}`}
               >
-                ERD Database
+                Database ERD
               </button>
             </div>
 
@@ -198,12 +198,12 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Memperbarui...
+                  Updating...
                 </>
               ) : (
                 <>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
-                  Perbarui Diagram
+                  Update Diagram
                 </>
               )}
             </button>
@@ -215,7 +215,7 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
             ) : (
               <div className="rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 p-8 text-center">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mx-auto text-zinc-300 dark:text-zinc-600 mb-3"><circle cx="12" cy="12" r="10" /><path d="M8 12l2 2 4-4" /></svg>
-                <h3 className="font-medium text-sm text-zinc-500 dark:text-zinc-400">Belum ada diagram arsitektur</h3>
+                <h3 className="font-medium text-sm text-zinc-500 dark:text-zinc-400">No architecture diagram yet</h3>
               </div>
             )
           )}
@@ -226,7 +226,7 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
             ) : (
               <div className="rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 p-8 text-center">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mx-auto text-zinc-300 dark:text-zinc-600 mb-3"><circle cx="12" cy="12" r="10" /><path d="M8 12l2 2 4-4" /></svg>
-                <h3 className="font-medium text-sm text-zinc-500 dark:text-zinc-400">Belum ada User Flow</h3>
+                <h3 className="font-medium text-sm text-zinc-500 dark:text-zinc-400">No User Flow yet</h3>
               </div>
             )
           )}
@@ -237,7 +237,7 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
             ) : (
               <div className="rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 p-8 text-center">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mx-auto text-zinc-300 dark:text-zinc-600 mb-3"><circle cx="12" cy="12" r="10" /><path d="M8 12l2 2 4-4" /></svg>
-                <h3 className="font-medium text-sm text-zinc-500 dark:text-zinc-400">Belum ada ERD Database</h3>
+                <h3 className="font-medium text-sm text-zinc-500 dark:text-zinc-400">No Database ERD yet</h3>
               </div>
             )
           )}
@@ -249,16 +249,16 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
           {/* Ringkasan */}
           <section>
             <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">
-              Ringkasan Proyek
+              Project Summary
             </h2>
             <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-5">
               <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">{project.title}</h3>
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1 max-w-xl line-clamp-3 whitespace-pre-wrap">{project.description}</p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-5 pt-4 border-t border-zinc-100 dark:border-zinc-800 text-sm">
-                <div><span className="text-zinc-500 dark:text-zinc-400">Dibuat</span><p className="font-medium text-zinc-900 dark:text-zinc-100">{project.createdAt}</p></div>
-                <div><span className="text-zinc-500 dark:text-zinc-400">Total Tugas</span><p className="font-medium text-zinc-900 dark:text-zinc-100">{totalTasks}</p></div>
-                <div><span className="text-zinc-500 dark:text-zinc-400">Selesai</span><p className="font-medium text-green-600 dark:text-green-400">{doneTasks}</p></div>
-                <div><span className="text-zinc-500 dark:text-zinc-400">Progres</span><p className="font-medium text-zinc-900 dark:text-zinc-100">{totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0}%</p></div>
+                <div><span className="text-zinc-500 dark:text-zinc-400">Created</span><p className="font-medium text-zinc-900 dark:text-zinc-100">{project.createdAt}</p></div>
+                <div><span className="text-zinc-500 dark:text-zinc-400">Total Tasks</span><p className="font-medium text-zinc-900 dark:text-zinc-100">{totalTasks}</p></div>
+                <div><span className="text-zinc-500 dark:text-zinc-400">Completed</span><p className="font-medium text-green-600 dark:text-green-400">{doneTasks}</p></div>
+                <div><span className="text-zinc-500 dark:text-zinc-400">Progress</span><p className="font-medium text-zinc-900 dark:text-zinc-100">{totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0}%</p></div>
               </div>
             </div>
 
@@ -266,7 +266,7 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
               <div className="rounded-xl border border-blue-200 dark:border-blue-900/50 bg-blue-50/50 dark:bg-blue-950/20 p-5 mt-4">
                 <h3 className="flex items-center gap-2 font-semibold text-sm text-blue-900 dark:text-blue-100 mb-2">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                  Keputusan Aggregator AI
+                  AI Aggregator Decisions
                 </h3>
                 <p className="text-sm text-blue-800 dark:text-blue-300 leading-relaxed whitespace-pre-wrap">
                   {project.reasoning}
@@ -280,7 +280,7 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
                 <details className="group">
                   <summary className="cursor-pointer px-4 py-3 bg-zinc-50 dark:bg-zinc-900 flex items-center justify-between outline-none hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-colors">
                     <span className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
-                      Lihat Hasil 5 Model (Drafts)
+                      View 5 Models Output (Drafts)
                     </span>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-zinc-500 group-open:rotate-180 transition-transform">
                       <path d="M4 6l4 4 4-4" />
@@ -293,7 +293,7 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
                         <div key={idx} className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm">
                           <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
                             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs">{idx + 1}</span>
-                            Draf Model {idx + 1}
+                            Model {idx + 1} Draft
                           </h4>
                           {hasTasks ? (
                             <div className="space-y-4">
@@ -304,7 +304,7 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
                                   <div className={`font-semibold flex items-center gap-2 ${isTaskUsed ? "text-green-700 dark:text-green-400" : "text-zinc-800 dark:text-zinc-200"}`}>
                                     <span className={isTaskUsed ? "text-green-500" : "text-zinc-400 mt-0.5"}>{isTaskUsed ? "✓" : "•"}</span>
                                     <span>{t.title}</span>
-                                    {isTaskUsed && <span className="text-[9px] bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-1.5 py-0.5 rounded-full border border-green-200 dark:border-green-800">Digunakan</span>}
+                                    {isTaskUsed && <span className="text-[9px] bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-1.5 py-0.5 rounded-full border border-green-200 dark:border-green-800">Used</span>}
                                   </div>
                                   {t.subTasks && t.subTasks.length > 0 && (
                                     <ul className="mt-2 ml-4 border-l-2 border-zinc-200 dark:border-zinc-800 pl-3 space-y-2">
@@ -353,14 +353,14 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
           {/* Daftar Tugas */}
           <section>
             <div className="flex items-center justify-between mb-3">
-              <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">Daftar Tugas</h2>
+              <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">Task List</h2>
               {parsedDrafts.length > 0 && (
                 <button
                   onClick={() => setShowCurationModal(true)}
                   className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors shadow-sm"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                  Kurasi Tugas
+                  Curate Tasks
                 </button>
               )}
             </div>
@@ -369,19 +369,19 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
 
           {/* Ekspor Laporan */}
           <section>
-            <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">Ekspor Laporan</h2>
+            <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">Export Report</h2>
             <ExportSection projectId={project.id} projectName={project.title} />
           </section>
 
           {/* Riwayat */}
           <section>
-            <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">Riwayat Proyek</h2>
+            <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">Project History</h2>
             <ProjectHistory projectId={project.id} />
           </section>
 
           {/* Hapus */}
           <section>
-            <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">Hapus Proyek</h2>
+            <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">Delete Project</h2>
             <div className="rounded-xl border border-red-200 dark:border-red-900/50 bg-red-50/50 dark:bg-red-950/20 p-5">
               <div className="flex items-start gap-3">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
@@ -390,13 +390,13 @@ export function ProjectTabs({ project }: ProjectTabsProps) {
                   </svg>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-medium text-sm text-red-800 dark:text-red-300">Hapus Proyek Ini</h3>
-                  <p className="text-xs text-red-600 dark:text-red-400 mt-1">Tindakan ini tidak dapat dibatalkan. Semua tugas, diagram, dan riwayat akan dihapus permanen.</p>
+                  <h3 className="font-medium text-sm text-red-800 dark:text-red-300">Delete This Project</h3>
+                  <p className="text-xs text-red-600 dark:text-red-400 mt-1">This action cannot be undone. All tasks, diagrams, and history will be permanently deleted.</p>
                   <button
                     onClick={() => setShowDeleteDialog(true)}
                     className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3.5 py-2 text-xs font-medium text-white hover:bg-red-700 transition-colors"
                   >
-                    Hapus Proyek
+                    Delete Project
                   </button>
                 </div>
               </div>

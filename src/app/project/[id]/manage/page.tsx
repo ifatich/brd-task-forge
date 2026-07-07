@@ -18,8 +18,8 @@ function getStatusColor(status: string): string {
 
 function getStatusLabel(status: string): string {
   switch (status) {
-    case "active": return "Aktif";
-    case "completed": return "Selesai";
+    case "active": return "Active";
+    case "completed": return "Completed";
     case "draft": return "Draft";
     default: return status;
   }
@@ -84,7 +84,7 @@ export default async function ManageProjectPage({ params }: PageProps) {
                 >
                   <path d="M10 4l-4 4 4 4" />
                 </svg>
-                Papan Tugas
+                Task Board
               </Link>
               <span className="text-zinc-300 dark:text-zinc-700">|</span>
               <span className="font-semibold text-sm truncate max-w-[250px]">
@@ -99,10 +99,10 @@ export default async function ManageProjectPage({ params }: PageProps) {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
-            Manajemen Proyek
+            Project Management
           </h1>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-            Kelola proyek, unduh laporan, dan lihat riwayat aktivitas.
+            Manage project, download reports, and view activity history.
           </p>
         </div>
 
@@ -110,7 +110,7 @@ export default async function ManageProjectPage({ params }: PageProps) {
           {/* Ringkasan Proyek */}
           <section>
             <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">
-              Ringkasan Proyek
+              Project Summary
             </h2>
             <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-5">
               <div className="flex items-start justify-between">
@@ -134,25 +134,25 @@ export default async function ManageProjectPage({ params }: PageProps) {
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-5 pt-4 border-t border-zinc-100 dark:border-zinc-800 text-sm">
                 <div>
-                  <span className="text-zinc-500 dark:text-zinc-400">Dibuat</span>
+                  <span className="text-zinc-500 dark:text-zinc-400">Created At</span>
                   <p className="font-medium text-zinc-900 dark:text-zinc-100">
                     {project.createdAt}
                   </p>
                 </div>
                 <div>
-                  <span className="text-zinc-500 dark:text-zinc-400">Diperbarui</span>
+                  <span className="text-zinc-500 dark:text-zinc-400">Updated At</span>
                   <p className="font-medium text-zinc-900 dark:text-zinc-100">
                     {project.updatedAt}
                   </p>
                 </div>
                 <div>
-                  <span className="text-zinc-500 dark:text-zinc-400">Total Tugas</span>
+                  <span className="text-zinc-500 dark:text-zinc-400">Total Tasks</span>
                   <p className="font-medium text-zinc-900 dark:text-zinc-100">
                     {totalTasks}
                   </p>
                 </div>
                 <div>
-                  <span className="text-zinc-500 dark:text-zinc-400">Progres</span>
+                  <span className="text-zinc-500 dark:text-zinc-400">Progress</span>
                   <p className="font-medium text-zinc-900 dark:text-zinc-100">
                     {project.progress}%
                   </p>
@@ -164,7 +164,7 @@ export default async function ManageProjectPage({ params }: PageProps) {
           {/* Daftar Tugas */}
           <section>
             <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">
-              Daftar Tugas
+              Task List
             </h2>
             <TaskList projectId={id} />
           </section>
@@ -172,7 +172,7 @@ export default async function ManageProjectPage({ params }: PageProps) {
           {/* Ekspor Laporan */}
           <section>
             <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">
-              Ekspor Laporan
+              Export Report
             </h2>
             <ExportSection projectId={id} projectName={project.title} />
           </section>
@@ -180,7 +180,7 @@ export default async function ManageProjectPage({ params }: PageProps) {
           {/* Riwayat Proyek */}
           <section>
             <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">
-              Riwayat Proyek
+              Project History
             </h2>
             <ProjectHistory projectId={id} />
           </section>
@@ -188,7 +188,7 @@ export default async function ManageProjectPage({ params }: PageProps) {
           {/* Hapus Proyek */}
           <section>
             <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">
-              Hapus Proyek
+              Delete Project
             </h2>
             <div className="rounded-xl border border-red-200 dark:border-red-900/50 bg-red-50/50 dark:bg-red-950/20 p-5">
               <div className="flex items-start gap-3">
@@ -211,13 +211,13 @@ export default async function ManageProjectPage({ params }: PageProps) {
                 </div>
                 <div className="flex-1">
                   <h3 className="font-medium text-sm text-red-800 dark:text-red-300">
-                    Hapus Proyek Ini
+                    Delete This Project
                   </h3>
                   <p className="text-xs text-red-600 dark:text-red-400 mt-1">
-                    Tindakan ini tidak dapat dibatalkan. Semua tugas, diagram, dan riwayat akan dihapus permanen.
+                    This action cannot be undone. All tasks, diagrams, and history will be permanently deleted.
                   </p>
                   <button className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3.5 py-2 text-xs font-medium text-white hover:bg-red-700 transition-colors">
-                    Hapus Proyek
+                    Delete Project
                   </button>
                 </div>
               </div>

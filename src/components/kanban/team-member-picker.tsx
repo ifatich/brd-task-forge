@@ -28,7 +28,13 @@ export function TeamMemberPicker({
     inputRef.current?.focus();
     fetch("/api/team")
       .then((res) => res.ok ? res.json() : [])
-      .then((data) => setTeam(Array.isArray(data) ? data : []))
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setTeam(data.filter(m => !m.name.includes("Admin") && !m.role.includes("Admin")));
+        } else {
+          setTeam([]);
+        }
+      })
       .catch(() => {});
   }, []);
 
@@ -71,7 +77,7 @@ export function TeamMemberPicker({
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Cari anggota tim..."
+            placeholder="Search team members..."
             className="w-full rounded-md border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 pl-8 pr-2.5 py-1.5 text-xs text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
           />
         </div>
@@ -91,12 +97,12 @@ export function TeamMemberPicker({
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <line x1="4" y1="4" x2="12" y2="12" /><line x1="12" y1="4" x2="4" y2="12" />
           </svg>
-          <span>Tidak ditugaskan</span>
+          <span>Unassigned</span>
         </button>
 
         {filtered.length === 0 ? (
           <div className="px-3 py-6 text-center text-xs text-zinc-400">
-            Tidak ada anggota yang cocok
+            No members match
           </div>
         ) : (
           filtered.map((member) => (

@@ -158,11 +158,13 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
               <h4 className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-1">
                 Assignee
               </h4>
-              <div
-                onClick={() => setShowAssigneePicker(!showAssigneePicker)}
-                className="hover:opacity-80 transition-opacity relative cursor-pointer"
-              >
-                <AssigneeBadge assigneeId={currentAssignee} size="md" />
+              <div className="relative">
+                <div
+                  onClick={() => setShowAssigneePicker(!showAssigneePicker)}
+                  className="hover:opacity-80 transition-opacity cursor-pointer inline-block"
+                >
+                  <AssigneeBadge assigneeId={currentAssignee} size="md" />
+                </div>
                 {showAssigneePicker && (
                   <div className="absolute top-full left-0 mt-1 z-50 min-w-[220px]">
                     <TeamMemberPicker
@@ -184,7 +186,7 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
                   <circle cx="8" cy="8" r="6" />
                   <polyline points="8 5 8 9 11 11" />
                 </svg>
-                Goals / Tujuan Modul
+                Goals / Module Goals
               </h4>
               <ul className="space-y-1">
                 {safeArray(task.goals).map((g: string, i: number) => (
@@ -207,7 +209,7 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
                   <rect x="2" y="2" width="12" height="12" rx="2" />
                   <polyline points="5 8 7 10 11 6" />
                 </svg>
-                Definition of Done — Modul
+                Definition of Done — Module
               </h4>
               <div className="rounded-lg bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3">
                 <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
@@ -319,7 +321,7 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
                     {/* Elemen UI */}
                     <div>
                       <h5 className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-1.5">
-                        Elemen UI
+                        UI Elements
                       </h5>
                       <div className="flex flex-wrap gap-1.5">
                         {safeArray(sub.elements).map((el: string, i: number) => (
@@ -347,7 +349,7 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="4 8 7 11 13 4" />
               </svg>
-              Selesaikan Task — pindahkan ke Done
+              Complete Task — move to Done
             </button>
           )}
         </div>

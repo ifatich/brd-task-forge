@@ -72,7 +72,7 @@ export function SubTaskAssignee({ subTask, taskId, onDataChange }: SubTaskAssign
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="4" y1="4" x2="12" y2="12" /><line x1="12" y1="4" x2="4" y2="12" />
                 </svg>
-                Tidak ditugaskan
+                Unassigned
               </button>
               <MemberList
                 selectedId={assigneeId}
@@ -91,7 +91,13 @@ function MemberList({ selectedId, onSelect }: { selectedId: string | null; onSel
   useEffect(() => {
     fetch("/api/team")
       .then((r) => r.ok ? r.json() : [])
-      .then(setMembers)
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setMembers(data.filter(m => !m.name.includes("Admin") && !m.role?.includes("Admin")));
+        } else {
+          setMembers([]);
+        }
+      })
       .catch(() => {});
   }, []);
 

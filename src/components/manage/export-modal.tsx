@@ -41,7 +41,7 @@ export function ExportModal({ projectId, projectName, onClose }: ExportModalProp
       console.error("Export failed:", err);
     }
 
-    // Brief delay agar UX terasa responsif
+    // Brief delay to make UX feel responsive
     await new Promise((r) => setTimeout(r, 500));
     setIsExporting(false);
     onClose();
@@ -56,13 +56,13 @@ export function ExportModal({ projectId, projectName, onClose }: ExportModalProp
     {
       value: "csv",
       label: "CSV",
-      desc: "Spreadsheet — bisa dibuka di Excel / Google Sheets",
+      desc: "Spreadsheet — openable in Excel / Google Sheets",
       icon: "csv",
     },
     {
       value: "pdf",
       label: "PDF",
-      desc: "Dokumen — siap cetak atau dikirim ke tim",
+      desc: "Document — ready to print or send to team",
       icon: "pdf",
     },
   ];
@@ -79,7 +79,7 @@ export function ExportModal({ projectId, projectName, onClose }: ExportModalProp
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100 dark:border-zinc-800">
           <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
-            Ekspor Laporan
+            Export Report
           </h2>
           <button
             onClick={onClose}
@@ -95,13 +95,13 @@ export function ExportModal({ projectId, projectName, onClose }: ExportModalProp
         <div className="p-5 space-y-5">
           {/* Project name */}
           <p className="text-xs text-zinc-500 dark:text-zinc-400">
-            Ekspor tugas dari <span className="font-medium text-zinc-700 dark:text-zinc-300">{projectName}</span>
+            Export tasks from <span className="font-medium text-zinc-700 dark:text-zinc-300">{projectName}</span>
           </p>
 
           {/* Format */}
           <div>
             <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-2 block">
-              Format File
+              File Format
             </label>
             <div className="grid grid-cols-2 gap-2">
               {formatOptions.map((opt) => (
@@ -143,17 +143,17 @@ export function ExportModal({ projectId, projectName, onClose }: ExportModalProp
           {/* Scope */}
           <div>
             <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-2 block">
-              Status Tugas
+              Task Status
             </label>
             <select
               value={scope}
               onChange={(e) => setScope(e.target.value as ExportScope)}
               className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
             >
-              <option value="all">Semua tugas</option>
-              <option value="todo">To Do saja</option>
-              <option value="in-progress">In Progress saja</option>
-              <option value="done">Done saja</option>
+              <option value="all">All tasks</option>
+              <option value="todo">To Do only</option>
+              <option value="in-progress">In Progress only</option>
+              <option value="done">Done only</option>
             </select>
           </div>
 
@@ -169,7 +169,7 @@ export function ExportModal({ projectId, projectName, onClose }: ExportModalProp
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-spin">
                     <path d="M21 12a9 9 0 11-6.219-8.56" />
                   </svg>
-                  Mengekspor...
+                  Exporting...
                 </>
               ) : (
                 <>
@@ -178,7 +178,7 @@ export function ExportModal({ projectId, projectName, onClose }: ExportModalProp
                     <path d="M3 8l5 5 5-5" />
                     <path d="M3 13h10" />
                   </svg>
-                  Unduh {format.toUpperCase()}
+                  Download {format.toUpperCase()}
                 </>
               )}
             </button>
@@ -186,7 +186,7 @@ export function ExportModal({ projectId, projectName, onClose }: ExportModalProp
               onClick={onClose}
               className="px-4 py-2.5 text-sm text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
             >
-              Batal
+              Cancel
             </button>
           </div>
         </div>

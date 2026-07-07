@@ -15,7 +15,7 @@ export function ExportSection({ projectId, projectName }: ExportSectionProps) {
     <>
       <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-5">
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-4">
-          Unduh laporan tugas dan status proyek untuk dokumentasi tim.
+          Download task reports and project status for team documentation.
         </p>
         <div className="flex flex-wrap gap-3">
           <button
@@ -27,7 +27,7 @@ export function ExportSection({ projectId, projectName }: ExportSectionProps) {
               <path d="M3 8l5 5 5-5" />
               <path d="M3 13h10" />
             </svg>
-            Pilih Format Ekspor
+            Select Export Format
           </button>
         </div>
       </div>

@@ -56,7 +56,7 @@ export function KanbanBoard({ projectId = "proj-001", onDataChange }: KanbanBoar
   const [overColumnId, setOverColumnId] = useState<TaskStatus | null>(null);
 
   const fetchTasks = useCallback(() => {
-    fetch(`/api/projects/${projectId}/tasks`)
+    fetch(`/api/projects/${projectId}/tasks?t=${Date.now()}`)
       .then((res) => res.ok ? res.json() : null)
       .then((data) => {
         const taskList = data?.tasks ?? [];

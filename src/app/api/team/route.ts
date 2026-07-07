@@ -35,8 +35,22 @@ export async function POST(request: Request) {
         name: body.name,
         avatar: body.avatar || "",
         role: body.role || "",
+        email: body.email || "",
       },
     });
+
+    if (body.email && body.password) {
+      // Upsert User for authentication
+      await prisma.user.upsert({
+        where: { email: body.email },
+        update: { passwordHash: body.password },
+        create: {
+          email: body.email,
+          passwordHash: body.password,
+          name: body.name,
+        }
+      });
+    }
 
     return NextResponse.json(member, { status: 201 });
   } catch (error) {
