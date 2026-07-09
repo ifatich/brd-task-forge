@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 const USERS = [
-  { id: "admin-001", name: "Budi (Admin)" },
-  { id: "member-001", name: "Siti (Developer)" },
-  { id: "member-002", name: "Agus (Designer)" },
+  { id: "admin-001", name: "Budi" },
+  { id: "member-001", name: "Siti" },
+  { id: "member-002", name: "Agus" },
 ];
 
 export function UserSwitcher() {
