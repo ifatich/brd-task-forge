@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { UserSwitcher } from "./user-switcher";
 
 export function DashboardHeader() {
   const router = useRouter();
@@ -19,8 +18,6 @@ export function DashboardHeader() {
       </div>
       
       <div className="flex items-center gap-3 shrink-0">
-        <UserSwitcher />
-        <div className="w-px h-6 bg-black/10 mx-2 hidden sm:block"></div>
         <button
           onClick={() => router.push("/upload")}
           className="hidden sm:flex px-4 py-2.5 rounded-[24px] bg-surface-soft border border-hairline hover:border-hairline hover:bg-hairline text-sm font-medium text-ink transition-all active:scale-[0.98]"
