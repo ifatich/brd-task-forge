@@ -54,14 +54,14 @@ export function ProjectList({ projects: initialProjects }: { projects: ProjectIt
 
       {/* ── Results ── */}
       {filtered.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-2xl bg-zinc-900/30 border border-white/5 py-24 text-center border-dashed">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 mb-4">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-zinc-500">
+        <div className="flex flex-col items-center justify-center rounded-[24px] bg-surface-soft border border-hairline py-24 text-center border-dashed">
+          <div className="flex h-14 w-14 items-center justify-center rounded-[24px] bg-black/5 mb-4">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ink/60">
               <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
             </svg>
           </div>
-          <p className="text-sm font-medium text-zinc-300 mb-1">No projects found</p>
-          <p className="text-xs text-zinc-500">Try adjusting your filters or search terms.</p>
+          <p className="text-sm font-medium text-ink mb-1">No projects found</p>
+          <p className="text-xs text-ink/60">Try adjusting your filters or search terms.</p>
         </div>
       ) : viewMode === "grid" ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -70,15 +70,15 @@ export function ProjectList({ projects: initialProjects }: { projects: ProjectIt
           ))}
         </div>
       ) : (
-        <div className="rounded-2xl border border-white/5 bg-zinc-900/30 overflow-hidden">
+        <div className="rounded-[24px] border border-hairline bg-surface-soft overflow-hidden">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/5 bg-white/[0.02]">
-                <th className="text-left px-5 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Project</th>
-                <th className="text-left px-5 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider hidden sm:table-cell">Status</th>
-                <th className="text-left px-5 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider hidden md:table-cell">Tasks</th>
-                <th className="text-left px-5 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Progress</th>
-                <th className="text-right px-5 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider hidden lg:table-cell">Updated</th>
+              <tr className="border-b border-hairline bg-black/5">
+                <th className="text-left px-5 py-4 text-xs font-semibold text-ink/60 uppercase tracking-wider">Project</th>
+                <th className="text-left px-5 py-4 text-xs font-semibold text-ink/60 uppercase tracking-wider hidden sm:table-cell">Status</th>
+                <th className="text-left px-5 py-4 text-xs font-semibold text-ink/60 uppercase tracking-wider hidden md:table-cell">Tasks</th>
+                <th className="text-left px-5 py-4 text-xs font-semibold text-ink/60 uppercase tracking-wider">Progress</th>
+                <th className="text-right px-5 py-4 text-xs font-semibold text-ink/60 uppercase tracking-wider hidden lg:table-cell">Updated</th>
               </tr>
             </thead>
             <tbody>
@@ -99,42 +99,42 @@ function TableRow({ project }: { project: ProjectItem }) {
 
   const statusBadge =
     project.status === "active"
-      ? "bg-blue-500/10 text-blue-400 border-blue-500/20"
+      ? "bg-surface-soft text-ink border-hairline"
       : project.status === "completed"
-      ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-      : "bg-white/5 text-zinc-400 border-white/10";
+        ? "bg-black/5 text-ink/60 border-hairline"
+        : "bg-black/5 text-ink/50 border-hairline";
 
   return (
     <tr
-      className="border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-colors cursor-pointer group"
+      className="border-b border-hairline last:border-0 hover:bg-black/5 transition-colors cursor-pointer group"
       onClick={() => router.push(`/project/${project.id}`)}
     >
       <td className="px-5 py-4">
-        <div className="font-medium text-zinc-200 group-hover:text-blue-400 transition-colors">{project.title}</div>
-        <div className="text-xs text-zinc-500 line-clamp-1 mt-1">{project.description}</div>
+        <div className="font-medium text-ink group-hover:text-ink/80 transition-colors">{project.title}</div>
+        <div className="text-xs text-ink/60 line-clamp-1 mt-1">{project.description}</div>
       </td>
       <td className="px-5 py-4 hidden sm:table-cell">
         <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-medium ${statusBadge}`}>
           {statusLabel}
         </span>
       </td>
-      <td className="px-5 py-4 text-zinc-400 hidden md:table-cell font-mono text-xs">
+      <td className="px-5 py-4 text-ink/60 hidden md:table-cell font-mono text-xs">
         {project.taskSummary?.done || 0}/{project.taskSummary?.total || 0}
       </td>
       <td className="px-5 py-4">
         <div className="flex items-center gap-3">
-          <div className="flex-1 max-w-[100px] h-1.5 rounded-full bg-zinc-800 overflow-hidden">
+          <div className="flex-1 max-w-[100px] h-1.5 rounded-full bg-hairline overflow-hidden">
             <div
               className={`h-full rounded-full transition-all duration-700 ease-out ${getProgressColor(project.progress)}`}
               style={{ width: `${project.progress}%` }}
             />
           </div>
-          <span className="text-xs font-semibold tabular-nums text-zinc-400 w-8 text-right font-mono">
+          <span className="text-xs font-semibold tabular-nums text-ink/60 w-8 text-right font-mono">
             {project.progress}%
           </span>
         </div>
       </td>
-      <td className="px-5 py-4 text-xs text-zinc-500 text-right hidden lg:table-cell font-mono">
+      <td className="px-5 py-4 text-xs text-ink/60 text-right hidden lg:table-cell font-mono">
         {project.updatedAt.split(' ')[0]}
       </td>
     </tr>

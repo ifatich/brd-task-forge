@@ -2,10 +2,10 @@
  * Returns a Tailwind color class based on progress percentage.
  */
 export function getProgressColor(value: number): string {
-  if (value >= 100) return "bg-green-500";
-  if (value >= 50) return "bg-blue-500";
-  if (value >= 25) return "bg-amber-500";
-  return "bg-zinc-400 dark:bg-zinc-500";
+  if (value >= 100) return "bg-ink";
+  if (value >= 50) return "bg-ink";
+  if (value >= 25) return "bg-ink/80";
+  return "bg-ink/60";
 }
 
 /**

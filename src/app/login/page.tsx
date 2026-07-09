@@ -53,34 +53,26 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="relative flex flex-col flex-1 items-center justify-center overflow-hidden">
-      {/* Background glow orbs */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-blue-600/10 blur-3xl" />
-        <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-indigo-600/10 blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-blue-500/5 blur-3xl" />
-      </div>
+    <div className="flex flex-col flex-1 items-center justify-center bg-canvas px-4">
+      <div className="w-full max-w-sm">
 
-      <div className="relative w-full max-w-sm mx-auto px-4">
         {/* ── Logo + Title ── */}
-        <div className="text-center mb-8">
-          <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl mb-4 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600" />
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-            <span className="relative text-white text-xl font-bold">B</span>
+        <div className="text-center mb-10">
+          <div className="inline-flex h-12 w-12 items-center justify-center rounded-[24px] mb-5 relative overflow-hidden">
+            <div className="absolute inset-0 bg-ink" />
+            <span className="relative text-canvas text-base font-bold">B</span>
           </div>
-          <h1 className="text-2xl font-bold text-foreground">Welcome Back</h1>
-          <p className="text-sm text-muted-foreground mt-1.5">Sign in to your BRD Task Forge account</p>
+          <h1 className="text-2xl font-bold text-ink tracking-tight">Welcome Back</h1>
+          <p className="text-sm text-ink/50 mt-1.5">Sign in to your BRD Task Forge account</p>
         </div>
 
-        {/* ── Card ── */}
-        <div className="glass-raised rounded-2xl p-7 relative overflow-hidden">
-          {/* Top shimmer line */}
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
+        {/* ── Form Card ── */}
+        <div className="rounded-[24px] border border-hairline bg-canvas p-7">
 
           <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+            {/* Form error */}
             {errors.form && (
-              <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-xs text-red-400 flex items-center gap-2">
+              <div className="rounded-[12px] bg-red-50 border border-red-200 px-4 py-3 text-xs text-red-600 flex items-center gap-2">
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <circle cx="8" cy="8" r="7" /><path d="M8 5v3.5M8 11h.01" />
                 </svg>
@@ -90,7 +82,7 @@ export default function LoginPage() {
 
             {/* Email */}
             <div className="space-y-1.5">
-              <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider block">
+              <label htmlFor="login-email" className="text-[11px] font-semibold text-ink/50 uppercase tracking-wider block">
                 Email
               </label>
               <input
@@ -100,21 +92,21 @@ export default function LoginPage() {
                 onChange={(e) => { setEmail(e.target.value); setTouched((p) => ({ ...p, email: true })); }}
                 onBlur={() => setTouched((p) => ({ ...p, email: true }))}
                 placeholder="name@example.com"
-                className={`w-full rounded-xl border bg-white/4 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 transition-all ${
+                className={`w-full rounded-[12px] border px-4 py-2.5 text-sm text-ink placeholder:text-ink/30 bg-canvas focus:outline-none focus:ring-2 transition-all ${
                   touched.email && errors.email
-                    ? "border-red-500/40 focus:ring-red-500/30"
-                    : "border-white/8 focus:ring-blue-500/40 focus:border-blue-500/40"
+                    ? "border-red-300 focus:ring-red-200"
+                    : "border-hairline focus:ring-ink/10 focus:border-ink/30"
                 }`}
                 autoFocus
               />
               {touched.email && errors.email && (
-                <p className="text-[10px] text-red-400 mt-1">{errors.email}</p>
+                <p className="text-[10px] text-red-500 mt-1">{errors.email}</p>
               )}
             </div>
 
             {/* Password */}
             <div className="space-y-1.5">
-              <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider block">
+              <label htmlFor="login-password" className="text-[11px] font-semibold text-ink/50 uppercase tracking-wider block">
                 Password
               </label>
               <input
@@ -124,14 +116,14 @@ export default function LoginPage() {
                 onChange={(e) => { setPassword(e.target.value); setTouched((p) => ({ ...p, password: true })); }}
                 onBlur={() => setTouched((p) => ({ ...p, password: true }))}
                 placeholder="••••••••"
-                className={`w-full rounded-xl border bg-white/4 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 transition-all ${
+                className={`w-full rounded-[12px] border px-4 py-2.5 text-sm text-ink placeholder:text-ink/30 bg-canvas focus:outline-none focus:ring-2 transition-all ${
                   touched.password && errors.password
-                    ? "border-red-500/40 focus:ring-red-500/30"
-                    : "border-white/8 focus:ring-blue-500/40 focus:border-blue-500/40"
+                    ? "border-red-300 focus:ring-red-200"
+                    : "border-hairline focus:ring-ink/10 focus:border-ink/30"
                 }`}
               />
               {touched.password && errors.password && (
-                <p className="text-[10px] text-red-400 mt-1">{errors.password}</p>
+                <p className="text-[10px] text-red-500 mt-1">{errors.password}</p>
               )}
             </div>
 
@@ -140,11 +132,11 @@ export default function LoginPage() {
               type="submit"
               id="login-submit"
               disabled={loading}
-              className="w-full btn-primary-gradient rounded-xl py-2.5 text-sm font-semibold text-white disabled:opacity-50 disabled:cursor-not-allowed mt-2 flex items-center justify-center gap-2"
+              className="w-full rounded-full bg-ink py-2.5 text-sm font-semibold text-canvas hover:bg-ink/85 disabled:opacity-40 disabled:cursor-not-allowed mt-2 flex items-center justify-center gap-2 transition-colors"
             >
               {loading ? (
                 <>
-                  <span className="animate-spin w-4 h-4 border-2 border-white/30 border-t-white rounded-full" />
+                  <span className="animate-spin w-4 h-4 border-2 border-canvas/30 border-t-canvas rounded-full" />
                   Signing in...
                 </>
               ) : (
@@ -155,15 +147,15 @@ export default function LoginPage() {
         </div>
 
         {/* ── Dev Quick Access ── */}
-        <div className="mt-6 pt-5 border-t border-white/6">
-          <p className="text-[10px] text-muted-foreground/60 text-center mb-3 uppercase tracking-widest font-semibold">
+        <div className="mt-6 pt-5 border-t border-hairline">
+          <p className="text-[10px] text-ink/40 text-center mb-3 uppercase tracking-widest font-semibold">
             Development · Quick Access
           </p>
           <div className="flex flex-col gap-2">
             <button
               id="mock-login-user"
               onClick={mockLoginAsUser}
-              className="w-full flex items-center justify-center gap-2 rounded-xl border border-white/8 bg-white/3 px-4 py-2.5 text-sm font-medium text-foreground hover:bg-white/6 hover:border-white/15 transition-all"
+              className="w-full flex items-center justify-center gap-2 rounded-full border border-hairline bg-canvas px-4 py-2.5 text-sm font-medium text-ink/80 hover:bg-black/5 transition-colors"
             >
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M8 8a3 3 0 100-6 3 3 0 000 6z" /><path d="M14 14c0-2-2.7-4-6-4s-6 2-6 4" />
@@ -173,7 +165,7 @@ export default function LoginPage() {
             <button
               id="mock-login-admin"
               onClick={mockLoginAsAdmin}
-              className="w-full flex items-center justify-center gap-2 rounded-xl border border-amber-500/20 bg-amber-500/8 px-4 py-2.5 text-sm font-medium text-amber-400 hover:bg-amber-500/15 hover:border-amber-500/35 transition-all"
+              className="w-full flex items-center justify-center gap-2 rounded-full border border-hairline bg-surface-soft px-4 py-2.5 text-sm font-medium text-ink/80 hover:bg-black/5 transition-colors"
             >
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M12 8a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -183,6 +175,7 @@ export default function LoginPage() {
             </button>
           </div>
         </div>
+
       </div>
     </div>
   );

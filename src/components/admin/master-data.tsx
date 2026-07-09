@@ -222,23 +222,23 @@ export function MasterData() {
 
   return (
     <div className="space-y-4">
-      {/* Tab navigation */}
-      <div className="flex items-center gap-1 border-b border-zinc-200 dark:border-zinc-800">
+      {/* Tab navigation — scrollable on mobile */}
+      <div className="flex items-center gap-1 border-b border-hairline overflow-x-auto scrollbar-none">
         {tabs.map((t) => (
           <button
             key={t.id}
             onClick={() => { setTab(t.id); setSelectedProject(null); }}
-            className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-[1px] ${
+            className={`shrink-0 flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-[1px] ${
               tab === t.id
-                ? "text-zinc-900 dark:text-zinc-100 border-zinc-900 dark:border-white"
-                : "text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 border-transparent"
+                ? "text-ink border-ink"
+                : "text-ink/60 hover:text-ink border-transparent"
             }`}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d={t.icon} />
             </svg>
             {t.label}
-            {t.count !== undefined && <span className="text-[11px] opacity-60">{t.count}</span>}
+            {t.count !== undefined && <span className="text-[11px] opacity-50">{t.count}</span>}
           </button>
         ))}
       </div>
@@ -249,12 +249,12 @@ export function MasterData() {
           {selectedProject ? (
             <AdminProjectDetail project={selectedProject} onClose={() => setSelectedProject(null)} onProjectDeleted={() => setSelectedProject(null)} />
           ) : (
-            <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900">
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">{projects.length} registered projects</p>
+            <div className="rounded-[24px] border border-hairline overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3 border-b border-hairline bg-surface-soft ">
+                <p className="text-xs text-ink/60 ">{projects.length} registered projects</p>
                 <button
                   onClick={() => setShowUploadModal(true)}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-zinc-900 dark:bg-white px-4 py-1.5 text-xs font-medium text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors"
+                  className="inline-flex items-center gap-1.5 bg-ink rounded-full px-4 py-1.5 text-xs font-medium text-canvas hover:bg-ink/80 :bg-black/10 transition-colors"
                 >
                   <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M8 2v12" /><path d="M2 8h12" /></svg>
                   Upload New BRD
@@ -268,10 +268,10 @@ export function MasterData() {
 
       {/* ── TAB: ANGGOTA TIM ── */}
       {tab === "team" && (
-        <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+        <div className="rounded-[24px] border border-hairline overflow-hidden">
           {/* Header with add button */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900">
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">{members.length} registered members</p>
+          <div className="flex items-center justify-between px-4 py-3 border-b border-hairline bg-surface-soft ">
+            <p className="text-xs text-ink/60 ">{members.length} registered members</p>
             <button
               onClick={() => openFormModal({
                 mode: "add",
@@ -284,28 +284,28 @@ export function MasterData() {
                 ],
                 onSave: handleAddMember,
               })}
-              className="rounded-lg bg-zinc-900 dark:bg-white px-3.5 py-1.5 text-xs font-medium text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors"
+              className="bg-ink rounded-full px-4 py-2 text-xs font-medium text-canvas hover:bg-ink/80 :bg-black/10 transition-colors"
             >
               + Add Member
             </button>
           </div>
 
           {/* Member list */}
-          <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
+          <div className="divide-y divide-zinc-100 ">
             {members.map((m) => (
-              <div key={m.id} className="flex items-center justify-between px-4 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors">
+              <div key={m.id} className="flex items-center justify-between px-4 py-3 hover:bg-surface-soft /50 transition-colors">
                 <div className="flex items-center gap-3 min-w-0">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-zinc-100 dark:bg-zinc-800 text-xs font-semibold text-zinc-600 dark:text-zinc-400">{m.avatar}</span>
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-black/5 text-xs font-semibold text-ink/60 ">{m.avatar}</span>
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200 truncate">{m.name}</p>
-                    <p className="text-xs text-zinc-400">{m.role}</p>
+                    <p className="text-sm font-medium text-ink truncate">{m.name}</p>
+                    <p className="text-xs text-ink/40">{m.role}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-1 shrink-0">
-                  <button onClick={() => handleEditMember(m)} className="p-1.5 rounded text-zinc-300 hover:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors" title="Edit">
+                  <button onClick={() => handleEditMember(m)} className="p-1.5 rounded text-ink/40 hover:text-ink/60 hover:bg-black/5  transition-colors" title="Edit">
                     <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M11 2l3 3-9 9H2v-3z" /></svg>
                   </button>
-                  <button onClick={() => handleDeleteMember(m)} className="p-1.5 rounded text-red-200 hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors" title="Delete">
+                  <button onClick={() => handleDeleteMember(m)} className="p-1.5 rounded text-red-200 hover:text-red-400 hover:bg-red-50 :bg-red-950/30 transition-colors" title="Delete">
                     <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M2 4h12" /><path d="M5 4V2h6v2" /><path d="M3 4l1 10h8l1-10" /></svg>
                   </button>
                 </div>
@@ -317,33 +317,33 @@ export function MasterData() {
 
       {/* ── TAB: PENGETAHUAN ── */}
       {tab === "knowledge" && (
-        <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900">
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">{knowledgeFiles.filter((f) => f.active).length} of {knowledgeFiles.length} active files</p>
-            <button onClick={() => setShowAddKnowledge(true)} className="rounded-lg bg-zinc-900 dark:bg-white px-3.5 py-1.5 text-xs font-medium text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">+ Add File</button>
+        <div className="rounded-[24px] border border-hairline overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-hairline bg-surface-soft ">
+            <p className="text-xs text-ink/60 ">{knowledgeFiles.filter((f) => f.active).length} of {knowledgeFiles.length} active files</p>
+            <button onClick={() => setShowAddKnowledge(true)} className="bg-ink rounded-full px-4 py-2 text-xs font-medium text-canvas hover:bg-ink/80 :bg-black/10 transition-colors">+ Add File</button>
           </div>
-          <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
+          <div className="divide-y divide-zinc-100 ">
             {knowledgeFiles.map((f) => (
-              <div key={f.id} className="flex items-center justify-between px-4 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors">
+              <div key={f.id} className="flex items-center justify-between px-4 py-3 hover:bg-surface-soft /50 transition-colors">
                 <div className="flex items-center gap-3 min-w-0">
-                  <span className={`inline-flex items-center justify-center w-2 h-2 rounded-full shrink-0 ${f.type === "Prompt" ? "bg-purple-400" : f.type === "Skill" ? "bg-blue-400" : "bg-amber-400"}`} />
-                  <span className="text-sm font-medium text-zinc-800 dark:text-zinc-200 truncate">{f.name}</span>
-                  <span className="inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400">{f.type}</span>
+                  <span className={`inline-flex items-center justify-center w-2 h-2 rounded-full shrink-0 ${f.type === "Prompt" ? "bg-ink" : f.type === "Skill" ? "bg-blue-400" : "bg-amber-400"}`} />
+                  <span className="text-sm font-medium text-ink truncate">{f.name}</span>
+                  <span className="inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-medium bg-black/5 text-ink/60 ">{f.type}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => setKnowledgeFiles((prev) => prev.map((pf) => pf.id === f.id ? { ...pf, active: !pf.active } : pf))}
-                    className={`relative inline-flex h-4 w-7 shrink-0 rounded-full border transition-colors ${f.active ? "bg-green-500 border-green-500" : "bg-zinc-200 dark:bg-zinc-700 border-zinc-200 dark:border-zinc-700"}`}
+                    className={`relative inline-flex h-4 w-7 shrink-0 rounded-full border transition-colors ${f.active ? "bg-green-500 border-green-500" : "bg-black/10 border-hairline "}`}
                   >
-                    <span className={`inline-block h-3 w-3 rounded-full bg-white shadow transform transition-transform ${f.active ? "translate-x-3.5" : "translate-x-0.5"}`} />
+                    <span className={`inline-block h-3 w-3 rounded-full bg-canvas transform transition-transform ${f.active ? "translate-x-3.5" : "translate-x-0.5"}`} />
                   </button>
-                  <button onClick={() => setPreviewItem(f)} className="p-1 rounded text-zinc-300 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors" title="View">
+                  <button onClick={() => setPreviewItem(f)} className="p-1 rounded text-ink/40 hover:text-ink hover:bg-surface-soft :bg-blue-950/30 transition-colors" title="View">
                     <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 8s2-4 7-4 7 4 7 4-2 4-7 4-7-4-7-4z" /><circle cx="8" cy="8" r="2" /></svg>
                   </button>
-                  <button onClick={() => handleEditKnowledge(f)} className="p-1 rounded text-zinc-300 hover:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors" title="Edit">
+                  <button onClick={() => handleEditKnowledge(f)} className="p-1 rounded text-ink/40 hover:text-ink/60 hover:bg-black/5  transition-colors" title="Edit">
                     <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M11 2l3 3-9 9H2v-3z" /></svg>
                   </button>
-                  <button onClick={() => handleDeleteKnowledge(f)} className="p-1 rounded text-red-200 hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors" title="Delete">
+                  <button onClick={() => handleDeleteKnowledge(f)} className="p-1 rounded text-red-200 hover:text-red-400 hover:bg-red-50 :bg-red-950/30 transition-colors" title="Delete">
                     <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M2 4h12" /><path d="M5 4V2h6v2" /><path d="M3 4l1 10h8l1-10" /></svg>
                   </button>
                 </div>
@@ -446,10 +446,10 @@ function AddKnowledgeModal({ onAdd, onClose }: {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="w-full max-w-md rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-2xl mx-4 animate-in fade-in zoom-in-95">
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100 dark:border-zinc-800">
-          <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">Add Knowledge File</h2>
-          <button onClick={onClose} className="p-1 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+      <div className="w-full max-w-md rounded-[24px] border border-hairline bg-canvas mx-4 animate-in fade-in zoom-in-95">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-hairline ">
+          <h2 className="font-semibold text-sm text-ink ">Add Knowledge File</h2>
+          <button onClick={onClose} className="p-1 rounded-md text-ink/40 hover:text-ink/60 :text-ink/40 hover:bg-black/5  transition-colors">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="4" y1="4" x2="12" y2="12" /><line x1="12" y1="4" x2="4" y2="12" /></svg>
           </button>
         </div>
@@ -460,12 +460,12 @@ function AddKnowledgeModal({ onAdd, onClose }: {
             onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
             onClick={() => inputRef.current?.click()}
-            className={`rounded-xl border-2 border-dashed p-6 text-center transition-all cursor-pointer ${
+            className={`rounded-[24px] border-2 border-dashed p-6 text-center transition-all cursor-pointer ${
               isDragging
-                ? "border-zinc-900 dark:border-white bg-zinc-50 dark:bg-zinc-900 scale-[1.02]"
+                ? "border-ink bg-surface-soft scale-[1.02]"
                 : file
-                  ? "border-green-300 dark:border-green-700 bg-green-50/50 dark:bg-green-950/10"
-                  : "border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500"
+                  ? "border-green-300 bg-green-50/50 "
+                  : "border-hairline hover:border-ink/40 :border-ink/60"
             }`}
           >
             <input ref={inputRef} type="file" accept=".md" onChange={handleSelect} className="hidden" />
@@ -475,18 +475,18 @@ function AddKnowledgeModal({ onAdd, onClose }: {
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mx-auto text-green-500">
                     <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" />
                   </svg>
-                  <p className="text-sm font-medium text-green-700 dark:text-green-400">{file.name}</p>
-                  <p className="text-[10px] text-zinc-400">{(file.size / 1024).toFixed(1)} KB — click to change</p>
+                  <p className="text-sm font-medium text-green-700 ">{file.name}</p>
+                  <p className="text-[10px] text-ink/40">{(file.size / 1024).toFixed(1)} KB — click to change</p>
                 </>
               ) : (
                 <>
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={`mx-auto transition-colors ${isDragging ? "text-zinc-900 dark:text-white" : "text-zinc-300 dark:text-zinc-600"}`}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={`mx-auto transition-colors ${isDragging ? "text-ink " : "text-ink/40 "}`}>
                     <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
                   </svg>
-                  <p className={`text-sm font-medium transition-colors ${isDragging ? "text-zinc-900 dark:text-white" : "text-zinc-500 dark:text-zinc-400"}`}>
+                  <p className={`text-sm font-medium transition-colors ${isDragging ? "text-ink " : "text-ink/60 "}`}>
                     {isDragging ? "Drop file here" : "Upload or drag & drop .md file"}
                   </p>
-                  <p className="text-[10px] text-zinc-400 dark:text-zinc-500">Markdown file containing AI instructions, prompts, or skills</p>
+                  <p className="text-[10px] text-ink/40 ">Markdown file containing AI instructions, prompts, or skills</p>
                 </>
               )}
             </div>
@@ -494,16 +494,16 @@ function AddKnowledgeModal({ onAdd, onClose }: {
 
           {/* Tipe selector */}
           <div>
-            <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1.5">File Type</label>
+            <label className="text-[11px] font-medium text-ink/60 block mb-1.5">File Type</label>
             <div className="flex gap-2">
               {["Prompt", "Skill", "Instruksi"].map((t) => (
                 <button
                   key={t} type="button"
                   onClick={() => setFileType(t)}
-                  className={`flex-1 rounded-lg border py-2 text-xs font-medium transition-all ${
+                  className={`flex-1 rounded-[24px] border py-2 text-xs font-medium transition-all ${
                     fileType === t
-                      ? "border-zinc-900 dark:border-white bg-zinc-900 dark:bg-white text-white dark:text-zinc-900"
-                      : "border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300"
+                      ? "border-ink bg-ink text-canvas "
+                      : "border-hairline text-ink/60 hover:border-hairline"
                   }`}
                 >
                   {t}
@@ -512,9 +512,9 @@ function AddKnowledgeModal({ onAdd, onClose }: {
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-zinc-100 dark:border-zinc-800">
-          <button onClick={onClose} className="rounded-lg border border-zinc-200 dark:border-zinc-700 px-3.5 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">Cancel</button>
-          <button onClick={() => file && onAdd(file, fileType)} disabled={!file} className="rounded-lg bg-zinc-900 dark:bg-white px-3.5 py-1.5 text-xs font-medium text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">Add</button>
+        <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-hairline ">
+          <button onClick={onClose} className="rounded-full border border-hairline px-4 py-2 text-xs font-medium text-ink/60 hover:bg-black/5  transition-colors">Cancel</button>
+          <button onClick={() => file && onAdd(file, fileType)} disabled={!file} className="bg-ink rounded-full px-4 py-2 text-xs font-medium text-canvas hover:bg-ink/80 :bg-black/10 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">Add</button>
         </div>
       </div>
     </div>
@@ -541,49 +541,49 @@ function KnowledgePreviewModal({ item, onClose, onSave }: {
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[6vh] pb-[6vh] bg-black/30 backdrop-blur-sm" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="w-full max-w-3xl rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-2xl mx-4 animate-in fade-in zoom-in-95 flex flex-col max-h-[88vh]">
+      <div className="w-full max-w-3xl rounded-[24px] border border-hairline bg-canvas mx-4 animate-in fade-in zoom-in-95 flex flex-col max-h-[88vh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100 dark:border-zinc-800 shrink-0">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-hairline shrink-0">
           <div className="flex items-center gap-3 min-w-0">
             <span className={`inline-flex items-center justify-center w-2.5 h-2.5 rounded-full shrink-0 ${
-              type === "Prompt" ? "bg-purple-400" : type === "Skill" ? "bg-blue-400" : "bg-amber-400"
+              type === "Prompt" ? "bg-ink" : type === "Skill" ? "bg-blue-400" : "bg-amber-400"
             }`} />
             <div className="min-w-0">
               {isEditing ? (
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)}
-                  className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 bg-transparent border-b border-zinc-300 dark:border-zinc-600 focus:outline-none focus:border-zinc-900 dark:focus:border-white w-full"
+                  className="font-semibold text-sm text-ink bg-transparent border-b border-hairline focus:outline-none focus:border-ink :border-white w-full"
                 />
               ) : (
-                <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 truncate">{name}</h2>
+                <h2 className="font-semibold text-sm text-ink truncate">{name}</h2>
               )}
             </div>
             {isEditing ? (
               <select value={type} onChange={(e) => setType(e.target.value)}
-                className="rounded-md border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-2 py-1 text-[10px] text-zinc-600 dark:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-900"
+                className="rounded-[12px] border border-hairline bg-canvas px-2 py-1 text-[10px] text-ink/60 focus:outline-none focus:ring-1 focus:ring-ink"
               >
                 {["Prompt", "Skill", "Instruksi"].map((t) => (
                   <option key={t} value={t}>{t}</option>
                 ))}
               </select>
             ) : (
-              <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[9px] font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 shrink-0">{type}</span>
+              <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[9px] font-medium bg-black/5 text-ink/60 shrink-0">{type}</span>
             )}
           </div>
           <div className="flex items-center gap-1">
             {!isEditing ? (
-              <button onClick={() => setIsEditing(true)} className="p-1.5 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors" title="Edit content">
+              <button onClick={() => setIsEditing(true)} className="p-1.5 rounded-md text-ink/40 hover:text-ink/60 :text-ink/40 hover:bg-black/5  transition-colors" title="Edit content">
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M11 2l3 3-9 9H2v-3z" />
                 </svg>
               </button>
             ) : (
-              <button onClick={() => setIsEditing(false)} className="p-1.5 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors" title="Back to view">
+              <button onClick={() => setIsEditing(false)} className="p-1.5 rounded-md text-ink/40 hover:text-ink/60 :text-ink/40 hover:bg-black/5  transition-colors" title="Back to view">
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M1 8s2-4 7-4 7 4 7 4-2 4-7 4-7-4-7-4z" /><circle cx="8" cy="8" r="2" />
                 </svg>
               </button>
             )}
-            <button onClick={onClose} className="p-1.5 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+            <button onClick={onClose} className="p-1.5 rounded-md text-ink/40 hover:text-ink/60 :text-ink/40 hover:bg-black/5  transition-colors">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="4" y1="4" x2="12" y2="12" /><line x1="12" y1="4" x2="4" y2="12" /></svg>
             </button>
           </div>
@@ -595,29 +595,29 @@ function KnowledgePreviewModal({ item, onClose, onSave }: {
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="w-full h-full min-h-[55vh] rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-4 py-3 text-sm text-zinc-700 dark:text-zinc-300 font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white resize-none"
+              className="w-full h-full min-h-[55vh] rounded-[24px] border border-hairline bg-canvas px-4 py-3 text-sm text-ink/80 font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-ink :ring-white resize-none"
               placeholder="Knowledge content in markdown format..."
             />
           ) : (
-            <div className="prose prose-sm dark:prose-invert max-w-none">
+            <div className="prose prose-sm max-w-none">
               {content.split("\n").map((line, i) => {
                 if (line.startsWith("# ")) {
-                  return <h1 key={i} className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mt-4 mb-2">{line.replace("# ", "")}</h1>;
+                  return <h1 key={i} className="text-lg font-bold text-ink mt-4 mb-2">{line.replace("# ", "")}</h1>;
                 }
                 if (line.startsWith("## ")) {
-                  return <h2 key={i} className="text-base font-semibold text-zinc-900 dark:text-zinc-100 mt-3 mb-1.5">{line.replace("## ", "")}</h2>;
+                  return <h2 key={i} className="text-base font-semibold text-ink mt-3 mb-1.5">{line.replace("## ", "")}</h2>;
                 }
                 if (line.startsWith("### ")) {
-                  return <h3 key={i} className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mt-2 mb-1">{line.replace("### ", "")}</h3>;
+                  return <h3 key={i} className="text-sm font-semibold text-ink mt-2 mb-1">{line.replace("### ", "")}</h3>;
                 }
                 if (line.startsWith("- **") && line.includes("**")) {
-                  return <li key={i} className="text-sm text-zinc-600 dark:text-zinc-400 ml-4 list-disc">{line.replace(/^- \*\*(.+?)\*\*:/, (_, bold) => `<strong>${bold}</strong>:`)}</li>;
+                  return <li key={i} className="text-sm text-ink/60 ml-4 list-disc">{line.replace(/^- \*\*(.+?)\*\*:/, (_, bold) => `<strong>${bold}</strong>:`)}</li>;
                 }
                 if (line.startsWith("- ")) {
-                  return <li key={i} className="text-sm text-zinc-600 dark:text-zinc-400 ml-4 list-disc">{line.replace("- ", "")}</li>;
+                  return <li key={i} className="text-sm text-ink/60 ml-4 list-disc">{line.replace("- ", "")}</li>;
                 }
                 if (/^\d+\. /.test(line)) {
-                  return <li key={i} className="text-sm text-zinc-600 dark:text-zinc-400 ml-4 list-decimal">{line.replace(/^\d+\. /, "")}</li>;
+                  return <li key={i} className="text-sm text-ink/60 ml-4 list-decimal">{line.replace(/^\d+\. /, "")}</li>;
                 }
                 if (line.startsWith("```")) {
                   return <div key={i} className="my-1" />;
@@ -625,27 +625,27 @@ function KnowledgePreviewModal({ item, onClose, onSave }: {
                 if (line.trim() === "") {
                   return <div key={i} className="h-2" />;
                 }
-                return <p key={i} className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">{line}</p>;
+                return <p key={i} className="text-sm text-ink/60 leading-relaxed">{line}</p>;
               })}
             </div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-t border-zinc-100 dark:border-zinc-800 shrink-0">
-          <span className="text-[10px] text-zinc-400">
+        <div className="flex items-center justify-between px-5 py-3.5 border-t border-hairline shrink-0">
+          <span className="text-[10px] text-ink/40">
             {isEditing ? "Editing content — markdown supported" : `${content.length} characters`}
           </span>
           <div className="flex items-center gap-2">
-            <button onClick={onClose} className="rounded-lg border border-zinc-200 dark:border-zinc-700 px-3.5 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+            <button onClick={onClose} className="rounded-full border border-hairline px-4 py-2 text-xs font-medium text-ink/60 hover:bg-black/5  transition-colors">
               {isEditing ? "Cancel" : "Close"}
             </button>
             {isEditing && (
               <button onClick={handleSave} disabled={saving || !content.trim()}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-zinc-900 dark:bg-white px-3.5 py-1.5 text-xs font-medium text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="inline-flex items-center gap-1.5 bg-ink rounded-full px-4 py-2 text-xs font-medium text-canvas hover:bg-ink/80 :bg-black/10 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 {saving ? (
-                  <><span className="animate-spin w-3 h-3 border-2 border-white dark:border-zinc-900 border-t-transparent rounded-full" /> Saving...</>
+                  <><span className="animate-spin w-3 h-3 border-2 border-white border-t-transparent rounded-full" /> Saving...</>
                 ) : (
                   <><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M13 13H3V3h7l3 3v7z" /><path d="M5 13V9h6v4" /></svg>
                   Save</>
@@ -672,29 +672,29 @@ function FormModal({ title, fields, onSave, onClose }: {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="w-full max-w-sm rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-2xl mx-4 animate-in fade-in zoom-in-95">
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100 dark:border-zinc-800">
-          <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">{title}</h2>
-          <button onClick={onClose} className="p-1 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+      <div className="w-full max-w-sm rounded-[24px] border border-hairline bg-canvas mx-4 animate-in fade-in zoom-in-95">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-hairline">
+          <h2 className="font-semibold text-sm text-ink">{title}</h2>
+          <button onClick={onClose} className="p-1 rounded-md text-ink/40 hover:text-ink hover:bg-black/5 transition-colors">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="4" y1="4" x2="12" y2="12" /><line x1="12" y1="4" x2="4" y2="12" /></svg>
           </button>
         </div>
         <div className="p-5 space-y-4">
           {fields.map((f) => (
             <div key={f.key}>
-              <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1">{f.label}</label>
+              <label className="text-[11px] font-medium text-ink/60 block mb-1">{f.label}</label>
               <input
                 type={f.key === "password" ? "password" : "text"} value={values[f.key]} onChange={(e) => setValues({ ...values, [f.key]: e.target.value })}
                 placeholder={f.placeholder} autoFocus={f.key === "name"}
                 onKeyDown={(e) => e.key === "Enter" && isValid && onSave(values)}
-                className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
+                className="w-full rounded-[12px] border border-hairline bg-canvas px-3 py-2 text-sm text-ink/80 placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-ink"
               />
             </div>
           ))}
         </div>
-        <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-zinc-100 dark:border-zinc-800">
-          <button onClick={onClose} className="rounded-lg border border-zinc-200 dark:border-zinc-700 px-3.5 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">Cancel</button>
-          <button onClick={() => onSave(values)} disabled={!isValid} className="rounded-lg bg-zinc-900 dark:bg-white px-3.5 py-1.5 text-xs font-medium text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
+        <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-hairline">
+          <button onClick={onClose} className="rounded-full border border-hairline px-4 py-2 text-xs font-medium text-ink/80 hover:bg-black/5 transition-colors">Cancel</button>
+          <button onClick={() => onSave(values)} disabled={!isValid} className="rounded-full bg-ink px-4 py-2 text-xs font-medium text-canvas hover:bg-ink/80 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
             {title.startsWith("Add") ? "Add" : "Save"}
           </button>
         </div>
@@ -715,27 +715,27 @@ function ConfirmModal({ title, message, itemName, onConfirm, onClose }: {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="w-full max-w-sm rounded-xl border border-red-200 dark:border-red-900/50 bg-white dark:bg-zinc-950 shadow-2xl mx-4 animate-in fade-in zoom-in-95">
-        <div className="flex items-center gap-2 px-5 py-3.5 border-b border-red-100 dark:border-red-900/30">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
+      <div className="w-full max-w-sm rounded-[24px] border border-red-200 bg-canvas mx-4 animate-in fade-in zoom-in-95">
+        <div className="flex items-center gap-2 px-5 py-3.5 border-b border-red-100 ">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-red-100 ">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-red-500"><path d="M2 4h12" /><path d="M5 4V2h6v2" /><path d="M3 4l1 10h8l1-10" /></svg>
           </div>
-          <h2 className="font-semibold text-sm text-red-700 dark:text-red-400">{title}</h2>
+          <h2 className="font-semibold text-sm text-red-700 ">{title}</h2>
         </div>
         <div className="p-5 space-y-4">
-          <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">{message}</p>
-          <div className="rounded-lg bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/50 p-3">
-            <p className="text-xs text-red-600 dark:text-red-400"><strong>Warning:</strong> This action cannot be undone.</p>
+          <p className="text-sm text-ink/60 leading-relaxed">{message}</p>
+          <div className="rounded-[16px] bg-red-50 border border-red-200 p-4">
+            <p className="text-xs text-red-600 "><strong>Warning:</strong> This action cannot be undone.</p>
           </div>
           <div>
-            <label className="text-xs text-zinc-500 dark:text-zinc-400 block mb-1.5">Type <strong className="text-zinc-700 dark:text-zinc-300">{itemName}</strong> to confirm:</label>
+            <label className="text-xs text-ink/60 block mb-1.5">Type <strong className="text-ink/80 ">{itemName}</strong> to confirm:</label>
             <input type="text" value={confirmText} onChange={(e) => setConfirmText(e.target.value)} placeholder={itemName}
-              className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-500 font-mono" />
+              className="w-full rounded-[12px] border border-hairline bg-canvas px-3 py-2 text-sm text-ink/80 placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-red-500 font-mono" />
           </div>
         </div>
-        <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-zinc-100 dark:border-zinc-800">
-          <button onClick={onClose} className="rounded-lg border border-zinc-200 dark:border-zinc-700 px-3.5 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">Cancel</button>
-          <button onClick={onConfirm} disabled={confirmText !== itemName} className="rounded-lg bg-red-600 px-3.5 py-1.5 text-xs font-medium text-white hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">Yes, Delete</button>
+        <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-hairline ">
+          <button onClick={onClose} className="rounded-full border border-hairline px-4 py-2 text-xs font-medium text-ink/60 hover:bg-black/5  transition-colors">Cancel</button>
+          <button onClick={onConfirm} disabled={confirmText !== itemName} className="rounded-full bg-red-600 px-4 py-2 text-xs font-medium text-canvas hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">Yes, Delete</button>
         </div>
       </div>
     </div>
@@ -748,8 +748,8 @@ const PdfPreview = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 p-6 text-center">
-        <div className="flex items-center justify-center gap-2 text-sm text-zinc-400 dark:text-zinc-500">
+      <div className="rounded-[24px] border border-dashed border-hairline p-6 text-center">
+        <div className="flex items-center justify-center gap-2 text-sm text-ink/40 ">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-spin">
             <path d="M21 12a9 9 0 11-6.219-8.56" />
           </svg>
@@ -762,7 +762,7 @@ const PdfPreview = dynamic(
 
 const FlowDiagram = dynamic(
   () => import("@/components/diagram/flow-diagram").then((m) => m.FlowDiagram),
-  { ssr: false, loading: () => <div className="flex items-center justify-center py-12 text-sm text-zinc-400"><span className="animate-spin w-4 h-4 border-2 border-zinc-400 border-t-transparent rounded-full mr-2" /> Loading diagram...</div> }
+  { ssr: false, loading: () => <div className="flex items-center justify-center py-12 text-sm text-ink/40"><span className="animate-spin w-4 h-4 border-2 border-ink/40 border-t-transparent rounded-full mr-2" /> Loading diagram...</div> }
 );
 
 // ── Upload BRD Modal (mirror user upload flow) ──
@@ -867,28 +867,28 @@ function UploadBrdModal({ onClose, onSuccess }: { onClose: () => void; onSuccess
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[8vh] pb-[8vh] bg-black/30 backdrop-blur-sm" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="w-full max-w-2xl rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-2xl mx-4 animate-in fade-in zoom-in-95 flex flex-col max-h-[84vh]">
+      <div className="w-full max-w-2xl rounded-[24px] border border-hairline bg-canvas mx-4 animate-in fade-in zoom-in-95 flex flex-col max-h-[84vh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100 dark:border-zinc-800 shrink-0">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-hairline shrink-0">
           <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-amber-100 dark:bg-amber-950/30">
+            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-black/5 ">
               {stage === "saved" ? (
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-green-600 dark:text-green-400">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-green-600 ">
                   <polyline points="4 8 7 11 12 5" /><polyline points="12 5 19 12 22 9" />
                 </svg>
               ) : (
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-amber-600 dark:text-amber-400">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-ink ">
                   <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" />
                 </svg>
               )}
             </div>
-            <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
+            <h2 className="font-semibold text-sm text-ink ">
               {stage === "preview" ? "Analysis Result Preview" : 
                stage === "saving" ? "Saving..." : 
                stage === "saved" ? "Successfully Saved" : "Upload New BRD"}
             </h2>
           </div>
-          <button onClick={onClose} disabled={uploading || stage === "saving"} className="p-1 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+          <button onClick={onClose} disabled={uploading || stage === "saving"} className="p-1 rounded-md text-ink/40 hover:text-ink/60 :text-ink/40 hover:bg-black/5  transition-colors">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="4" y1="4" x2="12" y2="12" /><line x1="12" y1="4" x2="4" y2="12" /></svg>
           </button>
         </div>
@@ -899,8 +899,8 @@ function UploadBrdModal({ onClose, onSuccess }: { onClose: () => void; onSuccess
           {(stage === "extracting" || stage === "analyzing" || stage === "verifying" || stage === "diagramming") && (
             <div>
               <div className="mb-4">
-                <h3 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">Processing Document</h3>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">AI is analyzing the BRD and generating UI/UX tasks.</p>
+                <h3 className="font-semibold text-sm text-ink ">Processing Document</h3>
+                <p className="text-xs text-ink/60 mt-0.5">AI is analyzing the BRD and generating UI/UX tasks.</p>
               </div>
               <AiProcessingIndicator currentStage={stage} onRetry={handleRetry} />
             </div>
@@ -909,10 +909,10 @@ function UploadBrdModal({ onClose, onSuccess }: { onClose: () => void; onSuccess
           {/* SAVING STAGE */}
           {stage === "saving" && (
             <div className="flex flex-col items-center justify-center py-12">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="animate-spin text-zinc-400 mb-3">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="animate-spin text-ink/40 mb-3">
                 <path d="M21 12a9 9 0 11-6.219-8.56" />
               </svg>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">Saving data to database...</p>
+              <p className="text-sm text-ink/60 ">Saving data to database...</p>
             </div>
           )}
 
@@ -921,28 +921,28 @@ function UploadBrdModal({ onClose, onSuccess }: { onClose: () => void; onSuccess
             <div className="space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-500">
               {/* Summary stats */}
               <div className="grid grid-cols-3 gap-3">
-                <div className="rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 p-3 text-center">
-                  <div className="text-xl font-bold text-zinc-900 dark:text-zinc-100">{summary?.taskCount || 0}</div>
-                  <div className="text-[10px] text-zinc-500 dark:text-zinc-400">Task (Modul)</div>
+                <div className="rounded-[24px] border border-hairline bg-surface-soft p-3 text-center">
+                  <div className="text-xl font-bold text-ink ">{summary?.taskCount || 0}</div>
+                  <div className="text-[10px] text-ink/60 ">Task (Modul)</div>
                 </div>
-                <div className="rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 p-3 text-center">
-                  <div className="text-xl font-bold text-blue-600 dark:text-blue-400">{summary?.screenCount || 0}</div>
-                  <div className="text-[10px] text-zinc-500 dark:text-zinc-400">Screen (Sub-task)</div>
+                <div className="rounded-[24px] border border-hairline bg-surface-soft p-3 text-center">
+                  <div className="text-xl font-bold text-ink ">{summary?.screenCount || 0}</div>
+                  <div className="text-[10px] text-ink/60 ">Screen (Sub-task)</div>
                 </div>
-                <div className="rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 p-3 text-center">
-                  <div className="text-xl font-bold text-amber-600 dark:text-amber-400">{summary?.elementCount || 0}</div>
-                  <div className="text-[10px] text-zinc-500 dark:text-zinc-400">UI Elements</div>
+                <div className="rounded-[24px] border border-hairline bg-surface-soft p-3 text-center">
+                  <div className="text-xl font-bold text-ink ">{summary?.elementCount || 0}</div>
+                  <div className="text-[10px] text-ink/60 ">UI Elements</div>
                 </div>
               </div>
 
               {/* Preview tab toggle */}
-              <div className="flex items-center gap-1 border-b border-zinc-200 dark:border-zinc-800">
+              <div className="flex items-center gap-1 border-b border-hairline ">
                 <button
                   onClick={() => setPreviewTab("tasks")}
                   className={`flex items-center gap-1.5 px-3 py-2 text-xs font-medium transition-colors border-b-2 -mb-[1px] ${
                     previewTab === "tasks"
-                      ? "text-zinc-900 dark:text-zinc-100 border-zinc-900 dark:border-white"
-                      : "text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 border-transparent"
+                      ? "text-ink border-ink "
+                      : "text-ink/60 hover:text-ink/80 :text-ink/40 border-transparent"
                   }`}
                 >
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /></svg>
@@ -952,8 +952,8 @@ function UploadBrdModal({ onClose, onSuccess }: { onClose: () => void; onSuccess
                   onClick={() => setPreviewTab("diagram")}
                   className={`flex items-center gap-1.5 px-3 py-2 text-xs font-medium transition-colors border-b-2 -mb-[1px] ${
                     previewTab === "diagram"
-                      ? "text-zinc-900 dark:text-zinc-100 border-zinc-900 dark:border-white"
-                      : "text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 border-transparent"
+                      ? "text-ink border-ink "
+                      : "text-ink/60 hover:text-ink/80 :text-ink/40 border-transparent"
                   }`}
                 >
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" /></svg>
@@ -964,38 +964,38 @@ function UploadBrdModal({ onClose, onSuccess }: { onClose: () => void; onSuccess
               {/* Task list */}
               {previewTab === "tasks" && (
               <div>
-                <h4 className="font-medium text-xs text-zinc-700 dark:text-zinc-300 mb-2">Task & Sub-task List</h4>
-                <div className="rounded-lg border border-zinc-200 dark:border-zinc-800 divide-y divide-zinc-100 dark:divide-zinc-800">
+                <h4 className="font-medium text-xs text-ink/80 mb-2">Task & Sub-task List</h4>
+                <div className="rounded-[24px] border border-hairline divide-y divide-zinc-100 ">
                   {tasks.map((task: any, i: number) => (
                     <div key={i}>
                       <button
                         onClick={() => setExpandedTask(expandedTask === task.title ? null : task.title)}
-                        className="w-full flex items-center gap-2 px-3 py-2.5 text-left hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors"
+                        className="w-full flex items-center gap-2 px-3 py-2.5 text-left hover:bg-surface-soft /50 transition-colors"
                       >
                         <span className={`inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-medium ${
-                          task.priority === "high" ? "bg-red-100 text-red-700 dark:bg-red-950/30 dark:text-red-400" :
-                          task.priority === "medium" ? "bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400" :
-                          "bg-green-100 text-green-700 dark:bg-green-950/30 dark:text-green-400"
+                          task.priority === "high" ? "bg-red-100 text-red-700 " :
+                          task.priority === "medium" ? "bg-black/5 text-amber-700 " :
+                          "bg-green-100 text-green-700 "
                         }`}>
                           {task.priority === "high" ? "High" : task.priority === "medium" ? "Medium" : "Low"}
                         </span>
-                        <span className="flex-1 text-sm font-medium text-zinc-800 dark:text-zinc-200 truncate">{task.title}</span>
-                        <span className="text-[10px] text-zinc-400">{task.subTasks?.length || 0} screen</span>
+                        <span className="flex-1 text-sm font-medium text-ink truncate">{task.title}</span>
+                        <span className="text-[10px] text-ink/40">{task.subTasks?.length || 0} screen</span>
                         <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"
-                          className={`text-zinc-400 transition-transform duration-200 shrink-0 ${expandedTask === task.title ? "rotate-90" : ""}`}>
+                          className={`text-ink/40 transition-transform duration-200 shrink-0 ${expandedTask === task.title ? "rotate-90" : ""}`}>
                           <path d="M6 4l4 4-4 4" />
                         </svg>
                       </button>
                       {expandedTask === task.title && (
                         <div className="px-3 pb-2.5 space-y-1">
-                          <p className="text-[10px] text-zinc-500 dark:text-zinc-400 leading-relaxed pl-1">{task.description}</p>
+                          <p className="text-[10px] text-ink/60 leading-relaxed pl-1">{task.description}</p>
                           {task.subTasks?.map((st: any, si: number) => (
-                            <div key={si} className="flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-zinc-50 dark:bg-zinc-900/50">
-                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="shrink-0 text-zinc-400">
+                            <div key={si} className="flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-surface-soft ">
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="shrink-0 text-ink/40">
                                 <rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
                               </svg>
-                              <span className="flex-1 text-xs text-zinc-600 dark:text-zinc-400">{st.title}</span>
-                              <span className="text-[9px] text-zinc-400">{st.elements?.length || 0} elements</span>
+                              <span className="flex-1 text-xs text-ink/60 ">{st.title}</span>
+                              <span className="text-[9px] text-ink/40">{st.elements?.length || 0} elements</span>
                             </div>
                           ))}
                         </div>
@@ -1008,9 +1008,9 @@ function UploadBrdModal({ onClose, onSuccess }: { onClose: () => void; onSuccess
 
               {/* Diagram preview */}
               {previewTab === "diagram" && previewData?.diagram?.mermaidSyntax && (
-                <div className="rounded-lg border border-zinc-200 dark:border-zinc-800 overflow-hidden">
-                  <div className="px-3 py-2 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900">
-                    <span className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Flow Diagram</span>
+                <div className="rounded-[24px] border border-hairline overflow-hidden">
+                  <div className="px-3 py-2 border-b border-hairline bg-surface-soft ">
+                    <span className="text-xs font-medium text-ink/80 ">Flow Diagram</span>
                   </div>
                   <div className="p-3">
                     <FlowDiagram
@@ -1023,11 +1023,11 @@ function UploadBrdModal({ onClose, onSuccess }: { onClose: () => void; onSuccess
               )}
 
               {/* Info banner */}
-              <div className="rounded-lg bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/50 p-3 flex items-start gap-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="shrink-0 mt-0.5 text-amber-600 dark:text-amber-400">
+              <div className="rounded-[16px] bg-surface-soft border border-amber-200 p-4 flex items-start gap-2">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="shrink-0 mt-0.5 text-ink ">
                   <circle cx="12" cy="12" r="10" /><line x1="12" y1="12" x2="12" y2="16" /><line x1="12" y1="8" x2="12.01" y2="8" />
                 </svg>
-                <p className="text-xs text-amber-700 dark:text-amber-400">
+                <p className="text-xs text-amber-700 ">
                   This data is a preview. Click <strong>Save</strong> to store it in the database, or <strong>Cancel</strong> to discard the results.
                 </p>
               </div>
@@ -1037,33 +1037,33 @@ function UploadBrdModal({ onClose, onSuccess }: { onClose: () => void; onSuccess
           {/* SAVED STAGE — navigation cards */}
           {stage === "saved" && previewData && (
             <div className="space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="rounded-xl border border-green-200 dark:border-green-900/50 bg-green-50 dark:bg-green-950/20 p-5 text-center">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-100 dark:bg-green-950/30 mb-2">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 dark:text-green-400">
+              <div className="rounded-[24px] border border-green-200 bg-green-50 p-5 text-center">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-100 mb-2">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600 ">
                     <polyline points="4 8 7 11 12 5" /><polyline points="12 5 19 12 22 9" />
                   </svg>
                 </div>
-                <h3 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">Successfully Saved!</h3>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">{summary?.taskCount} tasks · {summary?.screenCount} screens · {summary?.elementCount} UI elements</p>
+                <h3 className="font-semibold text-sm text-ink ">Successfully Saved!</h3>
+                <p className="text-xs text-ink/60 mt-1">{summary?.taskCount} tasks · {summary?.screenCount} screens · {summary?.elementCount} UI elements</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 {[
-                  { href: `/project/${previewData.projectId}`, label: "Task Board", icon: "M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z", color: "text-blue-600", bg: "bg-blue-100 dark:bg-blue-950/30" },
-                  { href: `/project/${previewData.projectId}/diagram`, label: "Flow Diagram", icon: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5", color: "text-amber-600", bg: "bg-amber-100 dark:bg-amber-950/30" },
-                  { href: `/project/${previewData.projectId}/manage`, label: "Task Details", icon: "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z", color: "text-purple-600", bg: "bg-purple-100 dark:bg-purple-950/30" },
+                  { href: `/project/${previewData.projectId}`, label: "Task Board", icon: "M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z", color: "text-ink", bg: "bg-black/5 " },
+                  { href: `/project/${previewData.projectId}/diagram`, label: "Flow Diagram", icon: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5", color: "text-ink", bg: "bg-black/5 " },
+                  { href: `/project/${previewData.projectId}/manage`, label: "Task Details", icon: "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z", color: "text-purple-600", bg: "bg-purple-100 " },
                 ].map((item) => (
-                  <a key={item.label} href={item.href} className="group rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900/50 p-3 hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-600 transition-all duration-200">
+                  <a key={item.label} href={item.href} className="group rounded-[24px] border border-hairline bg-canvas p-3 hover:hover:border-hairline :border-zinc-600 transition-all duration-200">
                     <div className="flex items-center gap-2">
-                      <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${item.bg} shrink-0`}>
+                      <div className={`flex h-8 w-8 items-center justify-center rounded-[24px] ${item.bg} shrink-0`}>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={item.color}><path d={item.icon} /></svg>
                       </div>
-                      <span className="text-xs font-medium text-zinc-800 dark:text-zinc-200 group-hover:underline">{item.label}</span>
+                      <span className="text-xs font-medium text-ink group-hover:underline">{item.label}</span>
                     </div>
                   </a>
                 ))}
               </div>
               <div className="text-center">
-                <button onClick={() => { setStage("idle"); setPreviewData(null); onSuccess(); }} className="text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors underline underline-offset-2">
+                <button onClick={() => { setStage("idle"); setPreviewData(null); onSuccess(); }} className="text-xs text-ink/40 hover:text-ink/60 :text-ink/40 transition-colors underline underline-offset-2">
                   Upload another document
                 </button>
               </div>
@@ -1073,14 +1073,14 @@ function UploadBrdModal({ onClose, onSuccess }: { onClose: () => void; onSuccess
           {/* ERROR STAGE */}
           {stage === "error" && (
             <div className="text-center py-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 dark:bg-red-950/30 mb-4">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-600 dark:text-red-400">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 mb-4">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-600 ">
                   <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">Failed</h3>
+              <h3 className="font-semibold text-ink ">Failed</h3>
               <p className="text-sm text-red-500 mt-1">{error}</p>
-              <button onClick={handleRetry} className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-zinc-900 dark:bg-white px-4 py-2 text-xs font-medium text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">
+              <button onClick={handleRetry} className="mt-4 inline-flex items-center gap-1.5 bg-ink rounded-full px-4 py-2 text-xs font-medium text-canvas hover:bg-ink/80 :bg-black/10 transition-colors">
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><polyline points="1 4 1 10 7 10" /><path d="M3.51 12a6 6 0 101.01-7.99" /></svg>
                 Try Again
               </button>
@@ -1092,15 +1092,15 @@ function UploadBrdModal({ onClose, onSuccess }: { onClose: () => void; onSuccess
             <>
               <div>
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-zinc-900 dark:bg-white text-[9px] font-bold text-white dark:text-zinc-900">1</span>
-                  <span className="font-medium text-xs text-zinc-700 dark:text-zinc-300">Upload BRD File</span>
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-ink text-[9px] font-bold text-canvas ">1</span>
+                  <span className="font-medium text-xs text-ink/80 ">Upload BRD File</span>
                 </div>
                 <div
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={(e) => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f && f.type === "application/pdf") setFile(f); }}
                   onClick={() => document.getElementById("admin-brd-upload")?.click()}
-                  className={`rounded-xl border-2 border-dashed p-6 text-center transition-all cursor-pointer ${
-                    file ? "border-green-300 dark:border-green-700 bg-green-50/50 dark:bg-green-950/10" : "border-zinc-200 dark:border-zinc-700 hover:border-zinc-400"
+                  className={`rounded-[24px] border-2 border-dashed p-6 text-center transition-all cursor-pointer ${
+                    file ? "border-green-300 bg-green-50/50 " : "border-hairline hover:border-ink/40"
                   }`}
                 >
                   <input id="admin-brd-upload" type="file" accept=".pdf" onChange={(e) => { const f = e.target.files?.[0]; if (f) setFile(f); }} className="hidden" />
@@ -1110,17 +1110,17 @@ function UploadBrdModal({ onClose, onSuccess }: { onClose: () => void; onSuccess
                         <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" />
                       </svg>
                       <div className="text-left">
-                        <p className="font-medium text-sm text-green-700 dark:text-green-400">{file.name}</p>
-                        <p className="text-[10px] text-zinc-400">{(file.size / 1024).toFixed(1)} KB — click to change</p>
+                        <p className="font-medium text-sm text-green-700 ">{file.name}</p>
+                        <p className="text-[10px] text-ink/40">{(file.size / 1024).toFixed(1)} KB — click to change</p>
                       </div>
                     </div>
                   ) : (
                     <div className="space-y-2">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mx-auto text-zinc-300 dark:text-zinc-600">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mx-auto text-ink/40 ">
                         <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
                       </svg>
-                      <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">Upload or drag & drop PDF file</p>
-                      <p className="text-xs text-zinc-400">Business Requirements Document (BRD) file</p>
+                      <p className="text-sm font-medium text-ink/60 ">Upload or drag & drop PDF file</p>
+                      <p className="text-xs text-ink/40">Business Requirements Document (BRD) file</p>
                     </div>
                   )}
                 </div>
@@ -1128,8 +1128,8 @@ function UploadBrdModal({ onClose, onSuccess }: { onClose: () => void; onSuccess
 
               <div>
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-zinc-200 dark:bg-zinc-800 text-[9px] font-bold text-zinc-500 dark:text-zinc-400">2</span>
-                  <span className="font-medium text-xs text-zinc-700 dark:text-zinc-300">Document Preview</span>
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-black/10 text-[9px] font-bold text-ink/60 ">2</span>
+                  <span className="font-medium text-xs text-ink/80 ">Document Preview</span>
                 </div>
                 <PdfPreview file={file} />
               </div>
@@ -1143,10 +1143,10 @@ function UploadBrdModal({ onClose, onSuccess }: { onClose: () => void; onSuccess
 
         {/* Footer */}
         {stage === "idle" && (
-          <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-zinc-100 dark:border-zinc-800 shrink-0">
-            <button onClick={onClose} className="rounded-lg border border-zinc-200 dark:border-zinc-700 px-3.5 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">Cancel</button>
+          <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-hairline shrink-0">
+            <button onClick={onClose} className="rounded-full border border-hairline px-4 py-2 text-xs font-medium text-ink/60 hover:bg-black/5  transition-colors">Cancel</button>
             <button onClick={handleSubmit} disabled={!file || uploading}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-zinc-900 dark:bg-white px-4 py-1.5 text-xs font-medium text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              className="inline-flex items-center gap-1.5 bg-ink rounded-full px-4 py-1.5 text-xs font-medium text-canvas hover:bg-ink/80 :bg-black/10 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             >
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M8 3v10" /><path d="M3 8l5 5 5-5" /></svg>
               Start Analysis
@@ -1155,10 +1155,10 @@ function UploadBrdModal({ onClose, onSuccess }: { onClose: () => void; onSuccess
         )}
 
         {stage === "preview" && (
-          <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-zinc-100 dark:border-zinc-800 shrink-0">
-            <button onClick={handleRetry} className="rounded-lg border border-zinc-200 dark:border-zinc-700 px-3.5 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">Cancel</button>
+          <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-hairline shrink-0">
+            <button onClick={handleRetry} className="rounded-full border border-hairline px-4 py-2 text-xs font-medium text-ink/60 hover:bg-black/5  transition-colors">Cancel</button>
             <button onClick={handleSave}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-green-600 px-4 py-1.5 text-xs font-medium text-white hover:bg-green-700 transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-full bg-green-600 px-4 py-1.5 text-xs font-medium text-canvas hover:bg-green-700 transition-colors"
             >
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M13 13H3V3h7l3 3v7z" /><path d="M5 13V9h6v4" /></svg>
               Save

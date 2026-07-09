@@ -39,12 +39,12 @@ export function UserSwitcher() {
     <div className="relative z-50">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/10 hover:bg-zinc-800 transition-colors"
+        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-soft border border-hairline hover:bg-hairline transition-colors"
       >
         <div className="h-6 w-6 rounded-full bg-blue-600 flex items-center justify-center text-[10px] font-bold text-white uppercase">
           {activeUser.name.charAt(0)}
         </div>
-        <span className="text-xs font-medium text-zinc-300">
+        <span className="text-xs font-medium text-ink">
           {activeUser.name}
         </span>
         <svg
@@ -54,16 +54,16 @@ export function UserSwitcher() {
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
-          className={`text-zinc-500 transition-transform ${isOpen ? "rotate-180" : ""}`}
+          className={`text-ink/60 transition-transform ${isOpen ? "rotate-180" : ""}`}
         >
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </button>
 
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 w-48 rounded-xl border border-white/10 bg-zinc-900 shadow-xl overflow-hidden py-1">
-          <div className="px-3 py-2 border-b border-white/5 mb-1">
-            <p className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider">
+        <div className="absolute top-full right-0 mt-2 w-48 rounded-[24px] border border-hairline bg-surface-soft overflow-hidden py-1">
+          <div className="px-3 py-2 border-b border-hairline mb-1">
+            <p className="text-[10px] font-medium text-ink/60 uppercase tracking-wider">
               Simulasi Login
             </p>
           </div>
@@ -74,12 +74,12 @@ export function UserSwitcher() {
               className={`w-full text-left px-3 py-2 text-sm transition-colors flex items-center gap-2 ${
                 activeUserId === u.id
                   ? "bg-blue-500/10 text-blue-400"
-                  : "text-zinc-300 hover:bg-zinc-800"
+                  : "text-ink hover:bg-hairline"
               }`}
             >
               <div
                 className={`h-5 w-5 rounded-full flex items-center justify-center text-[9px] font-bold uppercase ${
-                  activeUserId === u.id ? "bg-blue-600 text-white" : "bg-zinc-700 text-zinc-300"
+                  activeUserId === u.id ? "bg-blue-600 text-white" : "bg-surface-soft border border-hairline text-ink"
                 }`}
               >
                 {u.name.charAt(0)}

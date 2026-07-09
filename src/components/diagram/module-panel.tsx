@@ -33,14 +33,14 @@ export function ModulePanel({ modules, activeModule, activeScreen, onScreenSelec
     .filter((m) => m.screens.length > 0);
 
   return (
-    <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden flex flex-col h-full">
+    <div className="rounded-[24px] border border-zinc-200 overflow-hidden flex flex-col h-full">
       {/* Header — tetap di atas */}
-      <div className="px-3 py-2.5 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 shrink-0">
+      <div className="px-3 py-2.5 border-b border-zinc-200 bg-zinc-50 shrink-0">
         <div className="flex items-center justify-between mb-1.5">
-          <h3 className="font-semibold text-xs text-zinc-900 dark:text-zinc-100">
+          <h3 className="font-semibold text-xs text-zinc-900 ">
             Modul & Layar
           </h3>
-          <span className="text-[10px] text-zinc-500 dark:text-zinc-400 tabular-nums">
+          <span className="text-[10px] text-zinc-500 tabular-nums">
             {modules.length} &bull; {totalScreens}
           </span>
         </div>
@@ -65,14 +65,14 @@ export function ModulePanel({ modules, activeModule, activeScreen, onScreenSelec
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
             placeholder="Cari..."
-            className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 pl-7 pr-2 py-1 text-[11px] text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
+            className="w-full rounded-lg border border-zinc-200 bg-white pl-7 pr-2 py-1 text-[11px] text-zinc-700 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 :ring-white"
           />
         </div>
       </div>
 
       {/* Scrollable list — sisa tinggi otomatis */}
       <div className="overflow-y-auto flex-1">
-        <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
+        <div className="divide-y divide-zinc-100 ">
         {filteredModules.map((module) => {
           const isExpanded = expandedModule === module.name;
           const moduleIcon = getModuleIcon(module.name);
@@ -87,16 +87,16 @@ export function ModulePanel({ modules, activeModule, activeScreen, onScreenSelec
                 }}
                 className={`w-full flex items-center justify-between px-4 py-3 transition-colors text-left ${
                   activeModule === module.name
-                    ? "bg-zinc-100 dark:bg-zinc-800 ring-1 ring-inset ring-zinc-300 dark:ring-zinc-600"
-                    : "hover:bg-zinc-50 dark:hover:bg-zinc-900/50"
+                    ? "bg-zinc-100 ring-1 ring-inset ring-zinc-300 "
+                    : "hover:bg-zinc-50 :bg-zinc-900/50"
                 }`}
               >
                 <div className="flex items-center gap-2.5 min-w-0">
                   <span className="text-base shrink-0">{moduleIcon}</span>
-                  <span className="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">
+                  <span className="text-sm font-medium text-zinc-900 truncate">
                     {module.name}
                   </span>
-                  <span className="shrink-0 inline-flex items-center justify-center min-w-[18px] h-[18px] rounded-full bg-zinc-200 dark:bg-zinc-700 text-[10px] font-medium text-zinc-500 dark:text-zinc-400">
+                  <span className="shrink-0 inline-flex items-center justify-center min-w-[18px] h-[18px] rounded-full bg-zinc-200 text-[10px] font-medium text-zinc-500 ">
                     {module.screens.length}
                   </span>
                 </div>
@@ -130,8 +130,8 @@ export function ModulePanel({ modules, activeModule, activeScreen, onScreenSelec
                       onClick={() => onScreenSelect?.(screen)}
                       className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer ${
                         activeScreen === screen
-                          ? "bg-zinc-200 dark:bg-zinc-700 font-medium"
-                          : "hover:bg-zinc-100 dark:hover:bg-zinc-800 group"
+                          ? "bg-zinc-200 font-medium"
+                          : "hover:bg-zinc-100 :bg-zinc-800 group"
                       }`}
                     >
                       <svg
@@ -143,13 +143,13 @@ export function ModulePanel({ modules, activeModule, activeScreen, onScreenSelec
                         strokeWidth="1.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="shrink-0 text-zinc-400 dark:text-zinc-500"
+                        className="shrink-0 text-zinc-400 "
                       >
                         <rect x="2" y="3" width="20" height="14" rx="2" />
                         <line x1="8" y1="21" x2="16" y2="21" />
                         <line x1="12" y1="17" x2="12" y2="21" />
                       </svg>
-                      <span className="text-xs text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors">
+                      <span className="text-xs text-zinc-600 group-hover:text-zinc-900 :text-zinc-100 transition-colors">
                         {screen}
                       </span>
                     </div>
@@ -162,7 +162,7 @@ export function ModulePanel({ modules, activeModule, activeScreen, onScreenSelec
 
         {filteredModules.length === 0 && (
           <div className="px-4 py-6 text-center">
-            <p className="text-xs text-zinc-400 dark:text-zinc-500">
+            <p className="text-xs text-zinc-400 ">
               {filterText
                 ? "Tidak ada layar yang cocok"
                 : "Belum ada data modul"}

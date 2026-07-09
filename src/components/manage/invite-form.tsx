@@ -36,11 +36,11 @@ export function InviteForm({ onInvite }: InviteFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-5">
-      <h3 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-1">
+    <form onSubmit={handleSubmit} className="rounded-[24px] border border-zinc-200 p-5">
+      <h3 className="font-semibold text-sm text-zinc-900 mb-1">
         Undang Anggota Baru
       </h3>
-      <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-4">
+      <p className="text-xs text-zinc-500 mb-4">
         Kirim undangan email ke calon anggota tim.
       </p>
 
@@ -55,9 +55,9 @@ export function InviteForm({ onInvite }: InviteFormProps) {
             disabled={status === "sending" || status === "sent"}
             className={`w-full rounded-lg border px-3 py-2.5 text-sm transition-colors ${
               error
-                ? "border-red-300 dark:border-red-700 focus:ring-red-500"
-                : "border-zinc-200 dark:border-zinc-700 focus:ring-zinc-900 dark:focus:ring-white"
-            } bg-white dark:bg-zinc-950 text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 disabled:opacity-50`}
+                ? "border-red-300 focus:ring-red-500"
+                : "border-zinc-200 focus:ring-zinc-900 :ring-white"
+            } bg-white text-zinc-700 placeholder:text-zinc-400 focus:outline-none focus:ring-2 disabled:opacity-50`}
           />
           {error && (
             <p className="text-xs text-red-500 mt-1.5 flex items-center gap-1">
@@ -71,7 +71,7 @@ export function InviteForm({ onInvite }: InviteFormProps) {
         <button
           type="submit"
           disabled={!isValidEmail(email) || status === "sending" || status === "sent"}
-          className="shrink-0 inline-flex items-center justify-center gap-2 rounded-lg bg-zinc-900 dark:bg-white px-5 py-2.5 text-sm font-medium text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="shrink-0 inline-flex items-center justify-center gap-2 rounded-lg bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-zinc-800 :bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           {status === "sending" ? (
             <>

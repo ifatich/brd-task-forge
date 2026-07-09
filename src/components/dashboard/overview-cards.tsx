@@ -36,11 +36,11 @@ export function OverviewCards({ projects }: OverviewCardsProps) {
       trend: "+15% vs last month",
       trendUp: true,
       icon: (
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-300">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-ink">
           <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
         </svg>
       ),
-      iconBg: "bg-white/5",
+      iconBg: "bg-black/5",
     },
     {
       id: "completed",
@@ -77,21 +77,21 @@ export function OverviewCards({ projects }: OverviewCardsProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 animate-fade-in" style={{ animationDelay: "100ms" }}>
       {cards.map((card) => (
-        <div key={card.id} className="group relative rounded-2xl bg-zinc-900/50 border border-white/5 p-5 transition-all duration-300 hover:border-white/10 hover:bg-zinc-900/80">
+        <div key={card.id} className="group relative rounded-[24px] bg-surface-soft border border-hairline p-5 transition-all duration-300 hover:border-hairline hover:bg-black/5">
           <div className="flex items-start justify-between mb-4">
             <div className="flex-1">
-              <p className="text-xs font-medium text-zinc-400 mb-1">{card.title}</p>
-              <div className="text-2xl font-semibold text-zinc-100 tabular-nums">
+              <p className="text-xs font-medium text-ink/60 mb-1">{card.title}</p>
+              <div className="text-2xl font-semibold text-ink tabular-nums">
                 {card.value}
               </div>
             </div>
-            <div className={`flex h-10 w-10 items-center justify-center rounded-xl shrink-0 ${card.iconBg}`}>
+            <div className={`flex h-10 w-10 items-center justify-center rounded-[24px] shrink-0 ${card.iconBg}`}>
               {card.icon}
             </div>
           </div>
           
-          <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
-            <p className="text-[11px] text-zinc-500">{card.description}</p>
+          <div className="flex items-center justify-between mt-4 pt-4 border-t border-hairline">
+            <p className="text-[11px] text-ink/60">{card.description}</p>
             <div className={`flex items-center gap-1 text-[11px] font-medium ${card.trendUp ? 'text-emerald-400' : 'text-red-400'}`}>
               {card.trendUp ? (
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg>

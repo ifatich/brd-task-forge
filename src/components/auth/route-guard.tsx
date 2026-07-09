@@ -40,7 +40,7 @@ export function RouteGuard({ children }: { children: React.ReactNode }) {
   if (isLoading) {
     return (
       <div className="flex flex-1 items-center justify-center min-h-screen">
-        <div className="animate-spin w-6 h-6 border-2 border-zinc-900 dark:border-white border-t-transparent rounded-full" />
+        <div className="animate-spin w-6 h-6 border-2 border-zinc-900 border-t-transparent rounded-full" />
       </div>
     );
   }
@@ -52,7 +52,7 @@ export function RouteGuard({ children }: { children: React.ReactNode }) {
   if (!isAuthenticated && !isPublic) {
     return (
       <div className="flex flex-1 items-center justify-center min-h-screen">
-        <div className="animate-spin w-6 h-6 border-2 border-zinc-900 dark:border-white border-t-transparent rounded-full" />
+        <div className="animate-spin w-6 h-6 border-2 border-zinc-900 border-t-transparent rounded-full" />
       </div>
     );
   }
@@ -60,7 +60,7 @@ export function RouteGuard({ children }: { children: React.ReactNode }) {
   if (isAdminRoute && !isAdmin) {
     return (
       <div className="flex flex-1 items-center justify-center min-h-screen">
-        <div className="animate-spin w-6 h-6 border-2 border-zinc-900 dark:border-white border-t-transparent rounded-full" />
+        <div className="animate-spin w-6 h-6 border-2 border-zinc-900 border-t-transparent rounded-full" />
       </div>
     );
   }
@@ -69,7 +69,7 @@ export function RouteGuard({ children }: { children: React.ReactNode }) {
   if (isAuthenticated && pathname === "/login") {
     return (
       <div className="flex flex-1 items-center justify-center min-h-screen">
-        <div className="animate-spin w-6 h-6 border-2 border-zinc-900 dark:border-white border-t-transparent rounded-full" />
+        <div className="animate-spin w-6 h-6 border-2 border-zinc-900 border-t-transparent rounded-full" />
       </div>
     );
   }

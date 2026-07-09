@@ -40,9 +40,9 @@ interface Task {
 }
 
 const COLUMNS: { id: TaskStatus; title: string; color: string }[] = [
-  { id: "todo", title: "To Do", color: "bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800" },
-  { id: "in-progress", title: "In Progress", color: "bg-blue-50/50 dark:bg-blue-950/10 border border-blue-200/70 dark:border-blue-900/50" },
-  { id: "done", title: "Done", color: "bg-green-50/50 dark:bg-green-950/10 border border-green-200/70 dark:border-green-900/50" },
+  { id: "todo", title: "To Do", color: "bg-zinc-50 border border-zinc-200 " },
+  { id: "in-progress", title: "In Progress", color: "bg-blue-50/50 border border-blue-200/70 " },
+  { id: "done", title: "Done", color: "bg-green-50/50 border border-green-200/70 " },
 ];
 
 interface KanbanBoardProps {
@@ -247,24 +247,24 @@ export function KanbanBoard({ projectId = "proj-001", onDataChange }: KanbanBoar
             <div
               key={column.id}
               id={column.id}
-              className={`rounded-xl ${column.color} p-4 flex flex-col transition-all ${
+              className={`rounded-[24px] ${column.color} p-4 flex flex-col transition-all ${
                 isOver
-                  ? "ring-2 ring-zinc-900 dark:ring-white shadow-lg scale-[1.01]"
+                  ? "ring-2 ring-zinc-900 scale-[1.01]"
                   : ""
               }`}
             >
               {/* Column Header */}
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
+                  <h3 className="font-semibold text-sm text-zinc-900 ">
                     {column.title}
                   </h3>
-                  <span className="inline-flex items-center justify-center min-w-[22px] h-[22px] rounded-full bg-zinc-200/70 dark:bg-zinc-700/70 text-[11px] font-medium text-zinc-500 dark:text-zinc-400 tabular-nums">
+                  <span className="inline-flex items-center justify-center min-w-[22px] h-[22px] rounded-full bg-zinc-200/70 text-[11px] font-medium text-zinc-500 tabular-nums">
                     {getTotalTasks(column.id)}
                   </span>
                 </div>
                 {isOver && (
-                  <span className="text-[10px] font-medium text-zinc-500 dark:text-zinc-400 animate-pulse">
+                  <span className="text-[10px] font-medium text-zinc-500 animate-pulse">
                     + 1
                   </span>
                 )}
@@ -280,17 +280,17 @@ export function KanbanBoard({ projectId = "proj-001", onDataChange }: KanbanBoar
                     <div
                       className={`flex items-center justify-center h-24 rounded-lg border-2 border-dashed transition-colors ${
                         isOver
-                          ? "border-zinc-900 dark:border-white bg-zinc-200/50 dark:bg-zinc-800/50"
-                          : "border-zinc-200 dark:border-zinc-700"
+                          ? "border-zinc-900 bg-zinc-200/50 "
+                          : "border-zinc-200 "
                       }`}
                     >
                       {isOver ? (
-                        <p className="text-xs font-medium text-zinc-600 dark:text-zinc-300">
-                          Lepaskan di sini
+                        <p className="text-xs font-bold text-ink/70">
+                          Drop here
                         </p>
                       ) : (
-                        <p className="text-xs text-zinc-400 dark:text-zinc-500">
-                          Tidak ada tugas
+                        <p className="text-xs text-ink/40">
+                          No tasks yet
                         </p>
                       )}
                     </div>
@@ -299,7 +299,7 @@ export function KanbanBoard({ projectId = "proj-001", onDataChange }: KanbanBoar
                       {column.tasks.map((task) => (
                         <TaskCard key={task.id} task={task} onToggleSubTask={handleToggleSubTask} onCompleteTask={handleCompleteTask} onDataChange={fetchTasks} />
                       ))}
-                      <div className="h-1 rounded-full bg-zinc-900/20 dark:bg-white/20 animate-pulse" />
+                      <div className="h-1 rounded-full bg-zinc-900/20 animate-pulse" />
                     </>
                   ) : (
                     column.tasks.map((task) => (
@@ -316,7 +316,7 @@ export function KanbanBoard({ projectId = "proj-001", onDataChange }: KanbanBoar
       {/* Drag Overlay */}
       <DragOverlay>
         {activeTask ? (
-          <div className="rotate-3 opacity-95 shadow-2xl">
+          <div className="rotate-3 opacity-95 ">
             <TaskCard task={activeTask} />
           </div>
         ) : null}

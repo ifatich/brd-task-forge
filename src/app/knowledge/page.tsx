@@ -15,9 +15,9 @@ interface KnowledgeFile {
 
 const TYPE_LABELS: Record<string, string> = { prompt: "Prompt", skill: "Skill", instruction: "Instruksi" };
 const TYPE_COLORS: Record<string, string> = {
-  prompt: "bg-purple-100 text-purple-700 dark:bg-purple-950/30 dark:text-purple-400",
-  skill: "bg-blue-100 text-blue-700 dark:bg-blue-950/30 dark:text-blue-400",
-  instruction: "bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400",
+  prompt: "bg-purple-100 text-purple-700 ",
+  skill: "bg-blue-100 text-blue-700 ",
+  instruction: "bg-amber-100 text-amber-700 ",
 };
 
 export default function KnowledgePage() {
@@ -112,20 +112,26 @@ export default function KnowledgePage() {
   return (
     <div className="flex flex-col flex-1">
       {/* Navbar */}
-      <header className="sticky top-0 z-10 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-sm">
+      <header className="sticky top-0 z-50 nav-glass">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-14 items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Link href="/admin" className="flex items-center gap-1 text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
+          <div className="flex h-16 items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Link
+                href="/admin"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-sm font-medium text-ink/60 hover:text-ink hover:bg-black/5 transition-colors"
+              >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M10 4l-4 4 4 4" />
                 </svg>
                 Admin
               </Link>
-              <span className="text-zinc-300 dark:text-zinc-700">|</span>
-              <span className="font-semibold text-sm">Knowledge & Skill Manager</span>
+              <span className="text-ink/20">|</span>
+              <span className="font-semibold text-sm text-ink">Knowledge &amp; Skill Manager</span>
             </div>
-            <Link href="/" className="text-sm text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors">
+            <Link
+              href="/"
+              className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-ink/60 hover:text-ink hover:bg-black/5 transition-colors"
+            >
               Dasbor
             </Link>
           </div>
@@ -141,22 +147,22 @@ export default function KnowledgePage() {
               onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
               onDragLeave={() => setIsDragging(false)}
               onDrop={(e) => { e.preventDefault(); setIsDragging(false); Array.from(e.dataTransfer.files).forEach(addFile); }}
-              className={`rounded-xl border-2 border-dashed p-4 text-center transition-all cursor-pointer ${
+              className={`rounded-[24px] border-2 border-dashed p-4 text-center transition-all cursor-pointer ${
                 isDragging
-                  ? "border-zinc-900 dark:border-white bg-zinc-50 dark:bg-zinc-900 scale-[1.02]"
-                  : "border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500"
+                  ? "border-zinc-900 bg-zinc-50 scale-[1.02]"
+                  : "border-hairline hover:border-zinc-400 :border-zinc-500"
               }`}
               onClick={() => fileInputRef.current?.click()}
             >
               <input ref={fileInputRef} type="file" accept=".md" onChange={(e) => { const f = e.target.files?.[0]; if (f) addFile(f); e.target.value = ""; }} className="hidden" />
               <div className="space-y-2 pointer-events-none">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={`mx-auto transition-colors ${isDragging ? "text-zinc-900 dark:text-white" : "text-zinc-300 dark:text-zinc-600"}`}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={`mx-auto transition-colors ${isDragging ? "text-ink " : "text-zinc-300 "}`}>
                   <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
                 </svg>
-                <p className={`text-xs font-medium transition-colors ${isDragging ? "text-zinc-900 dark:text-white" : "text-zinc-500 dark:text-zinc-400"}`}>
+                <p className={`text-xs font-medium transition-colors ${isDragging ? "text-ink " : "text-ink/60 "}`}>
                   {isDragging ? "Lepaskan file di sini" : "Upload atau drag & drop file .md"}
                 </p>
-                <p className="text-[10px] text-zinc-400 dark:text-zinc-500">Instruksi, prompt, atau skill AI</p>
+                <p className="text-[10px] text-zinc-400 ">Instruksi, prompt, atau skill AI</p>
               </div>
             </div>
 
@@ -166,9 +172,9 @@ export default function KnowledgePage() {
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-400">
                   <circle cx="7" cy="7" r="4" /><line x1="11" y1="11" x2="14" y2="14" />
                 </svg>
-                <input type="text" value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder="Cari..." className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 pl-8 pr-3 py-1.5 text-xs text-zinc-700 dark:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-900" />
+                <input type="text" value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder="Cari..." className="w-full rounded-lg border border-hairline bg-canvas pl-8 pr-3 py-1.5 text-xs text-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-900" />
               </div>
-              <select value={filterType} onChange={(e) => setFilterType(e.target.value)} className="rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-2 py-1.5 text-xs text-zinc-700 dark:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-900">
+              <select value={filterType} onChange={(e) => setFilterType(e.target.value)} className="rounded-lg border border-hairline bg-canvas px-2 py-1.5 text-xs text-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-900">
                 <option value="all">Semua</option>
                 <option value="prompt">Prompt</option>
                 <option value="skill">Skill</option>
@@ -184,14 +190,14 @@ export default function KnowledgePage() {
                   onClick={() => setSelectedFile(f)}
                   className={`w-full text-left rounded-lg border px-3 py-2.5 transition-colors group ${
                     selectedFile?.id === f.id
-                      ? "border-zinc-900 dark:border-white bg-zinc-50 dark:bg-zinc-900"
-                      : "border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900/50"
+                      ? "border-zinc-900 bg-zinc-50 "
+                      : "border-hairline hover:bg-zinc-50 :bg-zinc-900/50"
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 min-w-0">
                       <span className={`inline-flex items-center justify-center w-2 h-2 rounded-full ${f.type === "prompt" ? "bg-purple-400" : f.type === "skill" ? "bg-blue-400" : "bg-amber-400"}`} />
-                      <span className="text-xs font-medium text-zinc-800 dark:text-zinc-200 truncate">{f.name}</span>
+                      <span className="text-xs font-medium text-zinc-800 truncate">{f.name}</span>
                     </div>
                     <div className="flex items-center gap-1 shrink-0">
                       <span className={`inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-medium ${TYPE_COLORS[f.type]}`}>
@@ -200,11 +206,11 @@ export default function KnowledgePage() {
                       <span
                         onClick={(e) => { e.stopPropagation(); toggleActive(f.id); }}
                         className={`relative inline-flex h-3.5 w-6 shrink-0 rounded-full border transition-colors cursor-pointer ${
-                          f.active ? "bg-green-500 border-green-500" : "bg-zinc-200 dark:bg-zinc-700 border-zinc-200 dark:border-zinc-700"
+                          f.active ? "bg-green-500 border-green-500" : "bg-zinc-200 border-hairline "
                         }`}
                         title={f.active ? "Aktif" : "Nonaktif"}
                       >
-                        <span className={`inline-block h-2.5 w-2.5 rounded-full bg-white shadow transform transition-transform ${
+                        <span className={`inline-block h-2.5 w-2.5 rounded-full bg-canvas transform transition-transform ${
                           f.active ? "translate-x-2.5" : "translate-x-0.5"
                         }`} />
                       </span>
@@ -229,42 +235,42 @@ export default function KnowledgePage() {
           {/* Right panel: preview */}
           <div className="lg:col-span-2">
             {selectedFile ? (
-              <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
-                <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900">
+              <div className="rounded-[24px] border border-hairline overflow-hidden">
+                <div className="flex items-center justify-between px-4 py-3 border-b border-hairline bg-zinc-50 ">
                   <div className="flex items-center gap-2 min-w-0">
                     <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${TYPE_COLORS[selectedFile.type]}`}>
                       {TYPE_LABELS[selectedFile.type]}
                     </span>
-                    <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">{selectedFile.name}</h3>
+                    <h3 className="text-sm font-medium text-ink truncate">{selectedFile.name}</h3>
                     <span
                       onClick={() => toggleActive(selectedFile.id)}
                       className={`relative inline-flex h-4 w-7 shrink-0 rounded-full border transition-colors cursor-pointer ${
-                        selectedFile.active ? "bg-green-500 border-green-500" : "bg-zinc-200 dark:bg-zinc-700 border-zinc-200 dark:border-zinc-700"
+                        selectedFile.active ? "bg-green-500 border-green-500" : "bg-zinc-200 border-hairline "
                       }`}
                       title={selectedFile.active ? "Aktif — klik nonaktifkan" : "Nonaktif — klik aktifkan"}
                     >
-                      <span className={`inline-block h-3 w-3 rounded-full bg-white shadow transform transition-transform ${
+                      <span className={`inline-block h-3 w-3 rounded-full bg-canvas transform transition-transform ${
                         selectedFile.active ? "translate-x-3" : "translate-x-0.5"
                       }`} />
                     </span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <button onClick={() => setDeleteTarget(selectedFile)} className="p-1.5 rounded text-red-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors" title="Hapus">
+                    <button onClick={() => setDeleteTarget(selectedFile)} className="p-1.5 rounded text-red-300 hover:text-red-500 hover:bg-red-50 :bg-red-950/30 transition-colors" title="Hapus">
                       <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M2 4h12" /><path d="M5 4V2h6v2" /><path d="M3 4l1 10h8l1-10" /></svg>
                     </button>
                   </div>
                 </div>
-                <pre className="p-4 text-xs text-zinc-700 dark:text-zinc-300 font-mono leading-relaxed whitespace-pre-wrap overflow-auto max-h-[70vh]">
+                <pre className="p-4 text-xs text-zinc-700 font-mono leading-relaxed whitespace-pre-wrap overflow-auto max-h-[70vh]">
                   {selectedFile.content}
                 </pre>
               </div>
             ) : (
-              <div className="rounded-xl border border-dashed border-zinc-200 dark:border-zinc-700 p-8 text-center flex flex-col items-center justify-center min-h-[300px]">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-zinc-200 dark:text-zinc-700 mb-3">
+              <div className="rounded-[24px] border border-dashed border-hairline p-8 text-center flex flex-col items-center justify-center min-h-[300px]">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-zinc-200 mb-3">
                   <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="12" y1="18" x2="12" y2="12" /><line x1="9" y1="15" x2="15" y2="15" />
                 </svg>
-                <p className="text-sm font-medium text-zinc-400 dark:text-zinc-500">Pilih file untuk melihat konten</p>
-                <p className="text-xs text-zinc-300 dark:text-zinc-600 mt-1">Upload file .md atau klik dari daftar</p>
+                <p className="text-sm font-medium text-zinc-400 ">Pilih file untuk melihat konten</p>
+                <p className="text-xs text-zinc-300 mt-1">Upload file .md atau klik dari daftar</p>
               </div>
             )}
           </div>
@@ -274,18 +280,18 @@ export default function KnowledgePage() {
       {/* Delete confirmation */}
       {deleteTarget && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm" onClick={(e) => { if (e.target === e.currentTarget) setDeleteTarget(null); }}>
-          <div className="w-full max-w-sm rounded-xl border border-red-200 dark:border-red-900/50 bg-white dark:bg-zinc-950 shadow-2xl mx-4 animate-in fade-in zoom-in-95 p-5 space-y-4">
+          <div className="w-full max-w-sm rounded-[24px] border border-red-200 bg-canvas mx-4 animate-in fade-in zoom-in-95 p-5 space-y-4">
             <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-red-100 ">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-red-500"><path d="M2 4h12" /><path d="M5 4V2h6v2" /><path d="M3 4l1 10h8l1-10" /></svg>
               </div>
-              <h3 className="font-semibold text-sm text-red-700 dark:text-red-400">Hapus File</h3>
+              <h3 className="font-semibold text-sm text-red-700 ">Hapus File</h3>
             </div>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Hapus <strong className="text-zinc-900 dark:text-zinc-200">{deleteTarget.name}</strong>? File akan dihapus permanen.
+            <p className="text-sm text-zinc-600 leading-relaxed">
+              Hapus <strong className="text-ink ">{deleteTarget.name}</strong>? File akan dihapus permanen.
             </p>
             <div className="flex justify-end gap-2">
-              <button onClick={() => setDeleteTarget(null)} className="rounded-lg border border-zinc-200 dark:border-zinc-700 px-3.5 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">Batal</button>
+              <button onClick={() => setDeleteTarget(null)} className="rounded-lg border border-hairline px-3.5 py-1.5 text-xs font-medium text-zinc-600 hover:bg-black/5 :bg-zinc-800 transition-colors">Batal</button>
               <button onClick={() => handleDeleteConfirm()} className="rounded-lg bg-red-600 px-3.5 py-1.5 text-xs font-medium text-white hover:bg-red-700 transition-colors">Ya, Hapus</button>
             </div>
           </div>
@@ -294,7 +300,7 @@ export default function KnowledgePage() {
       {/* Toast notification */}
       {toast && (
         <div className="fixed bottom-6 right-6 z-50 animate-in fade-in slide-in-from-bottom-2">
-          <div className={`flex items-center gap-2 rounded-lg shadow-lg px-4 py-3 text-sm font-medium ${
+          <div className={`flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium ${
             toast.type === "success"
               ? "bg-green-600 text-white"
               : "bg-red-600 text-white"

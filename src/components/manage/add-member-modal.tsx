@@ -37,7 +37,7 @@ export function AddMemberModal({ open, onOpenChange, onSuccess }: AddMemberModal
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[400px] p-0 gap-0 overflow-hidden bg-[#0A0A0A] border-zinc-800 text-white rounded-2xl shadow-2xl">
+      <DialogContent className="sm:max-w-[400px] p-0 gap-0 overflow-hidden bg-[#0A0A0A] border-zinc-800 text-white rounded-[24px] ">
         <div className="px-6 py-4 border-b border-zinc-800 flex justify-between items-center">
           <DialogTitle className="text-[15px] font-semibold tracking-tight">Add Team Member</DialogTitle>
         </div>
@@ -50,7 +50,7 @@ export function AddMemberModal({ open, onOpenChange, onSuccess }: AddMemberModal
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Full name"
-                className="w-full rounded-xl border border-zinc-800 bg-transparent px-3.5 py-2.5 text-[14px] text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
+                className="w-full rounded-[24px] border border-zinc-800 bg-transparent px-3.5 py-2.5 text-[14px] text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
               />
             </div>
             <div className="space-y-1.5">
@@ -60,7 +60,7 @@ export function AddMemberModal({ open, onOpenChange, onSuccess }: AddMemberModal
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
                 placeholder="Position / role"
-                className="w-full rounded-xl border border-zinc-800 bg-transparent px-3.5 py-2.5 text-[14px] text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
+                className="w-full rounded-[24px] border border-zinc-800 bg-transparent px-3.5 py-2.5 text-[14px] text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
               />
             </div>
           </div>

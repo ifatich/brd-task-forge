@@ -103,14 +103,14 @@ export function FileUploadZone({ onFileSelected, selectedFile }: FileUploadZoneP
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => !selectedFile && inputRef.current?.click()}
-        className={`relative rounded-xl border-2 border-dashed p-8 text-center transition-all ${
+        className={`relative rounded-[24px] border-2 border-dashed p-8 text-center transition-all ${
           error
-            ? "border-red-300 bg-red-50/50 dark:border-red-800 dark:bg-red-950/20"
+            ? "border-red-300 bg-red-50/50 "
             : isDragging
-              ? "border-zinc-900 bg-zinc-50 dark:border-white dark:bg-zinc-900 scale-[1.01]"
+              ? "border-zinc-900 bg-surface-soft scale-[1.01]"
               : selectedFile
-                ? "border-green-300 bg-green-50/50 dark:border-green-800 dark:bg-green-950/20"
-                : "border-zinc-300 hover:border-zinc-400 dark:border-zinc-700 dark:hover:border-zinc-600"
+                ? "border-green-300 bg-green-50/50 "
+                : "border-hairline hover:border-zinc-400 :border-zinc-600"
         } ${!selectedFile ? "cursor-pointer" : ""}`}
         role="button"
         tabIndex={0}
@@ -120,7 +120,7 @@ export function FileUploadZone({ onFileSelected, selectedFile }: FileUploadZoneP
             inputRef.current?.click();
           }
         }}
-        aria-label={selectedFile ? "File terpilih" : "Unggah file PDF"}
+        aria-label={selectedFile ? "Selected file" : "Upload PDF file"}
       >
         <input
           ref={inputRef}
@@ -135,7 +135,7 @@ export function FileUploadZone({ onFileSelected, selectedFile }: FileUploadZoneP
           <div className="space-y-3">
             {/* Success icon */}
             <div className="flex justify-center">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-100 ">
                 <svg
                   width="28"
                   height="28"
@@ -145,7 +145,7 @@ export function FileUploadZone({ onFileSelected, selectedFile }: FileUploadZoneP
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="text-green-600 dark:text-green-400"
+                  className="text-green-600 "
                 >
                   <path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z" />
                   <polyline points="14 2 14 8 20 8" />
@@ -157,10 +157,10 @@ export function FileUploadZone({ onFileSelected, selectedFile }: FileUploadZoneP
 
             {/* File info */}
             <div>
-              <p className="font-medium text-sm text-zinc-900 dark:text-zinc-100 break-all">
+              <p className="font-medium text-sm text-ink break-all">
                 {selectedFile.name}
               </p>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+              <p className="text-xs text-ink/60 mt-0.5">
                 {formatFileSize(selectedFile.size)} &mdash; PDF divalidasi ✓
               </p>
             </div>
@@ -169,7 +169,7 @@ export function FileUploadZone({ onFileSelected, selectedFile }: FileUploadZoneP
             <div className="flex items-center justify-center gap-3">
               <button
                 onClick={handleRemove}
-                className="inline-flex items-center gap-1 text-xs text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors"
+                className="inline-flex items-center gap-1 text-xs text-red-500 hover:text-red-700 :text-red-300 transition-colors"
               >
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="4" y1="4" x2="12" y2="12" />
@@ -182,7 +182,7 @@ export function FileUploadZone({ onFileSelected, selectedFile }: FileUploadZoneP
                   e.stopPropagation();
                   inputRef.current?.click();
                 }}
-                className="inline-flex items-center gap-1 text-xs text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300 transition-colors"
+                className="inline-flex items-center gap-1 text-xs text-ink/60 hover:text-ink/80 :text-zinc-300 transition-colors"
               >
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M8 3v10" />
@@ -199,8 +199,8 @@ export function FileUploadZone({ onFileSelected, selectedFile }: FileUploadZoneP
               <div
                 className={`flex h-14 w-14 items-center justify-center rounded-full transition-all ${
                   isDragging
-                    ? "bg-zinc-900 dark:bg-white scale-110"
-                    : "bg-zinc-100 dark:bg-zinc-800"
+                    ? "bg-zinc-900 scale-110"
+                    : "bg-black/5 "
                 }`}
               >
                 <svg
@@ -214,8 +214,8 @@ export function FileUploadZone({ onFileSelected, selectedFile }: FileUploadZoneP
                   strokeLinejoin="round"
                   className={`transition-colors ${
                     isDragging
-                      ? "text-white dark:text-zinc-900"
-                      : "text-zinc-500 dark:text-zinc-400"
+                      ? "text-white "
+                      : "text-ink/60 "
                   }`}
                 >
                   <path d="M12 16V4" />
@@ -228,16 +228,16 @@ export function FileUploadZone({ onFileSelected, selectedFile }: FileUploadZoneP
             {/* Text */}
             <div>
               {isDragging ? (
-                <p className="font-medium text-sm text-zinc-900 dark:text-zinc-100">
+                <p className="font-medium text-sm text-ink ">
                   Lepaskan file di sini
                 </p>
               ) : (
                 <>
-                  <p className="font-medium text-sm text-zinc-700 dark:text-zinc-300">
+                  <p className="font-medium text-sm text-ink/80 ">
                     Tarik & lepas file PDF di sini
                   </p>
-                  <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
-                    atau <span className="text-zinc-700 dark:text-zinc-300 underline underline-offset-2">klik untuk memilih</span> &mdash; maks. 10 MB
+                  <p className="text-xs text-ink/60 mt-1">
+                    atau <span className="text-ink/80 underline underline-offset-2">klik untuk memilih</span> &mdash; maks. 10 MB
                   </p>
                 </>
               )}
@@ -265,14 +265,14 @@ export function FileUploadZone({ onFileSelected, selectedFile }: FileUploadZoneP
             <line x1="8" y1="11" x2="8" y2="11.01" />
           </svg>
           <div>
-            <p className="font-medium text-red-600 dark:text-red-400 text-xs">
+            <p className="font-medium text-red-600 text-xs">
               {error.type === "size"
                 ? "File terlalu besar"
                 : error.type === "format"
                   ? "Format tidak didukung"
                   : "Terjadi kesalahan"}
             </p>
-            <p className="text-xs text-red-500 dark:text-red-400 mt-0.5">
+            <p className="text-xs text-red-500 mt-0.5">
               {error.message}
             </p>
           </div>

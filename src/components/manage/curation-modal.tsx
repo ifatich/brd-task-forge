@@ -166,16 +166,16 @@ export function CurationModal({ projectId, drafts, currentTasks, onClose, onSave
   return (
     <Dialog open={true} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-4xl max-h-[85vh] flex flex-col p-0 overflow-hidden">
-        <DialogHeader className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-800">
+        <DialogHeader className="px-6 py-4 border-b border-zinc-200 ">
           <DialogTitle>Curate Task List</DialogTitle>
           <DialogDescription>
             Determine which specifications to keep. This list is a complete combination of all tasks proposed by all 5 AI models.
           </DialogDescription>
         </DialogHeader>
         
-        <div className="flex-1 overflow-y-auto px-6 py-4 bg-zinc-50 dark:bg-zinc-950/50">
+        <div className="flex-1 overflow-y-auto px-6 py-4 bg-zinc-50 ">
           {error && (
-            <div className="mb-4 p-3 bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 rounded-lg text-sm">
+            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">
               {error}
             </div>
           )}
@@ -186,7 +186,7 @@ export function CurationModal({ projectId, drafts, currentTasks, onClose, onSave
               const isSelected = selected.has(tKey);
               
               return (
-                <div key={i} className={`p-4 rounded-xl border ${isSelected ? 'border-blue-300 dark:border-blue-800 bg-white dark:bg-zinc-900 shadow-sm' : 'border-zinc-200 dark:border-zinc-800 bg-zinc-100/50 dark:bg-zinc-900/50 opacity-60 hover:opacity-100'} transition-all`}>
+                <div key={i} className={`p-4 rounded-[24px] border ${isSelected ? 'border-blue-300 bg-white ' : 'border-zinc-200 bg-zinc-100/50 opacity-60 hover:opacity-100'} transition-all`}>
                   <label className="flex items-start gap-3 cursor-pointer">
                     <div className="pt-0.5">
                       <input 
@@ -197,15 +197,15 @@ export function CurationModal({ projectId, drafts, currentTasks, onClose, onSave
                       />
                     </div>
                     <div>
-                      <div className={`font-semibold ${isSelected ? 'text-zinc-900 dark:text-zinc-100' : 'text-zinc-500 dark:text-zinc-400 line-through'}`}>{t.title}</div>
+                      <div className={`font-semibold ${isSelected ? 'text-zinc-900 ' : 'text-zinc-500 line-through'}`}>{t.title}</div>
                       {t.description && (
-                        <p className={`text-sm mt-1 ${isSelected ? 'text-zinc-600 dark:text-zinc-400' : 'text-zinc-400 dark:text-zinc-500 line-through'}`}>{t.description}</p>
+                        <p className={`text-sm mt-1 ${isSelected ? 'text-zinc-600 ' : 'text-zinc-400 line-through'}`}>{t.description}</p>
                       )}
                     </div>
                   </label>
                   
                   {t.subTasks && t.subTasks.length > 0 && (
-                    <div className="mt-3 ml-7 border-l-2 border-zinc-100 dark:border-zinc-800 pl-4 space-y-2">
+                    <div className="mt-3 ml-7 border-l-2 border-zinc-100 pl-4 space-y-2">
                       {t.subTasks.map((st: any, j: number) => {
                         const stKey = (st.title || "").toLowerCase().trim();
                         const isStSelected = selected.has(`${tKey}::${stKey}`);
@@ -221,7 +221,7 @@ export function CurationModal({ projectId, drafts, currentTasks, onClose, onSave
                               />
                             </div>
                             <div className="flex-1">
-                              <div className={`text-sm ${isStSelected ? 'text-zinc-800 dark:text-zinc-200 font-medium' : 'text-zinc-500 dark:text-zinc-400 line-through'}`}>{st.title}</div>
+                              <div className={`text-sm ${isStSelected ? 'text-zinc-800 font-medium' : 'text-zinc-500 line-through'}`}>{st.title}</div>
                             </div>
                           </label>
                         );
@@ -234,11 +234,11 @@ export function CurationModal({ projectId, drafts, currentTasks, onClose, onSave
           </div>
         </div>
 
-        <DialogFooter className="px-6 py-4 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+        <DialogFooter className="px-6 py-4 border-t border-zinc-200 bg-white ">
           <button
             onClick={onClose}
             disabled={isSaving}
-            className="px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+            className="px-4 py-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 :text-zinc-100 transition-colors"
           >
             Cancel
           </button>

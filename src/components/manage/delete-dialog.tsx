@@ -51,22 +51,22 @@ export function DeleteDialog({
         if (e.target === overlayRef.current) onClose();
       }}
     >
-      <div className="w-full max-w-md rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-2xl mx-4 overflow-hidden">
+      <div className="w-full max-w-md rounded-[24px] border border-zinc-200 bg-white mx-4 overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100 dark:border-zinc-800">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100 ">
           <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-red-100 ">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-red-500">
                 <path d="M2 4h12" /><path d="M5 4V2h6v2" /><path d="M3 4l1 10h8l1-10" />
               </svg>
             </div>
-            <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
+            <h2 className="font-semibold text-sm text-zinc-900 ">
               Delete Project
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="p-1 rounded-md text-zinc-400 hover:text-zinc-600 :text-zinc-300 hover:bg-zinc-100 :bg-zinc-800 transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="4" y1="4" x2="12" y2="12" /><line x1="12" y1="4" x2="4" y2="12" />
@@ -77,16 +77,16 @@ export function DeleteDialog({
         {/* Body */}
         <div className="p-5 space-y-4">
           <div>
-            <p className="text-sm text-zinc-700 dark:text-zinc-300">
+            <p className="text-sm text-zinc-700 ">
               You are about to delete <strong>{projectName}</strong> along with all {taskCount} tasks and diagrams.
             </p>
-            <p className="text-xs text-red-600 dark:text-red-400 mt-2">
+            <p className="text-xs text-red-600 mt-2">
               This action cannot be undone.
             </p>
           </div>
 
           <div>
-            <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300 block mb-1.5">
+            <label className="text-xs font-medium text-zinc-700 block mb-1.5">
               Type the project name to confirm
             </label>
             <input
@@ -95,7 +95,7 @@ export function DeleteDialog({
               value={confirmText}
               onChange={(e) => setConfirmText(e.target.value)}
               placeholder={projectName}
-              className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-700 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-500"
             />
           </div>
 
@@ -118,7 +118,7 @@ export function DeleteDialog({
             </button>
             <button
               onClick={onClose}
-              className="px-4 py-2.5 text-sm text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
+              className="px-4 py-2.5 text-sm text-zinc-500 hover:text-zinc-700 :text-zinc-300 transition-colors"
             >
               Cancel
             </button>

@@ -10,13 +10,13 @@ interface ProjectTableProps {
 function getStatusStyle(status: string) {
   switch (status) {
     case "active":
-      return { bg: "bg-blue-50 dark:bg-blue-950/20", dot: "bg-blue-500", text: "text-blue-700 dark:text-blue-400", label: "Aktif" };
+      return { bg: "bg-surface-soft", dot: "bg-ink", text: "text-ink", label: "Aktif" };
     case "completed":
-      return { bg: "bg-green-50 dark:bg-green-950/20", dot: "bg-green-500", text: "text-green-700 dark:text-green-400", label: "Selesai" };
+      return { bg: "bg-black/5", dot: "bg-ink/60", text: "text-ink/60", label: "Selesai" };
     case "draft":
-      return { bg: "bg-zinc-100 dark:bg-zinc-800", dot: "bg-zinc-400", text: "text-zinc-600 dark:text-zinc-400", label: "Draft" };
+      return { bg: "bg-black/5", dot: "bg-ink/30", text: "text-ink/50", label: "Draft" };
     default:
-      return { bg: "bg-zinc-100 dark:bg-zinc-800", dot: "bg-zinc-400", text: "text-zinc-600 dark:text-zinc-400", label: status };
+      return { bg: "bg-black/5", dot: "bg-ink/30", text: "text-ink/50", label: status };
   }
 }
 
@@ -24,30 +24,21 @@ function getInitials(title: string): string {
   return title.split(" ").slice(0, 2).map((w) => w[0]).join("").toUpperCase();
 }
 
-function getColorForProject(title: string): string {
-  const colors = [
-    "bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400",
-    "bg-blue-100 text-blue-700 dark:bg-blue-950/30 dark:text-blue-400",
-    "bg-purple-100 text-purple-700 dark:bg-purple-950/30 dark:text-purple-400",
-    "bg-green-100 text-green-700 dark:bg-green-950/30 dark:text-green-400",
-    "bg-rose-100 text-rose-700 dark:bg-rose-950/30 dark:text-rose-400",
-    "bg-cyan-100 text-cyan-700 dark:bg-cyan-950/30 dark:text-cyan-400",
-  ];
-  let hash = 0;
-  for (let i = 0; i < title.length; i++) hash = ((hash << 5) - hash) + title.charCodeAt(i);
-  return colors[Math.abs(hash) % colors.length];
+function getColorForProject(_title: string): string {
+  // Monochrome — all avatars use the same surface-soft/ink palette per design.md
+  return "bg-black/5 text-ink";
 }
 
 export function ProjectTable({ projects = [], onSelectProject, selectedId }: ProjectTableProps) {
   return (
-    <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
+    <div className="divide-y divide-hairline ">
       {projects.length === 0 ? (
         <div className="px-5 py-10 text-center">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mx-auto text-zinc-300 dark:text-zinc-600 mb-3">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mx-auto text-ink/40 mb-3">
             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" />
           </svg>
-          <p className="text-sm text-zinc-400 dark:text-zinc-500">Belum ada proyek</p>
-          <p className="text-xs text-zinc-400 mt-1">Upload BRD untuk memulai</p>
+          <p className="text-sm text-ink/40 ">Belum ada proyek</p>
+          <p className="text-xs text-ink/40 mt-1">Upload BRD untuk memulai</p>
         </div>
       ) : (
         projects.map((p) => {
@@ -62,21 +53,20 @@ export function ProjectTable({ projects = [], onSelectProject, selectedId }: Pro
             <div
               key={p.id}
               onClick={() => onSelectProject?.(p)}
-              className={`flex items-center gap-4 px-5 py-4 cursor-pointer transition-all ${
-                isSelected
-                  ? "bg-amber-50 dark:bg-amber-950/10 border-l-2 border-amber-500"
-                  : "hover:bg-zinc-50 dark:hover:bg-zinc-900/50 border-l-2 border-transparent"
-              }`}
+              className={`flex items-center gap-4 px-5 py-4 cursor-pointer transition-all ${isSelected
+                ? "bg-surface-soft border-l-2 border-ink"
+                : "hover:bg-surface-soft border-l-2 border-transparent"
+                }`}
             >
               {/* Avatar */}
-              <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-xs font-bold ${colorClass}`}>
+              <div className={`hidden md:flex h-10 w-10 shrink-0 items-center justify-center rounded-[24px] text-xs font-bold ${colorClass}`}>
                 {initials}
               </div>
 
               {/* Info */}
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="font-medium text-sm text-zinc-900 dark:text-zinc-100 truncate">
+                <div className="flex items-center justify-between md:justify-start gap-2">
+                  <span className="font-medium text-sm text-ink truncate">
                     {p.title}
                   </span>
                   <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-medium ${status.bg} ${status.text}`}>
@@ -85,26 +75,26 @@ export function ProjectTable({ projects = [], onSelectProject, selectedId }: Pro
                   </span>
                 </div>
                 <div className="flex items-center gap-2 mt-0.5">
-                  <span className="text-[11px] text-zinc-400">{p.id}</span>
-                  <span className="text-zinc-200 dark:text-zinc-700">·</span>
-                  <span className="text-[11px] text-zinc-400">{p.createdAt}</span>
+                  <span className="text-[11px] text-ink/40">{p.id}</span>
+                  <span className="text-ink/20 ">·</span>
+                  <span className="text-[11px] text-ink/40">{p.createdAt}</span>
                 </div>
               </div>
 
               {/* Progress & tasks */}
-              <div className="flex items-center gap-4 shrink-0">
+              <div className="hidden md:flex items-center gap-4 shrink-0">
                 {tCount > 0 && (
                   <div className="hidden sm:block text-right">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-zinc-500 dark:text-zinc-400">{tCount} tugas</span>
-                      <span className="text-[10px] text-zinc-400">{doneCount}/{tCount}</span>
+                      <span className="text-xs text-ink/60 ">{tCount} tugas</span>
+                      <span className="text-[10px] text-ink/40">{doneCount}/{tCount}</span>
                     </div>
-                    <div className="w-24 h-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 mt-1 overflow-hidden">
-                      <div className="h-full rounded-full bg-gradient-to-r from-amber-400 to-amber-500" style={{ width: `${tCount > 0 ? (doneCount / tCount) * 100 : 0}%` }} />
+                    <div className="w-24 h-1.5 rounded-full bg-black/5 mt-1 overflow-hidden">
+                      <div className="h-full rounded-full bg-ink" style={{ width: `${tCount > 0 ? (doneCount / tCount) * 100 : 0}%` }} />
                     </div>
                   </div>
                 )}
-                <span className="text-xs text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 underline underline-offset-2 cursor-pointer shrink-0">
+                <span className="text-xs text-ink/60 hover:text-ink/80 :text-ink/40 underline underline-offset-2 cursor-pointer shrink-0">
                   Detail →
                 </span>
               </div>

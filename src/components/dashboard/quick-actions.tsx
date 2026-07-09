@@ -24,13 +24,13 @@ export function QuickActions({ projects }: { projects: ProjectItem[] }) {
       {/* ── Upload BRD ── */}
       <button
         onClick={() => router.push("/upload")}
-        className="group relative glass-raised rounded-2xl p-5 text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-500/30 overflow-hidden"
+        className="group relative glass-raised rounded-[24px] p-5 text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-500/30 overflow-hidden"
       >
         {/* Gradient glow on hover */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 to-indigo-500/0 group-hover:from-blue-500/5 group-hover:to-indigo-500/5 transition-all duration-300 rounded-2xl" />
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 to-indigo-500/0 group-hover:from-blue-500/5 group-hover:to-indigo-500/5 transition-all duration-300 rounded-[24px]" />
 
         <div className="relative flex items-center gap-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-500/15 border border-blue-500/20 group-hover:bg-blue-500/25 group-hover:border-blue-500/40 transition-all duration-200">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[24px] bg-blue-500/15 border border-blue-500/20 group-hover:bg-blue-500/25 group-hover:border-blue-500/40 transition-all duration-200">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400">
               <path d="M10 3v12" /><path d="M4 9l6-6 6 6" /><path d="M3 17h14" />
             </svg>
@@ -53,16 +53,16 @@ export function QuickActions({ projects }: { projects: ProjectItem[] }) {
       <button
         onClick={() => lastProject && router.push(`/project/${lastProject.id}`)}
         disabled={!lastProject}
-        className={`group relative glass-raised rounded-2xl p-5 text-left transition-all duration-300 overflow-hidden ${
+        className={`group relative glass-raised rounded-[24px] p-5 text-left transition-all duration-300 overflow-hidden ${
           lastProject
             ? "hover:-translate-y-0.5 hover:border-indigo-500/30 cursor-pointer"
             : "opacity-40 cursor-not-allowed"
         }`}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 to-purple-500/0 group-hover:from-indigo-500/5 group-hover:to-purple-500/5 transition-all duration-300 rounded-2xl" />
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/0 to-purple-500/0 group-hover:from-indigo-500/5 group-hover:to-purple-500/5 transition-all duration-300 rounded-[24px]" />
 
         <div className="relative flex items-center gap-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-indigo-500/15 border border-indigo-500/20 group-hover:bg-indigo-500/25 group-hover:border-indigo-500/40 transition-all duration-200">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[24px] bg-indigo-500/15 border border-indigo-500/20 group-hover:bg-indigo-500/25 group-hover:border-indigo-500/40 transition-all duration-200">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-indigo-400">
               <path d="M5 3v14M5 3l10 5-10 5" />
             </svg>

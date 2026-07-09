@@ -40,7 +40,7 @@ export function SubTaskAssignee({ subTask, taskId, onDataChange }: SubTaskAssign
       {assigneeId ? (
         <button
           onClick={() => setShowPicker(!showPicker)}
-          className="inline-flex items-center gap-1.5 rounded-md bg-zinc-100 dark:bg-zinc-800 px-2 py-1 text-xs text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+          className="inline-flex items-center gap-1.5 rounded-md bg-zinc-100 px-2 py-1 text-xs text-zinc-700 hover:bg-zinc-200 :bg-zinc-700 transition-colors"
         >
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M8 8a3 3 0 100-6 3 3 0 000 6z" />
@@ -51,7 +51,7 @@ export function SubTaskAssignee({ subTask, taskId, onDataChange }: SubTaskAssign
       ) : (
         <button
           onClick={() => setShowPicker(!showPicker)}
-          className="inline-flex items-center gap-1.5 rounded-md border border-dashed border-zinc-300 dark:border-zinc-600 px-2 py-1 text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:border-zinc-400 transition-colors"
+          className="inline-flex items-center gap-1.5 rounded-md border border-dashed border-zinc-300 px-2 py-1 text-xs text-zinc-400 hover:text-zinc-600 :text-zinc-300 hover:border-zinc-400 transition-colors"
         >
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M8 8a3 3 0 100-6 3 3 0 000 6z" />
@@ -63,11 +63,11 @@ export function SubTaskAssignee({ subTask, taskId, onDataChange }: SubTaskAssign
 
       {showPicker && (
         <div className="mt-1 z-50 w-full max-w-[220px]">
-          <div className="rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 shadow-lg overflow-hidden">
-            <div className="max-h-40 overflow-y-auto divide-y divide-zinc-100 dark:divide-zinc-800">
+          <div className="rounded-lg border border-zinc-200 bg-white overflow-hidden">
+            <div className="max-h-40 overflow-y-auto divide-y divide-zinc-100 ">
               <button
                 onClick={() => handleChange(null)}
-                className="w-full flex items-center gap-2 px-3 py-2 text-xs text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2 text-xs text-zinc-500 hover:bg-zinc-50 :bg-zinc-900 transition-colors"
               >
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="4" y1="4" x2="12" y2="12" /><line x1="12" y1="4" x2="4" y2="12" />
@@ -109,11 +109,11 @@ function MemberList({ selectedId, onSelect }: { selectedId: string | null; onSel
           onClick={() => onSelect(m.id)}
           className={`w-full flex items-center gap-2 px-3 py-2 text-xs transition-colors ${
             selectedId === m.id
-              ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
-              : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-900"
+              ? "bg-zinc-100 text-zinc-900 "
+              : "text-zinc-600 hover:bg-zinc-50 :bg-zinc-900"
           }`}
         >
-          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-zinc-200 dark:bg-zinc-700 text-[9px] font-medium">
+          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-zinc-200 text-[9px] font-medium">
             {m.avatar || m.name.charAt(0).toUpperCase()}
           </span>
           <span className="flex-1 text-left">{m.name}</span>

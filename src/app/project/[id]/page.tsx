@@ -3,15 +3,16 @@ import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { ProjectTabs } from "@/components/project/project-tabs";
 import { ProgressIndicator } from "@/components/kanban/progress-indicator";
+import { DescriptionPreview } from "@/components/project/description-preview";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 function getStatusConfig(status: string): { label: string; badge: string; dot: string } {
   switch (status) {
-    case "active":    return { label: "Active",    dot: "bg-blue-400",    badge: "bg-blue-500/10 text-blue-400 border-blue-500/25" };
-    case "completed": return { label: "Completed",  dot: "bg-emerald-400", badge: "bg-emerald-500/10 text-emerald-400 border-emerald-500/25" };
-    case "draft":     return { label: "Draft",      dot: "bg-zinc-500",   badge: "bg-white/5 text-muted-foreground border-white/10" };
-    default:          return { label: status,        dot: "bg-zinc-500",   badge: "bg-white/5 text-muted-foreground border-white/10" };
+    case "active": return { label: "Active", dot: "bg-blue-400", badge: "bg-blue-500/10 text-blue-400 border-blue-500/25" };
+    case "completed": return { label: "Completed", dot: "bg-emerald-400", badge: "bg-emerald-500/10 text-emerald-400 border-emerald-500/25" };
+    case "draft": return { label: "Draft", dot: "bg-zinc-500", badge: "bg-white/5 text-muted-foreground border-white/10" };
+    default: return { label: status, dot: "bg-zinc-500", badge: "bg-white/5 text-muted-foreground border-white/10" };
   }
 }
 
@@ -34,7 +35,7 @@ interface PageProps {
 async function fetchProject(id: string): Promise<ApiProject | null> {
   try {
     const cookieStore = await cookies();
-    const res = await fetch(`${BASE_URL}/api/projects/${id}`, { 
+    const res = await fetch(`${BASE_URL}/api/projects/${id}`, {
       cache: "no-store",
       headers: { Cookie: cookieStore.toString() }
     });
@@ -54,7 +55,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   const statusConfig = getStatusConfig(project.status);
 
   return (
-    <div className="flex flex-col flex-1 min-h-screen">
+    <div className="flex flex-col flex-1 min-h-screen bg-canvas text-ink">
 
       {/* ── Navbar ── */}
       <header className="sticky top-0 z-50 nav-glass">
@@ -65,7 +66,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             <div className="flex items-center gap-3 min-w-0">
               <Link
                 href="/"
-                className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors shrink-0 rounded-lg px-2 py-1.5 hover:bg-white/5"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-sm font-medium text-ink/60 hover:text-ink hover:bg-black/5 transition-colors shrink-0"
               >
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M10 4l-4 4 4 4" />
@@ -73,15 +74,15 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 <span className="hidden sm:inline">Back</span>
               </Link>
 
-              <span className="text-white/15 shrink-0">|</span>
+              <span className="text-ink/20 shrink-0">|</span>
 
               {/* Logo mini */}
-              <div className="relative flex h-7 w-7 items-center justify-center rounded-lg overflow-hidden shrink-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600" />
-                <span className="relative text-white text-xs font-bold">B</span>
+              <div className="relative flex h-9 w-9 items-center justify-center rounded-[24px] overflow-hidden shrink-0">
+                <div className="absolute inset-0 bg-ink" />
+                <span className="relative text-canvas text-sm font-bold">B</span>
               </div>
 
-              <span className="font-semibold text-sm truncate text-foreground">
+              <span className="font-semibold text-base text-ink truncate tracking-tight">
                 {project.title}
               </span>
             </div>
@@ -95,22 +96,20 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         </div>
       </header>
 
-      <main className="flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 py-12">
 
         {/* ── Project Header ── */}
-        <div className="mb-8 animate-float-up">
-          <p className="text-xs font-semibold text-blue-400/80 tracking-widest uppercase mb-2">
+        <section className="color-block-section bg-[var(--block-cream)] mb-12">
+          <p className="text-sm font-bold text-ink/50 tracking-widest uppercase mb-4">
             Project
           </p>
-          <h1 className="text-3xl font-bold text-foreground gradient-text leading-tight">
+          <h1 className="text-[42px] md:text-[64px] font-[340] leading-[1.1] tracking-[-0.015em] text-ink">
             {project.title}
           </h1>
           {project.description && (
-            <p className="text-sm text-muted-foreground mt-3 max-w-3xl leading-relaxed line-clamp-3 whitespace-pre-wrap">
-              {project.description}
-            </p>
+            <DescriptionPreview description={project.description} />
           )}
-        </div>
+        </section>
 
         {/* ── Progress ── */}
         <ProgressIndicator projectId={project.id} taskSummary={project.taskSummary} />

@@ -57,51 +57,33 @@ export default async function DiagramPage({ params }: PageProps) {
   return (
     <div className="flex flex-col flex-1">
       {/* Navbar */}
-      <header className="sticky top-0 z-10 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-sm">
+      <header className="sticky top-0 z-50 nav-glass">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-14 items-center justify-between">
+          <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-3">
               <Link
                 href={`/project/${id}`}
-                className="flex items-center gap-1 text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-sm font-medium text-ink/60 hover:text-ink hover:bg-black/5 transition-colors"
               >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M10 4l-4 4 4 4" />
                 </svg>
                 Detail
               </Link>
-              <span className="text-zinc-300 dark:text-zinc-700">|</span>
-              <span className="font-semibold text-sm truncate max-w-[250px]">
+              <span className="text-ink/20">|</span>
+              <span className="font-semibold text-sm text-ink truncate max-w-[250px]">
                 {project.title}
               </span>
-              <Badge variant="outline" className="text-[10px] px-1.5 py-0">
+              <span className="inline-flex items-center rounded-full border border-hairline px-2 py-0.5 text-[10px] font-medium text-ink/60">
                 Diagram
-              </Badge>
+              </span>
             </div>
             <Link
               href={`/project/${id}`}
-              className="inline-flex items-center gap-1 rounded-lg bg-zinc-900 dark:bg-white px-3 py-1.5 text-xs font-medium text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-xs font-medium text-canvas hover:bg-ink/80 transition-colors"
             >
               Papan Tugas
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M6 4l4 4-4 4" />
               </svg>
             </Link>
@@ -112,10 +94,10 @@ export default async function DiagramPage({ params }: PageProps) {
       <main className="flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+          <h1 className="text-xl font-bold text-ink ">
             Diagram Alur Visual
           </h1>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+          <p className="text-sm text-ink/60 mt-1">
             Representasi visual dari modul, layar, dan alur kerja berdasarkan analisis BRD.
           </p>
         </div>
@@ -124,7 +106,7 @@ export default async function DiagramPage({ params }: PageProps) {
         {diagram ? (
           <DiagramView diagram={diagram} />
         ) : (
-          <div className="rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 p-8 text-center">
+          <div className="rounded-[24px] border border-dashed border-zinc-300 p-8 text-center">
             <svg
               width="32"
               height="32"
@@ -134,15 +116,15 @@ export default async function DiagramPage({ params }: PageProps) {
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="mx-auto text-zinc-300 dark:text-zinc-600 mb-3"
+              className="mx-auto text-zinc-300 mb-3"
             >
               <circle cx="12" cy="12" r="10" />
               <path d="M8 12l2 2 4-4" />
             </svg>
-            <h3 className="font-medium text-sm text-zinc-500 dark:text-zinc-400">
+            <h3 className="font-medium text-sm text-ink/60 ">
               Belum ada diagram
             </h3>
-            <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1">
+            <p className="text-xs text-zinc-400 mt-1">
               Diagram akan muncul setelah AI selesai memproses dokumen BRD.
             </p>
           </div>

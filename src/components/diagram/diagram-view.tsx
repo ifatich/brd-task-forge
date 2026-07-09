@@ -160,16 +160,16 @@ export function DiagramView({ diagram }: DiagramViewProps) {
             onClick={handleReset}
             className={`shrink-0 font-medium transition-colors ${
               isFocusMode
-                ? "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-                : "text-zinc-900 dark:text-zinc-100 cursor-default"
+                ? "text-ink/50 hover:text-ink"
+                : "text-ink cursor-default"
             }`}
           >
-            Diagram Penuh
+            Full Diagram
           </button>
 
           {focusModule && (
             <>
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-zinc-300 dark:text-zinc-600">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-ink/30">
                 <path d="M6 4l4 4-4 4" />
               </svg>
               <button
@@ -178,8 +178,8 @@ export function DiagramView({ diagram }: DiagramViewProps) {
                 }}
                 className={`shrink-0 font-medium transition-colors ${
                   focusScreen
-                    ? "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-                    : "text-zinc-900 dark:text-zinc-100"
+                    ? "text-ink/50 hover:text-ink"
+                    : "text-ink"
                 }`}
               >
                 {focusModule}
@@ -189,34 +189,34 @@ export function DiagramView({ diagram }: DiagramViewProps) {
 
           {focusScreen && (
             <>
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-zinc-300 dark:text-zinc-600">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-ink/30">
                 <path d="M6 4l4 4-4 4" />
               </svg>
-              <span className="text-zinc-900 dark:text-zinc-100 font-medium truncate">
+              <span className="text-ink font-medium truncate">
                 {focusScreen}
               </span>
             </>
           )}
 
           {isFocusMode && (
-            <span className="text-[10px] text-zinc-400 dark:text-zinc-500 ml-2 hidden sm:inline">
-              &mdash; klik lagi atau &ldquo;Diagram Penuh&rdquo; untuk kembali
+            <span className="text-[10px] text-ink/40 ml-2 hidden sm:inline">
+              &mdash; click again or &ldquo;Full Diagram&rdquo; to return
             </span>
           )}
         </div>
 
-        <div className="flex items-center rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden shrink-0">
-          <div className="px-3 py-1.5 text-xs text-zinc-500 dark:text-zinc-400 bg-zinc-50 dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-800 flex items-center gap-1.5">
+        <div className="flex items-center rounded-lg border border-hairline bg-canvas overflow-hidden shrink-0">
+          <div className="px-3 py-1.5 text-xs text-ink/50 bg-black/5 border-r border-hairline flex items-center gap-1.5">
             {isDownloading ? (
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-spin"><path d="M21 12a9 9 0 11-6.219-8.56" /></svg>
             ) : (
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3v10" /><path d="M3 8l5 5 5-5" /><path d="M3 13h10" /></svg>
             )}
-            <span className="hidden sm:inline">Unduh:</span>
+            <span className="hidden sm:inline">Download:</span>
           </div>
-          <button onClick={() => handleDownload('png')} disabled={isDownloading} className="px-3 py-1.5 text-xs font-medium text-zinc-700 dark:text-zinc-300 border-r border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800 disabled:opacity-50 transition-colors">PNG</button>
-          <button onClick={() => handleDownload('pdf')} disabled={isDownloading} className="px-3 py-1.5 text-xs font-medium text-zinc-700 dark:text-zinc-300 border-r border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800 disabled:opacity-50 transition-colors">PDF</button>
-          <button onClick={() => handleDownload('svg')} disabled={isDownloading} className="px-3 py-1.5 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 disabled:opacity-50 transition-colors">SVG</button>
+          <button onClick={() => handleDownload('png')} disabled={isDownloading} className="px-3 py-1.5 text-xs font-medium text-zinc-700 border-r border-zinc-200 hover:bg-zinc-50 :bg-zinc-800 disabled:opacity-50 transition-colors">PNG</button>
+          <button onClick={() => handleDownload('pdf')} disabled={isDownloading} className="px-3 py-1.5 text-xs font-medium text-zinc-700 border-r border-zinc-200 hover:bg-zinc-50 :bg-zinc-800 disabled:opacity-50 transition-colors">PDF</button>
+          <button onClick={() => handleDownload('svg')} disabled={isDownloading} className="px-3 py-1.5 text-xs font-medium text-zinc-700 hover:bg-zinc-50 :bg-zinc-800 disabled:opacity-50 transition-colors">SVG</button>
         </div>
       </div>
 

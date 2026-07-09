@@ -35,10 +35,10 @@ interface TaskItem {
 
 function getPriorityColor(priority: string): string {
   switch (priority) {
-    case "high": return "bg-red-100 text-red-700 dark:bg-red-950/30 dark:text-red-400";
-    case "medium": return "bg-yellow-100 text-yellow-700 dark:bg-yellow-950/30 dark:text-yellow-400";
-    case "low": return "bg-green-100 text-green-700 dark:bg-green-950/30 dark:text-green-400";
-    default: return "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400";
+    case "high": return "bg-red-100 text-red-700 ";
+    case "medium": return "bg-yellow-100 text-yellow-700 ";
+    case "low": return "bg-green-100 text-green-700 ";
+    default: return "bg-zinc-100 text-zinc-600 ";
   }
 }
 
@@ -104,22 +104,22 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
         if (e.target === overlayRef.current) onClose();
       }}
     >
-      <div className="w-full max-w-lg rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-2xl mx-4 animate-in fade-in zoom-in-95 flex flex-col max-h-[84vh]">
+      <div className="w-full max-w-lg rounded-[24px] border border-zinc-200 bg-white mx-4 animate-in fade-in zoom-in-95 flex flex-col max-h-[84vh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100 dark:border-zinc-800 shrink-0">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100 shrink-0">
           <div className="flex items-center gap-2">
             <span
               className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${getPriorityColor(task.priority)}`}
             >
               {getPriorityLabel(task.priority)}
             </span>
-            <span className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono">
+            <span className="text-[10px] text-zinc-400 font-mono">
               {task.id}
             </span>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="p-1 rounded-md text-zinc-400 hover:text-zinc-600 :text-zinc-300 hover:bg-zinc-100 :bg-zinc-800 transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="4" y1="4" x2="12" y2="12" />
@@ -132,10 +132,10 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
         <div className="flex-1 overflow-y-auto p-5 space-y-5">
           {/* Title */}
           <div>
-            <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
+            <h2 className="text-lg font-bold text-zinc-900 ">
               {task.title}
             </h2>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1 leading-relaxed">
+            <p className="text-sm text-zinc-500 mt-1 leading-relaxed">
               {task.description}
             </p>
           </div>
@@ -143,10 +143,10 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
           {/* Status & Assignee */}
           <div className="flex items-center gap-4">
             <div>
-              <h4 className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-1">
+              <h4 className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-1">
                 Status
               </h4>
-              <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 capitalize">
+              <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium bg-zinc-100 text-zinc-700 capitalize">
                 {task.status === "in-progress"
                   ? "In Progress"
                   : task.status === "done"
@@ -155,7 +155,7 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
               </span>
             </div>
             <div>
-              <h4 className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-1">
+              <h4 className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-1">
                 Assignee
               </h4>
               <div className="relative">
@@ -181,7 +181,7 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
           {/* Task-level Goals */}
           {task.goals && (
             <div>
-              <h4 className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+              <h4 className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="8" cy="8" r="6" />
                   <polyline points="8 5 8 9 11 11" />
@@ -190,7 +190,7 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
               </h4>
               <ul className="space-y-1">
                 {safeArray(task.goals).map((g: string, i: number) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-zinc-700 dark:text-zinc-300">
+                  <li key={i} className="flex items-start gap-2 text-sm text-zinc-700 ">
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-0.5 text-green-500">
                       <polyline points="4 8 7 11 12 5" />
                     </svg>
@@ -204,15 +204,15 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
           {/* Task-level Definition of Done */}
           {task.definitionOfDone && (
             <div>
-              <h4 className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+              <h4 className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="2" width="12" height="12" rx="2" />
                   <polyline points="5 8 7 10 11 6" />
                 </svg>
                 Definition of Done — Module
               </h4>
-              <div className="rounded-lg bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3">
-                <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+              <div className="rounded-lg bg-zinc-50 border border-zinc-200 p-3">
+                <p className="text-sm text-zinc-700 leading-relaxed">
                   {task.definitionOfDone}
                 </p>
               </div>
@@ -221,12 +221,12 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
 
           {/* Progress */}
           <div>
-            <h4 className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-2">
+            <h4 className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-2">
               Sub-task ({doneCount}/{task.subTasks.length})
             </h4>
-            <div className="h-2 rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
+            <div className="h-2 rounded-full bg-zinc-100 overflow-hidden">
               <div
-                className="h-full rounded-full bg-zinc-900 dark:bg-white transition-all duration-300"
+                className="h-full rounded-full bg-zinc-900 transition-all duration-300"
                 style={{ width: `${task.subTasks.length > 0 ? (doneCount / task.subTasks.length) * 100 : 0}%` }}
               />
             </div>
@@ -235,7 +235,7 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
           {/* Sub-task list */}
           <div className="space-y-2">
             {task.subTasks.map((sub) => (
-              <div key={sub.id} className="rounded-lg border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+              <div key={sub.id} className="rounded-lg border border-zinc-200 overflow-hidden">
                 {/* Sub-task header — checkbox + expand */}
                 <div className="flex items-center">
                   {/* Checkbox */}
@@ -243,21 +243,21 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
                     onClick={() => onToggleSubTask?.(task.id, sub.id)}
                     className={`inline-flex items-center justify-center w-4 h-4 rounded border shrink-0 transition-colors ml-3.5 cursor-pointer hover:opacity-80 ${
                       sub.done
-                        ? "bg-zinc-900 dark:bg-white border-zinc-900 dark:border-white"
-                        : "border-zinc-300 dark:border-zinc-600"
+                        ? "bg-zinc-900 border-zinc-900 "
+                        : "border-zinc-300 "
                     }`}
                   >
                     {sub.done && (
-                      <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white dark:text-zinc-900">
+                      <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white ">
                         <polyline points="3 8 6 11 13 4" />
                       </svg>
                     )}
                   </span>
                   <button
                     onClick={() => setExpandedSub(expandedSub === sub.id ? null : sub.id)}
-                    className="flex-1 flex items-center gap-2.5 px-2.5 py-2.5 text-left hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors"
+                    className="flex-1 flex items-center gap-2.5 px-2.5 py-2.5 text-left hover:bg-zinc-50 :bg-zinc-900/50 transition-colors"
                   >
-                    <span className={`flex-1 text-sm ${sub.done ? "text-zinc-400 dark:text-zinc-500 line-through" : "text-zinc-800 dark:text-zinc-200"}`}>
+                    <span className={`flex-1 text-sm ${sub.done ? "text-zinc-400 line-through" : "text-zinc-800 "}`}>
                       {sub.title}
                     </span>
                     <svg
@@ -271,20 +271,20 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
 
                 {/* Expanded content: DoD + Elemen UI */}
                 {expandedSub === sub.id && (
-                  <div className="px-3.5 pb-3.5 pt-1 space-y-3 border-t border-zinc-100 dark:border-zinc-800">
+                  <div className="px-3.5 pb-3.5 pt-1 space-y-3 border-t border-zinc-100 ">
                     {/* Description */}
-                    <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                    <p className="text-xs text-zinc-600 leading-relaxed">
                       {sub.description}
                     </p>
 
                     {/* Goals */}
                     <div>
-                      <h5 className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-1.5">
+                      <h5 className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-1.5">
                         Goals
                       </h5>
                       <ul className="space-y-0.5">
                         {safeArray(sub.goals).map((g: string, i: number) => (
-                          <li key={i} className="flex items-start gap-1.5 text-xs text-zinc-600 dark:text-zinc-400">
+                          <li key={i} className="flex items-start gap-1.5 text-xs text-zinc-600 ">
                             <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-0.5 text-green-500">
                               <polyline points="4 8 7 11 12 5" />
                             </svg>
@@ -296,11 +296,11 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
 
                     {/* Definition of Done */}
                     <div>
-                      <h5 className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-1">
+                      <h5 className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-1">
                         Definition of Done
                       </h5>
-                      <div className="rounded-md bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-2.5">
-                        <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                      <div className="rounded-md bg-zinc-50 border border-zinc-200 p-2.5">
+                        <p className="text-xs text-zinc-600 leading-relaxed">
                           {sub.definitionOfDone}
                         </p>
                       </div>
@@ -308,7 +308,7 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
 
                     {/* Assignee */}
                     <div>
-                      <h5 className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                      <h5 className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
                         <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M8 8a3 3 0 100-6 3 3 0 000 6z" />
                           <path d="M14 14c0-2-2.7-4-6-4s-6 2-6 4" />
@@ -320,14 +320,14 @@ export function TaskDetailModal({ task, onClose, onToggleSubTask, onCompleteTask
 
                     {/* Elemen UI */}
                     <div>
-                      <h5 className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mb-1.5">
+                      <h5 className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-1.5">
                         UI Elements
                       </h5>
                       <div className="flex flex-wrap gap-1.5">
                         {safeArray(sub.elements).map((el: string, i: number) => (
                           <span
                             key={i}
-                            className="inline-flex items-center rounded-md bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/50 px-2 py-0.5 text-[10px] font-medium text-amber-700 dark:text-amber-400"
+                            className="inline-flex items-center rounded-md bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-medium text-amber-700 "
                           >
                             {el}
                           </span>

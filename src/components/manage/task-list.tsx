@@ -26,10 +26,10 @@ interface Task {
 
 function getPriorityColor(priority: string): string {
   switch (priority) {
-    case "high": return "bg-red-100 text-red-700 dark:bg-red-950/30 dark:text-red-400";
-    case "medium": return "bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400";
-    case "low": return "bg-green-100 text-green-700 dark:bg-green-950/30 dark:text-green-400";
-    default: return "bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-400";
+    case "high": return "bg-red-100 text-red-700 ";
+    case "medium": return "bg-amber-100 text-amber-700 ";
+    case "low": return "bg-green-100 text-green-700 ";
+    default: return "bg-zinc-100 text-zinc-700 ";
   }
 }
 
@@ -92,9 +92,9 @@ export function TaskList({ projectId }: TaskListProps) {
   };
 
   return (
-    <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+    <div className="rounded-[24px] border border-zinc-200 overflow-hidden">
       {/* Toolbar */}
-      <div className="p-4 border-b border-zinc-200 dark:border-zinc-800 space-y-3">
+      <div className="p-4 border-b border-zinc-200 space-y-3">
         {/* Search */}
         <div className="relative">
           <svg
@@ -116,7 +116,7 @@ export function TaskList({ projectId }: TaskListProps) {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             placeholder="Search tasks..."
-            className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 pl-9 pr-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
+            className="w-full rounded-lg border border-zinc-200 bg-white pl-9 pr-3 py-2 text-sm text-zinc-700 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 :ring-white"
           />
         </div>
 
@@ -135,8 +135,8 @@ export function TaskList({ projectId }: TaskListProps) {
                 onClick={() => setFilterStatus(opt.value)}
                 className={`text-xs px-2.5 py-1 rounded-full transition-colors ${
                   filterStatus === opt.value
-                    ? "bg-zinc-900 text-white dark:bg-white dark:text-zinc-900"
-                    : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700"
+                    ? "bg-zinc-900 text-white "
+                    : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200 :bg-zinc-700"
                 }`}
               >
                 {opt.label}
@@ -147,7 +147,7 @@ export function TaskList({ projectId }: TaskListProps) {
             ))}
           </div>
 
-          <span className="text-zinc-200 dark:text-zinc-700">|</span>
+          <span className="text-zinc-200 ">|</span>
 
           {/* Priority filter */}
           <select
@@ -155,7 +155,7 @@ export function TaskList({ projectId }: TaskListProps) {
             onChange={(e) =>
               setFilterPriority(e.target.value as Priority | "all")
             }
-            className="text-xs rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-2 py-1 text-zinc-600 dark:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
+            className="text-xs rounded-lg border border-zinc-200 bg-white px-2 py-1 text-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-900 :ring-white"
           >
             <option value="all">All Priorities</option>
             <option value="high">High</option>
@@ -168,28 +168,28 @@ export function TaskList({ projectId }: TaskListProps) {
       {/* Task list */}
       {loading ? (
         <div className="px-4 py-8 text-center">
-          <p className="text-sm text-zinc-400 dark:text-zinc-500">Loading tasks...</p>
+          <p className="text-sm text-zinc-400 ">Loading tasks...</p>
         </div>
       ) : tasks.length > 0 ? (
-        <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
+        <div className="divide-y divide-zinc-100 ">
           {tasks.map((task) => (
             <div
               key={task.id}
-              className="px-4 py-3.5 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors"
+              className="px-4 py-3.5 hover:bg-zinc-50 :bg-zinc-900/50 transition-colors"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <StatusDot status={task.status} />
-                    <h4 className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                    <h4 className="text-sm font-medium text-zinc-900 ">
                       {task.title}
                     </h4>
                   </div>
-                  <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 line-clamp-1">
+                  <p className="text-xs text-zinc-500 mt-1 line-clamp-1">
                     {task.description}
                   </p>
                   {task.subTasks.length > 0 && (
-                    <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5 line-clamp-1">
+                    <p className="text-[10px] text-zinc-400 mt-0.5 line-clamp-1">
                       {task.subTasks.length} sub-tasks • {task.subTasks.filter(s => s.done).length} done
                     </p>
                   )}
@@ -200,14 +200,14 @@ export function TaskList({ projectId }: TaskListProps) {
                   >
                     {getPriorityLabel(task.priority)}
                   </span>
-                  <span className="text-[10px] text-zinc-400 dark:text-zinc-500 capitalize">
+                  <span className="text-[10px] text-zinc-400 capitalize">
                     {task.status === "in-progress"
                       ? "In Progress"
                       : task.status}
                   </span>
                 </div>
               </div>
-              <div className="flex items-center gap-3 mt-2 text-[10px] text-zinc-400 dark:text-zinc-500">
+              <div className="flex items-center gap-3 mt-2 text-[10px] text-zinc-400 ">
                 {task.assignee ? (
                   <span>Assignee: {task.assignee.replace("_", " ")}</span>
                 ) : (
@@ -220,7 +220,7 @@ export function TaskList({ projectId }: TaskListProps) {
         </div>
       ) : (
         <div className="px-4 py-8 text-center">
-          <p className="text-sm text-zinc-400 dark:text-zinc-500">
+          <p className="text-sm text-zinc-400 ">
             {searchText
               ? "No tasks match your search"
               : "No tasks yet for this project"}
@@ -233,7 +233,7 @@ export function TaskList({ projectId }: TaskListProps) {
 
 function StatusDot({ status }: { status: TaskStatus }) {
   const colors = {
-    todo: "bg-zinc-300 dark:bg-zinc-600",
+    todo: "bg-zinc-300 ",
     "in-progress": "bg-blue-500",
     done: "bg-green-500",
   };

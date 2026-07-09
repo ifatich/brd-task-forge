@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useAuth } from "@/lib/auth/auth-context";
 import { AuthNav } from "./auth-nav";
 
@@ -13,15 +14,15 @@ export function DashboardNavbar() {
           {/* Brand + Nav */}
           <div className="flex items-center gap-6">
             {/* Logo */}
-            <a href="/" className="flex items-center gap-2.5 group">
-              <div className="relative flex h-9 w-9 items-center justify-center rounded-xl overflow-hidden shrink-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600" />
-                <span className="relative text-white text-sm font-bold">B</span>
+            <Link href="/" className="flex items-center gap-2.5">
+              <div className="relative flex h-9 w-9 items-center justify-center rounded-[24px] overflow-hidden shrink-0">
+                <div className="absolute inset-0 bg-ink" />
+                <span className="relative text-canvas text-sm font-bold">B</span>
               </div>
-              <span className="font-semibold text-base text-foreground hidden sm:inline tracking-tight">
+              <span className="font-semibold text-base text-ink hidden sm:inline tracking-tight">
                 BRD Task Forge
               </span>
-            </a>
+            </Link>
 
             {/* Navigation */}
             <nav className="hidden sm:flex items-center gap-1">
@@ -54,17 +55,16 @@ function NavLink({
     <a
       href={href}
       className={`
-        relative px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all duration-200
-        ${
-          isAdmin
-            ? "text-amber-400 hover:text-amber-300 hover:bg-amber-500/10"
-            : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+        relative px-3.5 py-1.5 rounded-lg text-sm font-medium transition-colors
+        ${isAdmin
+          ? "text-ink/60 hover:text-ink hover:bg-black/5"
+          : "text-ink/60 hover:text-ink hover:bg-black/5"
         }
       `}
     >
       {label}
       {isAdmin && (
-        <span className="ml-1.5 inline-flex items-center rounded-full bg-amber-500/20 px-1.5 py-0.5 text-[9px] font-semibold text-amber-400 border border-amber-500/30">
+        <span className="ml-1.5 inline-flex items-center rounded-full bg-black/5 px-1.5 py-0.5 text-[9px] font-semibold text-ink/60 border border-hairline">
           ADMIN
         </span>
       )}

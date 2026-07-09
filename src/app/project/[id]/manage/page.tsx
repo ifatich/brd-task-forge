@@ -11,8 +11,8 @@ function getStatusColor(status: string): string {
   switch (status) {
     case "active": return "bg-blue-500";
     case "completed": return "bg-green-500";
-    case "draft": return "bg-zinc-300 dark:bg-zinc-600";
-    default: return "bg-zinc-300 dark:bg-zinc-600";
+    case "draft": return "bg-zinc-300 ";
+    default: return "bg-zinc-300 ";
   }
 }
 
@@ -64,30 +64,21 @@ export default async function ManageProjectPage({ params }: PageProps) {
   return (
     <div className="flex flex-col flex-1">
       {/* Navbar */}
-      <header className="sticky top-0 z-10 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-sm">
+      <header className="sticky top-0 z-50 nav-glass">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-14 items-center justify-between">
+          <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-3">
               <Link
                 href={`/project/${id}`}
-                className="flex items-center gap-1 text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-sm font-medium text-ink/60 hover:text-ink hover:bg-black/5 transition-colors"
               >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M10 4l-4 4 4 4" />
                 </svg>
                 Task Board
               </Link>
-              <span className="text-zinc-300 dark:text-zinc-700">|</span>
-              <span className="font-semibold text-sm truncate max-w-[250px]">
+              <span className="text-ink/20">|</span>
+              <span className="font-semibold text-sm text-ink truncate max-w-[250px]">
                 {project.title}
               </span>
             </div>
@@ -98,10 +89,10 @@ export default async function ManageProjectPage({ params }: PageProps) {
       <main className="flex-1 mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+          <h1 className="text-xl font-bold text-ink ">
             Project Management
           </h1>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+          <p className="text-sm text-ink/60 mt-1">
             Manage project, download reports, and view activity history.
           </p>
         </div>
@@ -109,16 +100,16 @@ export default async function ManageProjectPage({ params }: PageProps) {
         <div className="space-y-8">
           {/* Ringkasan Proyek */}
           <section>
-            <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">
+            <h2 className="font-semibold text-sm text-ink mb-3">
               Project Summary
             </h2>
-            <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-5">
+            <div className="rounded-[24px] border border-hairline p-5">
               <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">
+                  <h3 className="font-semibold text-ink ">
                     {project.title}
                   </h3>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1 max-w-xl line-clamp-3 whitespace-pre-wrap">
+                  <p className="text-sm text-ink/60 mt-1 max-w-xl line-clamp-3 whitespace-pre-wrap">
                     {project.description}
                   </p>
                 </div>
@@ -132,28 +123,28 @@ export default async function ManageProjectPage({ params }: PageProps) {
                   {getStatusLabel(project.status)}
                 </Badge>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-5 pt-4 border-t border-zinc-100 dark:border-zinc-800 text-sm">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-5 pt-4 border-t border-zinc-100 text-sm">
                 <div>
-                  <span className="text-zinc-500 dark:text-zinc-400">Created At</span>
-                  <p className="font-medium text-zinc-900 dark:text-zinc-100">
+                  <span className="text-ink/60 ">Created At</span>
+                  <p className="font-medium text-ink ">
                     {project.createdAt}
                   </p>
                 </div>
                 <div>
-                  <span className="text-zinc-500 dark:text-zinc-400">Updated At</span>
-                  <p className="font-medium text-zinc-900 dark:text-zinc-100">
+                  <span className="text-ink/60 ">Updated At</span>
+                  <p className="font-medium text-ink ">
                     {project.updatedAt}
                   </p>
                 </div>
                 <div>
-                  <span className="text-zinc-500 dark:text-zinc-400">Total Tasks</span>
-                  <p className="font-medium text-zinc-900 dark:text-zinc-100">
+                  <span className="text-ink/60 ">Total Tasks</span>
+                  <p className="font-medium text-ink ">
                     {totalTasks}
                   </p>
                 </div>
                 <div>
-                  <span className="text-zinc-500 dark:text-zinc-400">Progress</span>
-                  <p className="font-medium text-zinc-900 dark:text-zinc-100">
+                  <span className="text-ink/60 ">Progress</span>
+                  <p className="font-medium text-ink ">
                     {project.progress}%
                   </p>
                 </div>
@@ -163,7 +154,7 @@ export default async function ManageProjectPage({ params }: PageProps) {
 
           {/* Daftar Tugas */}
           <section>
-            <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">
+            <h2 className="font-semibold text-sm text-ink mb-3">
               Task List
             </h2>
             <TaskList projectId={id} />
@@ -171,7 +162,7 @@ export default async function ManageProjectPage({ params }: PageProps) {
 
           {/* Ekspor Laporan */}
           <section>
-            <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">
+            <h2 className="font-semibold text-sm text-ink mb-3">
               Export Report
             </h2>
             <ExportSection projectId={id} projectName={project.title} />
@@ -179,7 +170,7 @@ export default async function ManageProjectPage({ params }: PageProps) {
 
           {/* Riwayat Proyek */}
           <section>
-            <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">
+            <h2 className="font-semibold text-sm text-ink mb-3">
               Project History
             </h2>
             <ProjectHistory projectId={id} />
@@ -187,12 +178,12 @@ export default async function ManageProjectPage({ params }: PageProps) {
 
           {/* Hapus Proyek */}
           <section>
-            <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-3">
+            <h2 className="font-semibold text-sm text-ink mb-3">
               Delete Project
             </h2>
-            <div className="rounded-xl border border-red-200 dark:border-red-900/50 bg-red-50/50 dark:bg-red-950/20 p-5">
+            <div className="rounded-[24px] border border-red-200 bg-red-50/50 p-5">
               <div className="flex items-start gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-100 ">
                   <svg
                     width="16"
                     height="16"
@@ -210,10 +201,10 @@ export default async function ManageProjectPage({ params }: PageProps) {
                   </svg>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-medium text-sm text-red-800 dark:text-red-300">
+                  <h3 className="font-medium text-sm text-red-800 ">
                     Delete This Project
                   </h3>
-                  <p className="text-xs text-red-600 dark:text-red-400 mt-1">
+                  <p className="text-xs text-red-600 mt-1">
                     This action cannot be undone. All tasks, diagrams, and history will be permanently deleted.
                   </p>
                   <button className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3.5 py-2 text-xs font-medium text-white hover:bg-red-700 transition-colors">

@@ -233,11 +233,11 @@ export function getTasksByStatus(tasks: Task[], status: TaskStatus): Task[] {
 export function getPriorityColor(priority: Priority): string {
   switch (priority) {
     case "high":
-      return "bg-red-100 text-red-700 dark:bg-red-950/30 dark:text-red-400";
+      return "bg-red-100 text-red-700 ";
     case "medium":
-      return "bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400";
+      return "bg-amber-100 text-amber-700 ";
     case "low":
-      return "bg-blue-100 text-blue-700 dark:bg-blue-950/30 dark:text-blue-400";
+      return "bg-blue-100 text-blue-700 ";
   }
 }
 
@@ -253,7 +253,7 @@ export function getPriorityLabel(priority: Priority): string {
 }
 
 export const COLUMNS: { id: TaskStatus; title: string; color: string }[] = [
-  { id: "todo", title: "To Do", color: "bg-zinc-100 dark:bg-zinc-800/50" },
-  { id: "in-progress", title: "In Progress", color: "bg-blue-50 dark:bg-blue-950/20" },
-  { id: "done", title: "Done", color: "bg-green-50 dark:bg-green-950/20" },
+  { id: "todo", title: "To Do", color: "bg-zinc-100 " },
+  { id: "in-progress", title: "In Progress", color: "bg-blue-50 " },
+  { id: "done", title: "Done", color: "bg-green-50 " },
 ];

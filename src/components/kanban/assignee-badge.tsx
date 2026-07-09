@@ -34,7 +34,7 @@ export function AssigneeBadge({ assigneeId, size = "sm" }: AssigneeBadgeProps) {
 
   if (!member) {
     return (
-      <span className={`inline-flex items-center gap-1.5 ${size === "sm" ? "text-[10px]" : "text-xs"} text-zinc-300 dark:text-zinc-600 italic`}>
+      <span className={`inline-flex items-center gap-1.5 ${size === "sm" ? "text-[10px]" : "text-xs"} text-zinc-300 italic`}>
         <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M8 8a3 3 0 100-6 3 3 0 000 6z" />
           <path d="M14 14c0-2-2.7-4-6-4s-6 2-6 4" />
@@ -49,16 +49,16 @@ export function AssigneeBadge({ assigneeId, size = "sm" }: AssigneeBadgeProps) {
   return (
     <div className="flex items-center gap-1.5 group/assignee">
       <div
-        className={`flex items-center justify-center rounded-full font-medium uppercase shrink-0 transition-all duration-150 group-hover/assignee:ring-2 group-hover/assignee:ring-zinc-400 dark:group-hover/assignee:ring-zinc-500 ${dotSize} ${
+        className={`flex items-center justify-center rounded-full font-medium uppercase shrink-0 transition-all duration-150 group-hover/assignee:ring-2 group-hover/assignee:ring-zinc-400 :ring-zinc-500 ${dotSize} ${
           size === "sm"
-            ? "bg-zinc-200 dark:bg-zinc-700 text-zinc-500 dark:text-zinc-400"
-            : "bg-zinc-200 dark:bg-zinc-700 text-zinc-500 dark:text-zinc-400"
+            ? "bg-zinc-200 text-zinc-500 "
+            : "bg-zinc-200 text-zinc-500 "
         }`}
         title={member.role}
       >
         {member.avatar}
       </div>
-      <span className={`${size === "sm" ? "text-[10px]" : "text-sm"} text-zinc-500 dark:text-zinc-400 truncate group-hover/assignee:text-zinc-700 dark:group-hover/assignee:text-zinc-300 transition-colors duration-150`}>
+      <span className={`${size === "sm" ? "text-[10px]" : "text-sm"} text-zinc-500 truncate group-hover/assignee:text-zinc-700 :text-zinc-300 transition-colors duration-150`}>
         {member.name}
       </span>
     </div>

@@ -54,9 +54,9 @@ export function TeamMemberPicker({
   };
 
   return (
-    <div className="rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 shadow-lg overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+    <div className="rounded-lg border border-zinc-200 bg-white overflow-hidden animate-in fade-in zoom-in-95 duration-150">
       {/* Search */}
-      <div className="p-2 border-b border-zinc-100 dark:border-zinc-800">
+      <div className="p-2 border-b border-zinc-100 ">
         <div className="relative">
           <svg
             width="12"
@@ -78,20 +78,20 @@ export function TeamMemberPicker({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search team members..."
-            className="w-full rounded-md border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 pl-8 pr-2.5 py-1.5 text-xs text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
+            className="w-full rounded-md border border-zinc-200 bg-zinc-50 pl-8 pr-2.5 py-1.5 text-xs text-zinc-700 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 :ring-white"
           />
         </div>
       </div>
 
       {/* List */}
-      <div className="max-h-52 overflow-y-auto divide-y divide-zinc-100 dark:divide-zinc-800">
+      <div className="max-h-52 overflow-y-auto divide-y divide-zinc-100 ">
         {/* Kosongkan */}
         <button
           onClick={() => handleSelect(null)}
           className={`w-full flex items-center gap-2 px-3 py-2.5 text-xs transition-colors ${
             selectedId === null
-              ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
-              : "text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-900"
+              ? "bg-zinc-100 text-zinc-900 "
+              : "text-zinc-500 hover:bg-zinc-50 :bg-zinc-900"
           }`}
         >
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -111,15 +111,15 @@ export function TeamMemberPicker({
               onClick={() => handleSelect(member.id)}
               className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-xs transition-colors ${
                 selectedId === member.id
-                  ? "bg-zinc-100 dark:bg-zinc-800"
-                  : "hover:bg-zinc-50 dark:hover:bg-zinc-900"
+                  ? "bg-zinc-100 "
+                  : "hover:bg-zinc-50 :bg-zinc-900"
               }`}
             >
               <div
                 className={`flex h-7 w-7 items-center justify-center rounded-full font-medium text-[10px] uppercase shrink-0 ${
                   selectedId === member.id
-                    ? "bg-zinc-900 text-white dark:bg-white dark:text-zinc-900"
-                    : "bg-zinc-200 dark:bg-zinc-700 text-zinc-500 dark:text-zinc-400"
+                    ? "bg-zinc-900 text-white "
+                    : "bg-zinc-200 text-zinc-500 "
                 }`}
               >
                 {member.avatar}
@@ -128,8 +128,8 @@ export function TeamMemberPicker({
                 <span
                   className={`block truncate ${
                     selectedId === member.id
-                      ? "font-medium text-zinc-900 dark:text-zinc-100"
-                      : "text-zinc-700 dark:text-zinc-300"
+                      ? "font-medium text-zinc-900 "
+                      : "text-zinc-700 "
                   }`}
                 >
                   {member.name}
@@ -139,7 +139,7 @@ export function TeamMemberPicker({
                 </span>
               </div>
               {selectedId === member.id && (
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-zinc-900 dark:text-white">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-zinc-900 ">
                   <polyline points="4 8 7 11 12 5" />
                 </svg>
               )}

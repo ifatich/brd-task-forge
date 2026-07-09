@@ -23,64 +23,64 @@ export function UploadStatusBanner() {
   return (
     <div className="mb-8 animate-fade-in">
       {isProcessing ? (
-        <div className="rounded-xl border border-blue-500/20 bg-blue-500/10 p-4 flex items-center justify-between shadow-sm">
+        <div className="rounded-[24px] border border-blue-500/20 bg-blue-500/10 p-4 flex items-center justify-between ">
           <div className="flex items-center gap-3">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="animate-spin text-blue-400 shrink-0">
               <path d="M21 12a9 9 0 11-6.219-8.56" />
             </svg>
             <div>
-              <p className="text-sm font-semibold text-blue-100">
-                Memproses {fileName || "dokumen"}...
+              <p className="text-sm font-bold text-ink">
+                Processing {fileName || "document"}...
               </p>
-              <p className="text-xs text-blue-400 mt-0.5">
-                Estimasi: 8-10 menit. Anda dapat terus menggunakan dashboard.
+              <p className="text-xs text-ink/70 mt-0.5">
+                Estimated time: 8-10 minutes. You can continue using the dashboard.
               </p>
             </div>
           </div>
           <button
             onClick={() => router.push("/upload")}
-            className="text-xs font-medium text-blue-300 hover:text-white px-3 py-1.5 rounded-lg bg-blue-500/20 hover:bg-blue-500/40 transition-colors"
+            className="text-xs font-bold text-ink hover:text-ink/70 px-4 py-2 rounded-full bg-black/5 hover:bg-black/10 transition-colors"
           >
-            Lihat Progress
+            View Progress
           </button>
         </div>
       ) : previewData ? (
-        <div className="rounded-xl border border-green-500/20 bg-green-500/10 p-4 flex items-center justify-between shadow-sm">
+        <div className="rounded-[24px] border border-green-500/20 bg-green-500/10 p-4 flex items-center justify-between ">
           <div className="flex items-center gap-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-500/20 shrink-0">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-green-400">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-green-600">
                 <path d="M13 5L6 12l-3-3" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
             <div>
-              <p className="text-sm font-semibold text-green-100">
-                ✨ Analisis {fileName || "dokumen"} selesai!
+              <p className="text-sm font-bold text-ink">
+                ✨ Analysis for {fileName || "document"} completed!
               </p>
-              <p className="text-xs text-green-400 mt-0.5">
-                Pratinjau struktur tugas dan diagram sudah siap.
+              <p className="text-xs text-ink/70 mt-0.5">
+                Task structures and diagram previews are ready.
               </p>
             </div>
           </div>
           <button
             onClick={() => router.push("/upload")}
-            className="text-xs font-medium text-green-900 bg-green-400 hover:bg-green-300 px-4 py-2 rounded-lg transition-colors"
+            className="text-xs font-bold text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded-full transition-colors"
           >
-            Lihat Hasil
+            View Results
           </button>
         </div>
       ) : error ? (
-        <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-4 flex items-center justify-between shadow-sm">
+        <div className="rounded-[24px] border border-red-500/20 bg-red-500/10 p-4 flex items-center justify-between ">
           <div className="flex items-center gap-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-red-500/20 shrink-0">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-red-400">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-red-500">
                 <path d="M4 12l8-8M4 4l8 8" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
             <div>
-              <p className="text-sm font-semibold text-red-100">
-                Gagal memproses {fileName || "dokumen"}
+              <p className="text-sm font-bold text-ink">
+                Failed to process {fileName || "document"}
               </p>
-              <p className="text-xs text-red-400 mt-0.5 line-clamp-1">
+              <p className="text-xs text-red-500/80 mt-0.5 line-clamp-1">
                 {error}
               </p>
             </div>
@@ -90,9 +90,9 @@ export function UploadStatusBanner() {
               uploadStore.clear();
               router.push("/upload");
             }}
-            className="text-xs font-medium text-red-300 hover:text-white px-3 py-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/40 transition-colors"
+            className="text-xs font-bold text-ink hover:text-ink/70 px-4 py-2 rounded-full bg-black/5 hover:bg-black/10 transition-colors"
           >
-            Tutup
+            Dismiss
           </button>
         </div>
       ) : null}

@@ -16,8 +16,8 @@ export interface Project {
 export const mockProjects: Project[] = [
   {
     id: "proj-001",
-    title: "Aplikasi Mobile Banking",
-    description: "BRD untuk pengembangan aplikasi mobile banking dengan fitur transfer, mutasi, dan pembayaran.",
+    title: "Mobile Banking App",
+    description: "BRD for mobile banking app development with transfer, mutation, and payment features.",
     status: "active",
     progress: 65,
     totalTasks: 24,
@@ -93,7 +93,7 @@ export function getStatusColor(status: Project["status"]): string {
     case "completed":
       return "bg-green-500";
     case "draft":
-      return "bg-zinc-300 dark:bg-zinc-600";
+      return "bg-zinc-300 ";
   }
 }
 

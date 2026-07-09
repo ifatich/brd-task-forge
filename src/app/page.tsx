@@ -28,10 +28,10 @@ export default async function Home() {
   const projects = await fetchProjects();
 
   return (
-    <div className="flex flex-col flex-1 min-h-screen bg-[#09090b] text-zinc-300">
+    <div className="flex flex-col flex-1 min-h-screen bg-canvas text-ink">
       <DashboardNavbar />
 
-      <main className="flex-1 mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8 py-10">
+      <main className="flex-1 mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 py-12">
         
         {/* 0. Upload Status Banner (Global Processing State) */}
         <UploadStatusBanner />
@@ -45,8 +45,8 @@ export default async function Home() {
         {/* 3. Today's Overview (Key Metrics) */}
         <section className="mb-12">
           <div className="flex items-center gap-3 mb-6">
-            <h2 className="text-lg font-semibold text-zinc-100">Today's Overview</h2>
-            <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
+            <h2 className="text-4xl md:text-[64px] font-[340] leading-[1.1] tracking-[-0.015em] text-ink">Today's Overview</h2>
+            <div className="h-px flex-1 bg-gradient-to-r from-hairline to-transparent" />
           </div>
           <OverviewCards projects={projects} />
         </section>
@@ -54,8 +54,8 @@ export default async function Home() {
         {/* 4. Operational Insights */}
         <section className="mb-12">
           <div className="flex items-center gap-3 mb-6">
-            <h2 className="text-lg font-semibold text-zinc-100">Insights</h2>
-            <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
+            <h2 className="text-4xl md:text-[64px] font-[340] leading-[1.1] tracking-[-0.015em] text-ink">Insights</h2>
+            <div className="h-px flex-1 bg-gradient-to-r from-hairline to-transparent" />
           </div>
           <InsightsPanel projects={projects} />
         </section>
@@ -63,11 +63,11 @@ export default async function Home() {
         {/* 5. Projects Explorer */}
         <section>
           <div className="flex items-center gap-3 mb-6">
-            <h2 className="text-lg font-semibold text-zinc-100">Projects Explorer</h2>
-            <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-white/10 text-zinc-300">
+            <h2 className="text-4xl md:text-[64px] font-[340] leading-[1.1] tracking-[-0.015em] text-ink">Projects Explorer</h2>
+            <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-black/10 text-ink">
               {projects.length}
             </span>
-            <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
+            <div className="h-px flex-1 bg-gradient-to-r from-hairline to-transparent" />
           </div>
           <ProjectList projects={projects} />
         </section>

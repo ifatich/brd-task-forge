@@ -37,10 +37,10 @@ interface TaskItem {
 
 function getPriorityColor(priority: string): string {
   switch (priority) {
-    case "high": return "bg-red-100 text-red-700 dark:bg-red-950/30 dark:text-red-400";
-    case "medium": return "bg-yellow-100 text-yellow-700 dark:bg-yellow-950/30 dark:text-yellow-400";
-    case "low": return "bg-green-100 text-green-700 dark:bg-green-950/30 dark:text-green-400";
-    default: return "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400";
+    case "high": return "bg-red-100 text-red-700 ";
+    case "medium": return "bg-yellow-100 text-yellow-700 ";
+    case "low": return "bg-green-100 text-green-700 ";
+    default: return "bg-zinc-100 text-zinc-600 ";
   }
 }
 
@@ -88,7 +88,7 @@ export function TaskCard({ task, onToggleSubTask, onCompleteTask, onDataChange }
     <div
       ref={setNodeRef}
       style={style}
-      className="rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-sm hover:shadow-md transition-shadow touch-none"
+      className="rounded-lg border border-zinc-200 bg-white hover:transition-touch-none"
     >
       {/* Drag handle bar */}
       <div
@@ -110,7 +110,7 @@ export function TaskCard({ task, onToggleSubTask, onCompleteTask, onDataChange }
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-zinc-300 dark:text-zinc-600"
+            className="text-zinc-300 "
           >
             <circle cx="6" cy="4" r="1" />
             <circle cx="10" cy="4" r="1" />
@@ -130,24 +130,24 @@ export function TaskCard({ task, onToggleSubTask, onCompleteTask, onDataChange }
           className="px-3.5 pb-3.5 cursor-pointer space-y-2"
         >
           {/* Title — module/task name */}
-          <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 leading-snug">
+          <h4 className="text-sm font-semibold text-zinc-900 leading-snug">
             {task.title}
           </h4>
 
           {/* Description */}
-          <p className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2">
+          <p className="text-xs text-zinc-500 line-clamp-2">
             {task.description}
           </p>
 
           {/* Progress bar sub-tasks */}
           <div className="flex items-center gap-2">
-            <div className="flex-1 h-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
+            <div className="flex-1 h-1.5 rounded-full bg-zinc-100 overflow-hidden">
               <div
-                className="h-full rounded-full bg-zinc-900 dark:bg-white transition-all duration-300"
+                className="h-full rounded-full bg-zinc-900 transition-all duration-300"
                 style={{ width: `${task.subTasks.length > 0 ? (doneSubTasks / task.subTasks.length) * 100 : 0}%` }}
               />
             </div>
-            <span className="text-[10px] text-zinc-400 dark:text-zinc-500 tabular-nums shrink-0">
+            <span className="text-[10px] text-zinc-400 tabular-nums shrink-0">
               {doneSubTasks}/{task.subTasks.length}
             </span>
           </div>
@@ -170,24 +170,24 @@ export function TaskCard({ task, onToggleSubTask, onCompleteTask, onDataChange }
                   onClick={() => onToggleSubTask?.(task.id, sub.id)}
                   className={`inline-flex items-center justify-center w-3.5 h-3.5 rounded border transition-colors shrink-0 ${
                     sub.done
-                      ? "bg-zinc-900 dark:bg-white border-zinc-900 dark:border-white"
-                      : "border-zinc-300 dark:border-zinc-600 group-hover:border-zinc-400"
+                      ? "bg-zinc-900 border-zinc-900 "
+                      : "border-zinc-300 group-hover:border-zinc-400"
                   }`}
                 >
                   {sub.done && (
-                    <svg width="8" height="8" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white dark:text-zinc-900">
+                    <svg width="8" height="8" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white ">
                       <polyline points="3 8 6 11 13 4" />
                     </svg>
                   )}
                 </span>
-                <span className={`text-[11px] leading-tight truncate ${sub.done ? "text-zinc-400 dark:text-zinc-500 line-through" : "text-zinc-600 dark:text-zinc-400"}`}>
+                <span className={`text-[11px] leading-tight truncate ${sub.done ? "text-ink/40 line-through" : "text-ink"}`}>
                   {sub.title}
                 </span>
               </label>
             ))}
             {task.subTasks.length > 4 && (
-              <p className="text-[10px] text-zinc-400 dark:text-zinc-500 pl-6">
-                +{task.subTasks.length - 4} lainnya
+              <p className="text-[10px] text-ink/40 pl-6">
+                +{task.subTasks.length - 4} more
               </p>
             )}
           </div>
@@ -199,24 +199,24 @@ export function TaskCard({ task, onToggleSubTask, onCompleteTask, onDataChange }
                 e.stopPropagation();
                 onCompleteTask?.(task.id);
               }}
-              className="w-full inline-flex items-center justify-center gap-1.5 rounded-lg bg-green-600 hover:bg-green-700 active:bg-green-800 text-white text-xs font-medium px-3 py-1.5 transition-colors"
+              className="w-full inline-flex items-center justify-center gap-1.5 rounded-full bg-green-500 hover:bg-green-600 active:bg-green-700 text-white text-xs font-bold px-3 py-1.5 transition-colors"
             >
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="4 8 7 11 13 4" />
               </svg>
-              Selesaikan Task
+              Complete Task
             </button>
           )}
 
           {/* Indikasi semua sub-task selesai */}
           {task.subTasks.length > 0 && task.subTasks.every((s) => s.done) && task.status !== "done" && (
-            <p className="text-[10px] text-green-600 dark:text-green-400 text-center -mt-1">
-              Semua sub-task selesai — klik tombol di atas untuk menyelesaikan task
+            <p className="text-[10px] text-green-600 text-center -mt-1">
+              All sub-tasks completed — click the button above to complete the task
             </p>
           )}
 
           {/* Footer: Assignee & Task ID */}
-          <div className="flex items-center justify-between pt-2 border-t border-zinc-100 dark:border-zinc-800 relative">
+          <div className="flex items-center justify-between pt-2 border-t border-zinc-100 relative">
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -226,7 +226,7 @@ export function TaskCard({ task, onToggleSubTask, onCompleteTask, onDataChange }
             >
               <AssigneeBadge assigneeId={task.assigneeId} size="sm" />
             </button>
-            <span className="text-[9px] text-zinc-300 dark:text-zinc-600 font-mono">
+            <span className="text-[9px] text-zinc-300 font-mono">
               {task.id}
             </span>
 

@@ -34,8 +34,8 @@ function getStatusColor(status: string): string {
   switch (status) {
     case "active": return "bg-blue-500";
     case "completed": return "bg-green-500";
-    case "draft": return "bg-zinc-300 dark:bg-zinc-600";
-    default: return "bg-zinc-300 dark:bg-zinc-600";
+    case "draft": return "bg-zinc-300 ";
+    default: return "bg-zinc-300 ";
   }
 }
 
@@ -50,10 +50,10 @@ function getStatusLabel(status: string): string {
 
 function getPriorityColor(priority: string): string {
   switch (priority) {
-    case "high": return "bg-red-100 text-red-700 dark:bg-red-950/30 dark:text-red-400";
-    case "medium": return "bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400";
-    case "low": return "bg-green-100 text-green-700 dark:bg-green-950/30 dark:text-green-400";
-    default: return "bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-400";
+    case "high": return "bg-red-100 text-red-700 ";
+    case "medium": return "bg-amber-100 text-amber-700 ";
+    case "low": return "bg-green-100 text-green-700 ";
+    default: return "bg-black/5 text-ink/80 ";
   }
 }
 
@@ -193,13 +193,13 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
   };
 
   return (
-    <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+    <div className="rounded-[24px] border border-hairline overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900">
+      <div className="flex items-center justify-between px-5 py-4 border-b border-hairline bg-surface-soft ">
         <div className="flex items-center gap-3 min-w-0">
           <button
             onClick={onClose}
-            className="shrink-0 p-1 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors"
+            className="shrink-0 p-1 rounded-md text-ink/40 hover:text-ink/80 :text-ink/40 hover:bg-black/10 :bg-ink transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M10 4l-4 4 4 4" />
@@ -207,12 +207,12 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
           </button>
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 truncate">
+              <h3 className="font-semibold text-sm text-ink truncate">
                 {currentProject.title}
               </h3>
               <span className={`inline-block w-2 h-2 rounded-full ${getStatusColor(currentProject.status)}`} />
             </div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 truncate">
+            <p className="text-xs text-ink/60 mt-0.5 truncate">
               {currentProject.id} &middot; {currentProject.createdAt} &middot; {allTaskCount} tasks
             </p>
           </div>
@@ -220,7 +220,7 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
         <div className="flex items-center gap-2">
           <button
             onClick={() => setEditTarget({ type: "project", data: currentProject })}
-            className="p-1.5 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors"
+            className="p-1.5 rounded-md text-ink/40 hover:text-ink/80 :text-ink/40 hover:bg-black/10 :bg-ink transition-colors"
             title="Edit project"
           >
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -229,32 +229,32 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
           </button>
           <button
             onClick={() => setDeleteTarget({ type: "project", id: currentProject.id, name: currentProject.title })}
-            className="p-1.5 rounded-md text-red-300 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+            className="p-1.5 rounded-md text-red-300 hover:text-red-500 :text-red-400 hover:bg-red-50 :bg-red-950/30 transition-colors"
             title="Delete project"
           >
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M2 4h12" /><path d="M5 4V2h6v2" /><path d="M3 4l1 10h8l1-10" />
             </svg>
           </button>
-          <span className="text-[10px] text-zinc-400 capitalize">{getStatusLabel(currentProject.status)}</span>
+          <span className="text-[10px] text-ink/40 capitalize">{getStatusLabel(currentProject.status)}</span>
         </div>
       </div>
 
       {/* Stats mini + add task */}
-      <div className="flex items-stretch gap-px bg-zinc-200 dark:bg-zinc-800">
+      <div className="flex items-stretch gap-px bg-black/10 ">
         {[
-          { label: "Completed", value: doneTasks, color: "text-green-600 dark:text-green-400" },
-          { label: "In Progress", value: inProgressTasks, color: "text-blue-600 dark:text-blue-400" },
-          { label: "Total", value: allTaskCount, color: "text-zinc-900 dark:text-zinc-100" },
+          { label: "Completed", value: doneTasks, color: "text-green-600 " },
+          { label: "In Progress", value: inProgressTasks, color: "text-blue-600 " },
+          { label: "Total", value: allTaskCount, color: "text-ink " },
         ].map((s) => (
-          <div key={s.label} className="flex-1 bg-white dark:bg-zinc-950 px-4 py-3 text-center">
+          <div key={s.label} className="flex-1 bg-canvas px-4 py-3 text-center">
             <div className={`text-lg font-bold ${s.color}`}>{s.value}</div>
-            <div className="text-[10px] text-zinc-500 dark:text-zinc-400">{s.label}</div>
+            <div className="text-[10px] text-ink/60 ">{s.label}</div>
           </div>
         ))}
         <button
           onClick={() => setAddTaskOpen(true)}
-          className="flex items-center justify-center gap-1.5 bg-white dark:bg-zinc-950 px-4 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors text-xs font-medium text-zinc-600 dark:text-zinc-400"
+          className="flex items-center justify-center gap-1.5 bg-canvas px-4 py-3 hover:bg-surface-soft :bg-ink transition-colors text-xs font-medium text-ink/80 "
         >
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M8 2v12" /><path d="M2 8h12" /></svg>
           Add Task
@@ -262,13 +262,13 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex items-center border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+      <div className="flex items-center border-b border-hairline bg-canvas ">
         <button
           onClick={() => setActiveTab("tasks")}
           className={`flex items-center gap-1.5 px-5 py-2.5 text-xs font-medium transition-colors border-b-2 -mb-[1px] ${
             activeTab === "tasks"
-              ? "text-zinc-900 dark:text-zinc-100 border-zinc-900 dark:border-white"
-              : "text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 border-transparent"
+              ? "text-ink border-ink "
+              : "text-ink/60 hover:text-ink/80 :text-ink/40 border-transparent"
           }`}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -281,8 +281,8 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
           onClick={() => setActiveTab("diagram")}
           className={`flex items-center gap-1.5 px-5 py-2.5 text-xs font-medium transition-colors border-b-2 -mb-[1px] ${
             activeTab === "diagram"
-              ? "text-zinc-900 dark:text-zinc-100 border-zinc-900 dark:border-white"
-              : "text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 border-transparent"
+              ? "text-ink border-ink "
+              : "text-ink/60 hover:text-ink/80 :text-ink/40 border-transparent"
           }`}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -294,7 +294,7 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
         <a
           href={`/project/${currentProject.id}/diagram`}
           target="_blank"
-          className="ml-auto flex items-center gap-1 px-4 py-2 text-[10px] text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
+          className="ml-auto flex items-center gap-1 px-4 py-2 text-[10px] text-ink/40 hover:text-ink/80 :text-ink/40 transition-colors"
         >
           Open in new tab
           <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M6 4l4 4-4 4" /></svg>
@@ -305,21 +305,21 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
       {activeTab === "tasks" && (
         <>
       {/* Filter bar */}
-      <div className="p-4 border-b border-zinc-200 dark:border-zinc-800 space-y-3">
+      <div className="p-4 border-b border-hairline space-y-3">
         <div className="relative">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="absolute left-3 top-1/2 -translate-y-1/2 text-ink/40">
             <circle cx="7" cy="7" r="4" /><line x1="11" y1="11" x2="14" y2="14" />
           </svg>
           <input
             type="text" value={searchText} onChange={(e) => setSearchText(e.target.value)}
             placeholder="Search task or sub-task..."
-            className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 pl-9 pr-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
+            className="w-full rounded-[12px] border border-hairline bg-canvas pl-9 pr-3 py-2 text-sm text-ink/80 placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-ink :ring-white"
           />
         </div>
         <div className="flex gap-2">
           <select
             value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}
-            className="rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-1.5 text-xs text-zinc-700 dark:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-900"
+            className="rounded-full border border-hairline bg-canvas px-3 py-1.5 text-xs text-ink/80 focus:outline-none focus:ring-2 focus:ring-ink"
           >
             <option value="all">All Status</option>
             <option value="todo">To Do</option>
@@ -328,7 +328,7 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
           </select>
           <select
             value={filterPriority} onChange={(e) => setFilterPriority(e.target.value)}
-            className="rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-1.5 text-xs text-zinc-700 dark:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-900"
+            className="rounded-full border border-hairline bg-canvas px-3 py-1.5 text-xs text-ink/80 focus:outline-none focus:ring-2 focus:ring-ink"
           >
             <option value="all">All Priorities</option>
             <option value="high">High</option>
@@ -339,10 +339,10 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
       </div>
 
       {/* Task list */}
-      <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
+      <div className="divide-y divide-zinc-100 ">
         {tasks.length === 0 ? (
           <div className="px-5 py-8 text-center">
-            <p className="text-sm text-zinc-400 dark:text-zinc-500">No tasks found</p>
+            <p className="text-sm text-ink/40 ">No tasks found</p>
           </div>
         ) : (
           tasks.map((task) => (
@@ -350,23 +350,23 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
               {/* Task row */}
               <button
                 onClick={() => setExpandedTask(expandedTask === task.id ? null : task.id)}
-                className="w-full flex items-center gap-3 px-5 py-3 text-left hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors"
+                className="w-full flex items-center gap-3 px-5 py-3 text-left hover:bg-surface-soft :bg-ink/50 transition-colors"
               >
                 <span
                   className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium shrink-0 ${getPriorityColor(task.priority)}`}
                 >
                   {getPriorityLabel(task.priority)}
                 </span>
-                <span className="flex-1 text-sm font-medium text-zinc-800 dark:text-zinc-200 truncate">
+                <span className="flex-1 text-sm font-medium text-zinc-800 truncate">
                   {task.title}
                 </span>
-                <span className="text-xs text-zinc-400 tabular-nums">
+                <span className="text-xs text-ink/40 tabular-nums">
                   {task.subTasks.filter((s: any) => s.done).length}/{task.subTasks.length}
                 </span>
                 <span className={`text-[10px] font-medium capitalize px-2 py-0.5 rounded-full ${
-                  task.status === "done" ? "bg-green-100 text-green-700 dark:bg-green-950/30 dark:text-green-400" :
-                  task.status === "in-progress" ? "bg-blue-100 text-blue-700 dark:bg-blue-950/30 dark:text-blue-400" :
-                  "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400"
+                  task.status === "done" ? "bg-green-100 text-green-700 " :
+                  task.status === "in-progress" ? "bg-blue-100 text-blue-700 " :
+                  "bg-black/5 text-ink/80 "
                 }`}>
                   {task.status === "in-progress" ? "In Progress" : task.status === "done" ? "Done" : "To Do"}
                 </span>
@@ -375,7 +375,7 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
                     e.stopPropagation();
                     setEditTarget({ type: "task", data: task, projectId: currentProject.id });
                   }}
-                  className="p-1 rounded text-zinc-300 hover:text-zinc-500 dark:hover:text-zinc-300 transition-colors cursor-pointer"
+                  className="p-1 rounded text-ink/40 hover:text-ink/60 :text-ink/40 transition-colors cursor-pointer"
                   title="Edit task"
                 >
                   <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -387,7 +387,7 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
                     e.stopPropagation();
                     setDeleteTarget({ type: "task", id: task.id, name: task.title });
                   }}
-                  className="p-1 rounded text-red-200 hover:text-red-400 dark:hover:text-red-400 transition-colors cursor-pointer"
+                  className="p-1 rounded text-red-200 hover:text-red-400 :text-red-400 transition-colors cursor-pointer"
                   title="Delete task"
                 >
                   <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -395,7 +395,7 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
                   </svg>
                 </span>
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"
-                  className={`text-zinc-400 transition-transform duration-200 shrink-0 ${expandedTask === task.id ? "rotate-90" : ""}`}
+                  className={`text-ink/40 transition-transform duration-200 shrink-0 ${expandedTask === task.id ? "rotate-90" : ""}`}
                 >
                   <path d="M6 4l4 4-4 4" />
                 </svg>
@@ -403,34 +403,34 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
 
               {/* Expanded sub-tasks */}
               {expandedTask === task.id && (
-                <div className="px-5 pb-3 pt-1 space-y-1 bg-zinc-50/50 dark:bg-zinc-900/30">
-                  <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed pl-1 pb-1.5">
+                <div className="px-5 pb-3 pt-1 space-y-1 bg-surface-soft/50 ">
+                  <p className="text-xs text-ink/60 leading-relaxed pl-1 pb-1.5">
                     {task.description}
                   </p>
                   {task.subTasks.map((sub: any) => (
-                    <div key={sub.id} className="flex items-center gap-2.5 px-3 py-1.5 rounded-md hover:bg-white dark:hover:bg-zinc-900 transition-colors group">
+                    <div key={sub.id} className="flex items-center gap-2.5 px-3 py-1.5 rounded-md hover:bg-canvas :bg-ink transition-colors group">
                       <span className={`inline-flex items-center justify-center w-3.5 h-3.5 rounded border shrink-0 transition-colors ${
                         sub.done
-                          ? "bg-zinc-900 dark:bg-white border-zinc-900 dark:border-white"
-                          : "border-zinc-300 dark:border-zinc-600"
+                          ? "bg-ink border-ink "
+                          : "border-zinc-300 "
                       }`}>
                         {sub.done && (
-                          <svg width="8" height="8" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white dark:text-zinc-900">
+                          <svg width="8" height="8" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-canvas ">
                             <polyline points="3 8 6 11 13 4" />
                           </svg>
                         )}
                       </span>
-                      <span className={`flex-1 text-xs ${sub.done ? "text-zinc-400 dark:text-zinc-500 line-through" : "text-zinc-600 dark:text-zinc-400"}`}>
+                      <span className={`flex-1 text-xs ${sub.done ? "text-ink/40 line-through" : "text-ink/80 "}`}>
                         {sub.title}
                       </span>
                       <div className="flex gap-1 items-center">
                         {safeArray(sub.elements).slice(0, 3).map((el: any, i: number) => (
-                          <span key={i} className="inline-flex items-center rounded-md bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/50 px-1.5 py-0.5 text-[9px] text-amber-700 dark:text-amber-400">
+                          <span key={i} className="inline-flex items-center rounded-md bg-black/5 border border-hairline px-1.5 py-0.5 text-[9px] text-amber-700 ">
                             {el}
                           </span>
                         ))}
                         {safeArray(sub.elements).length > 3 && (
-                          <span className="text-[9px] text-zinc-400">+{safeArray(sub.elements).length - 3}</span>
+                          <span className="text-[9px] text-ink/40">+{safeArray(sub.elements).length - 3}</span>
                         )}
                         {/* Add element inline */}
                         <AddElementInline
@@ -448,14 +448,14 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
                     </div>
                   ))}
                   {task.subTasks.length === 0 && (
-                    <p className="text-xs text-zinc-400 pl-1 pb-1">No sub-tasks yet</p>
+                    <p className="text-xs text-ink/40 pl-1 pb-1">No sub-tasks yet</p>
                   )}
 
                   {/* Tambah Sub-task */}
                   <div className="pt-2">
                     <button
                       onClick={(e) => { e.stopPropagation(); setAddSubTaskFor(task.id); }}
-                      className="inline-flex items-center gap-1 rounded-lg border border-dashed border-zinc-300 dark:border-zinc-600 hover:border-zinc-400 dark:hover:border-zinc-500 px-3 py-1.5 text-[10px] font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
+                      className="inline-flex items-center gap-1 rounded-lg border border-dashed border-zinc-300 hover:border-ink/40 :border-ink/60 px-3 py-1.5 text-[10px] font-medium text-ink/60 hover:text-ink/80 :text-ink/40 transition-colors"
                     >
                       <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M8 2v12" /><path d="M2 8h12" /></svg>
                       Add Sub-task
@@ -476,19 +476,19 @@ export function AdminProjectDetail({ project, onClose, onProjectDeleted }: Admin
           {diagramLoading ? (
             <div className="flex items-center justify-center py-16">
               <div className="flex flex-col items-center gap-3">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-spin text-zinc-400">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-spin text-ink/40">
                   <path d="M21 12a9 9 0 11-6.219-8.56" />
                 </svg>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400">Loading diagram...</p>
+                <p className="text-sm text-ink/60 ">Loading diagram...</p>
               </div>
             </div>
           ) : diagramError ? (
             <div className="text-center py-12">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mx-auto text-zinc-300 dark:text-zinc-600 mb-3">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mx-auto text-ink/40 mb-3">
                 <circle cx="12" cy="12" r="10" /><path d="M8 12l2 2 4-4" />
               </svg>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">{diagramError}</p>
-              <p className="text-xs text-zinc-400 mt-1">Upload & process BRD first to view the diagram.</p>
+              <p className="text-sm text-ink/60 ">{diagramError}</p>
+              <p className="text-xs text-ink/40 mt-1">Upload & process BRD first to view the diagram.</p>
             </div>
           ) : diagramData ? (
             <div className="grid grid-cols-1 lg:grid-cols-9 gap-6">
@@ -608,38 +608,38 @@ function AddTaskModal({ onAdd, onClose }: {
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[10vh] pb-[10vh] bg-black/30 backdrop-blur-sm" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="w-full max-w-lg rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-2xl mx-4 animate-in fade-in zoom-in-95 flex flex-col max-h-[80vh]">
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100 dark:border-zinc-800 shrink-0">
-          <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">Add Task</h2>
-          <button onClick={onClose} className="p-1 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+      <div className="w-full max-w-lg rounded-[24px] border border-hairline bg-canvas mx-4 animate-in fade-in zoom-in-95 flex flex-col max-h-[80vh]">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-hairline shrink-0">
+          <h2 className="font-semibold text-sm text-ink ">Add Task</h2>
+          <button onClick={onClose} className="p-1 rounded-md text-ink/40 hover:text-ink/80 :text-ink/40 hover:bg-black/5 :bg-ink transition-colors">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="4" y1="4" x2="12" y2="12" /><line x1="12" y1="4" x2="4" y2="12" /></svg>
           </button>
         </div>
         <div className="flex-1 overflow-y-auto p-5 space-y-4">
           <div>
-            <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1">Task Title <span className="text-red-400">*</span></label>
+            <label className="text-[11px] font-medium text-ink/60 block mb-1">Task Title <span className="text-red-400">*</span></label>
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. Dashboard Module" autoFocus
-              className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900" />
+              className="w-full rounded-[12px] border border-hairline bg-canvas px-3 py-2 text-sm text-ink/80 placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-ink" />
           </div>
           <div>
-            <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1">Description</label>
+            <label className="text-[11px] font-medium text-ink/60 block mb-1">Description</label>
             <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={2} placeholder="Brief description of this task"
-              className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 resize-none" />
+              className="w-full rounded-[12px] border border-hairline bg-canvas px-3 py-2 text-sm text-ink/80 placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-ink resize-none" />
           </div>
           <div>
-            <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1">Goals / Objectives</label>
+            <label className="text-[11px] font-medium text-ink/60 block mb-1">Goals / Objectives</label>
             <textarea value={goals} onChange={(e) => setGoals(e.target.value)} rows={2} placeholder="One line per goal&#10;e.g.&#10;Facilitate user login&#10;Multi-factor security"
-              className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 resize-none" />
+              className="w-full rounded-[12px] border border-hairline bg-canvas px-3 py-2 text-sm text-ink/80 placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-ink resize-none" />
           </div>
           <div>
-            <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1">Definition of Done</label>
+            <label className="text-[11px] font-medium text-ink/60 block mb-1">Definition of Done</label>
             <textarea value={definitionOfDone} onChange={(e) => setDefinitionOfDone(e.target.value)} rows={2} placeholder="What criteria indicate this task is completed?"
-              className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 resize-none" />
+              className="w-full rounded-[12px] border border-hairline bg-canvas px-3 py-2 text-sm text-ink/80 placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-ink resize-none" />
           </div>
         </div>
-        <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-zinc-100 dark:border-zinc-800 shrink-0">
-          <button onClick={onClose} className="rounded-lg border border-zinc-200 dark:border-zinc-700 px-3.5 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">Cancel</button>
-          <button onClick={handleSubmit} disabled={!title.trim()} className="rounded-lg bg-zinc-900 dark:bg-white px-3.5 py-1.5 text-xs font-medium text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">Add Task</button>
+        <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-hairline shrink-0">
+          <button onClick={onClose} className="rounded-full border border-hairline px-4 py-2 text-xs font-medium text-ink/80 hover:bg-black/5 :bg-ink transition-colors">Cancel</button>
+          <button onClick={handleSubmit} disabled={!title.trim()} className="rounded-full bg-ink px-4 py-2 text-xs font-medium text-canvas hover:bg-ink :bg-black/10 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">Add Task</button>
         </div>
       </div>
     </div>
@@ -664,43 +664,43 @@ function AddSubTaskModal({ onAdd, onClose }: {
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[10vh] pb-[10vh] bg-black/30 backdrop-blur-sm" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="w-full max-w-lg rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-2xl mx-4 animate-in fade-in zoom-in-95 flex flex-col max-h-[80vh]">
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100 dark:border-zinc-800 shrink-0">
-          <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">Add Sub-task</h2>
-          <button onClick={onClose} className="p-1 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+      <div className="w-full max-w-lg rounded-[24px] border border-hairline bg-canvas mx-4 animate-in fade-in zoom-in-95 flex flex-col max-h-[80vh]">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-hairline shrink-0">
+          <h2 className="font-semibold text-sm text-ink ">Add Sub-task</h2>
+          <button onClick={onClose} className="p-1 rounded-md text-ink/40 hover:text-ink/80 :text-ink/40 hover:bg-black/5 :bg-ink transition-colors">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="4" y1="4" x2="12" y2="12" /><line x1="12" y1="4" x2="4" y2="12" /></svg>
           </button>
         </div>
         <div className="flex-1 overflow-y-auto p-5 space-y-4">
           <div>
-            <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1">Sub-task Title <span className="text-red-400">*</span></label>
+            <label className="text-[11px] font-medium text-ink/60 block mb-1">Sub-task Title <span className="text-red-400">*</span></label>
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. Login Page" autoFocus
-              className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900" />
+              className="w-full rounded-[12px] border border-hairline bg-canvas px-3 py-2 text-sm text-ink/80 placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-ink" />
           </div>
           <div>
-            <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1">Description</label>
+            <label className="text-[11px] font-medium text-ink/60 block mb-1">Description</label>
             <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={2} placeholder="Description of this sub-task"
-              className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 resize-none" />
+              className="w-full rounded-[12px] border border-hairline bg-canvas px-3 py-2 text-sm text-ink/80 placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-ink resize-none" />
           </div>
           <div>
-            <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1">Goals / Objectives</label>
+            <label className="text-[11px] font-medium text-ink/60 block mb-1">Goals / Objectives</label>
             <textarea value={goals} onChange={(e) => setGoals(e.target.value)} rows={2} placeholder="One line per goal"
-              className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 resize-none" />
+              className="w-full rounded-[12px] border border-hairline bg-canvas px-3 py-2 text-sm text-ink/80 placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-ink resize-none" />
           </div>
           <div>
-            <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1">Definition of Done</label>
+            <label className="text-[11px] font-medium text-ink/60 block mb-1">Definition of Done</label>
             <textarea value={definitionOfDone} onChange={(e) => setDefinitionOfDone(e.target.value)} rows={2} placeholder="Completion criteria for this sub-task"
-              className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 resize-none" />
+              className="w-full rounded-[12px] border border-hairline bg-canvas px-3 py-2 text-sm text-ink/80 placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-ink resize-none" />
           </div>
           <div>
-            <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1">UI Elements</label>
+            <label className="text-[11px] font-medium text-ink/60 block mb-1">UI Elements</label>
             <textarea value={elements} onChange={(e) => setElements(e.target.value)} rows={2} placeholder="Separate with comma&#10;e.g. Email Form, Password Form, Login Button"
-              className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 resize-none" />
+              className="w-full rounded-[12px] border border-hairline bg-canvas px-3 py-2 text-sm text-ink/80 placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-ink resize-none" />
           </div>
         </div>
-        <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-zinc-100 dark:border-zinc-800 shrink-0">
-          <button onClick={onClose} className="rounded-lg border border-zinc-200 dark:border-zinc-700 px-3.5 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">Cancel</button>
-          <button onClick={handleSubmit} disabled={!title.trim()} className="rounded-lg bg-zinc-900 dark:bg-white px-3.5 py-1.5 text-xs font-medium text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">Add Sub-task</button>
+        <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-hairline shrink-0">
+          <button onClick={onClose} className="rounded-full border border-hairline px-4 py-2 text-xs font-medium text-ink/80 hover:bg-black/5 :bg-ink transition-colors">Cancel</button>
+          <button onClick={handleSubmit} disabled={!title.trim()} className="rounded-full bg-ink px-4 py-2 text-xs font-medium text-canvas hover:bg-ink :bg-black/10 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">Add Sub-task</button>
         </div>
       </div>
     </div>
@@ -716,7 +716,7 @@ function AddElementInline({ onAdd }: { onAdd: (element: string) => void }) {
     return (
       <button
         onClick={(e) => { e.stopPropagation(); setOpen(true); }}
-        className="p-0.5 rounded text-zinc-200 hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/20 transition-colors opacity-0 group-hover:opacity-100"
+        className="p-0.5 rounded text-ink/20 hover:text-ink hover:bg-black/5 :bg-amber-950/20 transition-colors opacity-0 group-hover:opacity-100"
         title="Add UI Element"
       >
         <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M8 2v12" /><path d="M2 8h12" /></svg>
@@ -737,9 +737,9 @@ function AddElementInline({ onAdd }: { onAdd: (element: string) => void }) {
           }
           if (e.key === "Escape") setOpen(false);
         }}
-        className="w-28 rounded border border-amber-200 dark:border-amber-800 bg-white dark:bg-zinc-900 px-1.5 py-0.5 text-[9px] text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-amber-400"
+        className="w-28 rounded border border-hairline bg-canvas px-1.5 py-0.5 text-[9px] text-ink/80 placeholder:text-ink/40 focus:outline-none focus:ring-1 focus:ring-ink"
       />
-      <button onClick={() => setOpen(false)} className="p-0.5 text-zinc-300 hover:text-zinc-500 transition-colors">
+      <button onClick={() => setOpen(false)} className="p-0.5 text-ink/40 hover:text-ink/60 transition-colors">
         <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="4" y1="4" x2="12" y2="12" /><line x1="12" y1="4" x2="4" y2="12" /></svg>
       </button>
     </span>

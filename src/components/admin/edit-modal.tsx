@@ -55,13 +55,13 @@ export function EditModal({ target, onClose, onSave }: EditModalProps) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm"
       onClick={(e) => { if (e.target === overlayRef.current) onClose(); }}
     >
-      <div className="w-full max-w-md rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-2xl mx-4 animate-in fade-in zoom-in-95">
+      <div className="w-full max-w-md rounded-[24px] border border-hairline bg-canvas mx-4 animate-in fade-in zoom-in-95">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-100 dark:border-zinc-800">
-          <h2 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-hairline ">
+          <h2 className="font-semibold text-sm text-ink ">
             Edit {isProject ? "Project" : "Task"}
           </h2>
-          <button onClick={onClose} className="p-1 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+          <button onClick={onClose} className="p-1 rounded-md text-ink/40 hover:text-ink/80 :text-ink/40 hover:bg-black/5 :bg-ink transition-colors">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="4" y1="4" x2="12" y2="12" /><line x1="12" y1="4" x2="4" y2="12" />
             </svg>
@@ -71,28 +71,28 @@ export function EditModal({ target, onClose, onSave }: EditModalProps) {
         {/* Body */}
         <div className="p-5 space-y-4">
           <div>
-            <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1">Title</label>
+            <label className="text-[11px] font-medium text-ink/60 block mb-1">Title</label>
             <input
               type="text" value={title} onChange={(e) => setTitle(e.target.value)}
-              className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
+              className="w-full rounded-[12px] border border-hairline bg-canvas px-3 py-2 text-sm text-ink/80 placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-ink :ring-white"
             />
           </div>
 
           <div>
-            <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1">Description</label>
+            <label className="text-[11px] font-medium text-ink/60 block mb-1">Description</label>
             <textarea
               value={description} onChange={(e) => setDescription(e.target.value)}
               rows={3}
-              className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white resize-none"
+              className="w-full rounded-[12px] border border-hairline bg-canvas px-3 py-2 text-sm text-ink/80 placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-ink :ring-white resize-none"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1">Status</label>
+              <label className="text-[11px] font-medium text-ink/60 block mb-1">Status</label>
               <select
                 value={status} onChange={(e) => setStatus(e.target.value as typeof status)}
-                className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-900"
+                className="w-full rounded-[12px] border border-hairline bg-canvas px-3 py-2 text-sm text-ink/80 focus:outline-none focus:ring-2 focus:ring-ink"
               >
                 {isProject ? (
                   <>
@@ -112,10 +112,10 @@ export function EditModal({ target, onClose, onSave }: EditModalProps) {
 
             {!isProject && (
               <div>
-                <label className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block mb-1">Priority</label>
+                <label className="text-[11px] font-medium text-ink/60 block mb-1">Priority</label>
                 <select
                   value={priority} onChange={(e) => setPriority(e.target.value as typeof priority)}
-                  className="w-full rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-900"
+                  className="w-full rounded-[12px] border border-hairline bg-canvas px-3 py-2 text-sm text-ink/80 focus:outline-none focus:ring-2 focus:ring-ink"
                 >
                   <option value="high">High</option>
                   <option value="medium">Medium</option>
@@ -126,7 +126,7 @@ export function EditModal({ target, onClose, onSave }: EditModalProps) {
           </div>
 
           {isProject && (
-            <div className="rounded-lg bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3 text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+            <div className="rounded-[12px] bg-surface-soft border border-hairline p-3 text-xs text-ink/60 leading-relaxed">
               <strong>ID:</strong> {target.data.id}<br />
             <strong>Created:</strong> {(target.data as any).createdAt}<br />
             <strong>Tasks:</strong> {(target.data as any).totalTasks} total
@@ -135,13 +135,13 @@ export function EditModal({ target, onClose, onSave }: EditModalProps) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-zinc-100 dark:border-zinc-800">
-          <button onClick={onClose} className="rounded-lg border border-zinc-200 dark:border-zinc-700 px-3.5 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+        <div className="flex items-center justify-end gap-2 px-5 py-3.5 border-t border-hairline ">
+          <button onClick={onClose} className="rounded-full border border-hairline px-4 py-2 text-xs font-medium text-ink/80 hover:bg-black/5 :bg-ink transition-colors">
             Cancel
           </button>
           <button
             onClick={handleSave}
-            className="rounded-lg bg-zinc-900 dark:bg-white px-3.5 py-1.5 text-xs font-medium text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors"
+            className="rounded-full bg-ink px-4 py-2 text-xs font-medium text-canvas hover:bg-ink :bg-black/10 transition-colors"
           >
             Save Changes
           </button>

@@ -135,7 +135,7 @@ export function FlowDiagram({ mermaidSyntax, showLegend = true, nodeDetails }: F
       (node as SVGGElement).style.setProperty("transition", "filter 0.18s ease", "important");
     });
 
-    // ── STEP 2: Styling per level — warna, radius, shadow ──
+    // ── STEP 2: Styling per level — warna, radius, ──
     svgEl.querySelectorAll(".node").forEach((node) => {
       const id = extractNodeId((node as SVGGElement).id ?? "");
       const rect = node.querySelector("rect") as SVGRectElement | null;
@@ -157,8 +157,8 @@ export function FlowDiagram({ mermaidSyntax, showLegend = true, nodeDetails }: F
         rect.setAttribute("fill", "#18181b");
         rect.setAttribute("stroke", "#18181b");
         rect.setAttribute("stroke-width", "0");
-        // Filter shadow lebih dalam untuk root
-        rect.setAttribute("filter", "drop-shadow(0 4px 12px rgba(0,0,0,0.2))");
+        // Filter lebih dalam untuk root
+        rect.setAttribute("filter", "drop-(0 4px 12px rgba(0,0,0,0.2))");
         const label = node.querySelector(".nodeLabel");
         if (label) (label as SVGElement).style.setProperty("color", "#ffffff", "important");
       } else if (isModule) {
@@ -172,7 +172,7 @@ export function FlowDiagram({ mermaidSyntax, showLegend = true, nodeDetails }: F
         };
         const [bg, fg] = colors[id] ?? ["#f4f4f5", "#18181b"];
         rect.setAttribute("fill", bg);
-        rect.setAttribute("filter", "drop-shadow(0 2px 6px rgba(0,0,0,0.08))");
+        rect.setAttribute("filter", "drop-(0 2px 6px rgba(0,0,0,0.08))");
         const label = node.querySelector(".nodeLabel");
         if (label) (label as SVGElement).style.setProperty("color", fg, "important");
       } else if (isScreen) {
@@ -181,7 +181,7 @@ export function FlowDiagram({ mermaidSyntax, showLegend = true, nodeDetails }: F
         rect.setAttribute("fill", "#eef2ff");
         rect.setAttribute("stroke", "#c7d2fe");
         rect.setAttribute("stroke-width", "1.5");
-        rect.setAttribute("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.07))");
+        rect.setAttribute("filter", "drop-(0 2px 4px rgba(0,0,0,0.07))");
         const label = node.querySelector(".nodeLabel");
         if (label) (label as SVGElement).style.setProperty("color", "#4338ca", "important");
       } else if (isComponent) {
@@ -190,7 +190,7 @@ export function FlowDiagram({ mermaidSyntax, showLegend = true, nodeDetails }: F
         rect.setAttribute("fill", "#fffbeb");
         rect.setAttribute("stroke", "#fde68a");
         rect.setAttribute("stroke-width", "1");
-        rect.setAttribute("filter", "drop-shadow(0 1px 2px rgba(0,0,0,0.04))");
+        rect.setAttribute("filter", "drop-(0 1px 2px rgba(0,0,0,0.04))");
         const label = node.querySelector(".nodeLabel");
         if (label) (label as SVGElement).style.setProperty("color", "#92400e", "important");
       }
@@ -256,7 +256,7 @@ export function FlowDiagram({ mermaidSyntax, showLegend = true, nodeDetails }: F
       if (rectEl) {
         rectEl.setAttribute("transform", "scale(1.05)");
       }
-      nodeEl.style.filter = "brightness(1.08) drop-shadow(0 6px 16px rgba(0,0,0,0.12))";
+      nodeEl.style.filter = "brightness(1.08) drop-(0 6px 16px rgba(0,0,0,0.12))";
     };
 
     const onMouseOut = (e: Event) => {
@@ -335,7 +335,7 @@ export function FlowDiagram({ mermaidSyntax, showLegend = true, nodeDetails }: F
   }
 
   return (
-    <div className={`${isFullscreen ? 'fixed inset-0 z-[100] rounded-none border-0' : 'rounded-xl border border-zinc-200 dark:border-zinc-800 relative'} bg-white dark:bg-zinc-950 overflow-hidden flex flex-col`}>
+    <div className={`rounded-[24px] border border-hairline bg-canvas relative flex flex-col transition-all ${isFullscreen ? '!fixed !inset-0 !z-[100] !rounded-none !border-0' : ''}`}>
       {/* Loading skeleton */}
       {!isRendered && (
         <div className="space-y-3 animate-pulse">
@@ -355,15 +355,15 @@ export function FlowDiagram({ mermaidSyntax, showLegend = true, nodeDetails }: F
             </svg>
             Merender diagram...
           </div>
-          <div className="h-4 bg-zinc-100 dark:bg-zinc-800 rounded w-3/4 mx-auto" />
-          <div className="h-4 bg-zinc-100 dark:bg-zinc-800 rounded w-1/2 mx-auto" />
-          <div className="h-4 bg-zinc-100 dark:bg-zinc-800 rounded w-2/3 mx-auto" />
-          <div className="h-4 bg-zinc-100 dark:bg-zinc-800 rounded w-1/3 mx-auto" />
+          <div className="h-4 bg-zinc-100 rounded w-3/4 mx-auto" />
+          <div className="h-4 bg-zinc-100 rounded w-1/2 mx-auto" />
+          <div className="h-4 bg-zinc-100 rounded w-2/3 mx-auto" />
+          <div className="h-4 bg-zinc-100 rounded w-1/3 mx-auto" />
         </div>
       )}
 
       {/* Diagram SVG */}
-      <div className={`w-full ${isFullscreen ? 'flex-1 h-full' : 'h-[600px] min-h-[400px] max-h-[85vh] resize-y'} overflow-hidden cursor-grab active:cursor-grabbing group ${!isRendered ? "hidden" : ""}`}>
+      <div className={`w-full ${isFullscreen ? 'flex-1 h-full' : 'h-[800px] min-h-[500px] max-h-[95vh] resize-y'} overflow-hidden cursor-grab active:cursor-grabbing group ${!isRendered ? "hidden" : ""}`}>
         <TransformWrapper
           initialScale={1}
           minScale={0.2}
@@ -375,17 +375,17 @@ export function FlowDiagram({ mermaidSyntax, showLegend = true, nodeDetails }: F
           {({ zoomIn, zoomOut, resetTransform }) => (
             <>
               {/* Zoom Controls Overlay */}
-              <div className="absolute top-4 right-4 z-10 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button onClick={() => zoomIn()} className="p-2 bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-sm hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors" title="Zoom In">
+              <div className="absolute top-4 right-4 z-50 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button onClick={() => zoomIn()} className="p-2 bg-canvas text-ink/70 border border-hairline rounded-lg hover:bg-black/5 transition-colors" title="Zoom In">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </button>
-                <button onClick={() => zoomOut()} className="p-2 bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-sm hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors" title="Zoom Out">
+                <button onClick={() => zoomOut()} className="p-2 bg-canvas text-ink/70 border border-hairline rounded-lg hover:bg-black/5 transition-colors" title="Zoom Out">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </button>
-                <button onClick={() => resetTransform()} className="p-2 bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-sm hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors" title="Reset View">
+                <button onClick={() => resetTransform()} className="p-2 bg-canvas text-ink/70 border border-hairline rounded-lg hover:bg-black/5 transition-colors" title="Reset View">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
                 </button>
-                <button onClick={() => setIsFullscreen(!isFullscreen)} className="p-2 bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-sm hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors" title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}>
+                <button onClick={() => setIsFullscreen(!isFullscreen)} className="p-2 bg-canvas text-ink/70 border border-hairline rounded-lg hover:bg-black/5 transition-colors" title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}>
                   {isFullscreen ? (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
                   ) : (
@@ -414,41 +414,41 @@ export function FlowDiagram({ mermaidSyntax, showLegend = true, nodeDetails }: F
           className="absolute z-20 pointer-events-none transform -translate-x-1/2 -translate-y-full"
           style={{ left: tooltip.x, top: tooltip.y }}
         >
-          <div className="bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-xs font-medium px-3 py-1.5 rounded-lg shadow-lg whitespace-nowrap">
+          <div className="bg-zinc-900 text-white text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap">
             {tooltip.text}
-            <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-zinc-900 dark:border-t-white" />
+            <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-zinc-900 " />
           </div>
         </div>
       )}
 
       {/* Interaction Legend — level hierarchy + instructions */}
       {isRendered && showLegend && (
-        <div className="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800">
+        <div className="mt-4 pt-4 border-t border-zinc-100 ">
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px]">
             {/* Level 1 */}
             <span className="flex items-center gap-1.5">
               <span className="inline-block w-3 h-3 rounded-sm bg-[#18181b]" />
-              <span className="text-zinc-500 dark:text-zinc-400">Project</span>
+              <span className="text-zinc-500 ">Project</span>
             </span>
             {/* Level 2 */}
             <span className="flex items-center gap-1.5">
               <span className="inline-block w-3 h-3 rounded-sm bg-[#dbeafe]" />
-              <span className="text-zinc-500 dark:text-zinc-400">Task</span>
+              <span className="text-zinc-500 ">Task</span>
             </span>
             {/* Level 3 */}
             <span className="flex items-center gap-1.5">
               <span className="inline-block w-3 h-3 rounded-sm bg-[#eef2ff] border border-[#c7d2fe]" />
-              <span className="text-zinc-500 dark:text-zinc-400">Sub-task</span>
+              <span className="text-zinc-500 ">Sub-task</span>
             </span>
             {/* Level 4 */}
             <span className="flex items-center gap-1.5">
               <span className="inline-block w-3 h-3 rounded-sm bg-[#fffbeb] border border-[#fde68a]" />
-              <span className="text-zinc-500 dark:text-zinc-400">Elemen UI</span>
+              <span className="text-zinc-500 ">Elemen UI</span>
             </span>
             {/* Separator */}
-            <span className="hidden sm:inline text-zinc-300 dark:text-zinc-700">|</span>
+            <span className="hidden sm:inline text-zinc-300 ">|</span>
             {/* Tooltip hint */}
-            <span className="flex items-center gap-1 text-zinc-400 dark:text-zinc-500">
+            <span className="flex items-center gap-1 text-zinc-400 ">
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="8" cy="8" r="6" />
                 <line x1="8" y1="5" x2="8" y2="9" />
@@ -456,7 +456,7 @@ export function FlowDiagram({ mermaidSyntax, showLegend = true, nodeDetails }: F
               </svg>
               Hover untuk info
             </span>
-            <span className="flex items-center gap-1 text-zinc-400 dark:text-zinc-500">
+            <span className="flex items-center gap-1 text-zinc-400 ">
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 10l-4-4-4 4" />
               </svg>

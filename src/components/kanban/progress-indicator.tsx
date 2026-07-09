@@ -48,23 +48,23 @@ export function ProgressIndicator({ projectId, taskSummary }: ProgressIndicatorP
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
       {/* Overall Progress */}
-      <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-4">
+      <div className="rounded-[24px] border border-zinc-200 p-4">
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+            <div className="text-2xl font-bold text-zinc-900 ">
               {percentage}%
             </div>
-            <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+            <div className="text-xs text-zinc-500 mt-0.5">
               Overall Progress
             </div>
           </div>
           <div
             className={`flex h-10 w-10 items-center justify-center rounded-full ${
               percentage === 100
-                ? "bg-green-100 dark:bg-green-900/30"
+                ? "bg-green-100 "
                 : percentage > 0
-                  ? "bg-blue-100 dark:bg-blue-900/30"
-                  : "bg-zinc-100 dark:bg-zinc-800"
+                  ? "bg-blue-100 "
+                  : "bg-zinc-100 "
             }`}
           >
             <svg
@@ -78,10 +78,10 @@ export function ProgressIndicator({ projectId, taskSummary }: ProgressIndicatorP
               strokeLinejoin="round"
               className={
                 percentage === 100
-                  ? "text-green-600 dark:text-green-400"
+                  ? "text-green-600 "
                   : percentage > 0
-                    ? "text-blue-600 dark:text-blue-400"
-                    : "text-zinc-400 dark:text-zinc-500"
+                    ? "text-blue-600 "
+                    : "text-zinc-400 "
               }
             >
               {percentage === 100 ? (
@@ -112,16 +112,16 @@ export function ProgressIndicator({ projectId, taskSummary }: ProgressIndicatorP
       </div>
 
       {/* To Do */}
-      <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-4">
-        <div className="text-2xl font-bold text-zinc-300 dark:text-zinc-600">
+      <div className="rounded-[24px] border border-zinc-200 p-4">
+        <div className="text-2xl font-bold text-zinc-300 ">
           {stats.todo}
         </div>
-        <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+        <div className="text-xs text-zinc-500 mt-0.5">
           To Do
         </div>
-        <div className="mt-3 h-2 rounded-full bg-zinc-200 dark:bg-zinc-700">
+        <div className="mt-3 h-2 rounded-full bg-zinc-200 ">
           <div
-            className="h-full rounded-full bg-zinc-400 dark:bg-zinc-500 transition-all"
+            className="h-full rounded-full bg-zinc-400 transition-all"
             style={{
               width: `${stats.total > 0 ? (stats.todo / stats.total) * 100 : 0}%`,
             }}
@@ -130,14 +130,14 @@ export function ProgressIndicator({ projectId, taskSummary }: ProgressIndicatorP
       </div>
 
       {/* In Progress */}
-      <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-4">
-        <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+      <div className="rounded-[24px] border border-zinc-200 p-4">
+        <div className="text-2xl font-bold text-blue-600 ">
           {stats.inProgress}
         </div>
-        <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+        <div className="text-xs text-zinc-500 mt-0.5">
           In Progress
         </div>
-        <div className="mt-3 h-2 rounded-full bg-zinc-200 dark:bg-zinc-700">
+        <div className="mt-3 h-2 rounded-full bg-zinc-200 ">
           <div
             className="h-full rounded-full bg-blue-500 transition-all"
             style={{
@@ -148,14 +148,14 @@ export function ProgressIndicator({ projectId, taskSummary }: ProgressIndicatorP
       </div>
 
       {/* Done */}
-      <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-4">
-        <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+      <div className="rounded-[24px] border border-zinc-200 p-4">
+        <div className="text-2xl font-bold text-green-600 ">
           {stats.done}
         </div>
-        <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+        <div className="text-xs text-zinc-500 mt-0.5">
           Done
         </div>
-        <div className="mt-3 h-2 rounded-full bg-zinc-200 dark:bg-zinc-700">
+        <div className="mt-3 h-2 rounded-full bg-zinc-200 ">
           <div
             className="h-full rounded-full bg-green-500 transition-all"
             style={{
