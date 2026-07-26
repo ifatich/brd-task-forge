@@ -12,9 +12,10 @@ interface TeamMember {
 interface AssigneeBadgeProps {
   assigneeId: string | null;
   size?: "sm" | "md";
+  showName?: boolean;
 }
 
-export function AssigneeBadge({ assigneeId, size = "sm" }: AssigneeBadgeProps) {
+export function AssigneeBadge({ assigneeId, size = "sm", showName = true }: AssigneeBadgeProps) {
   const [member, setMember] = useState<TeamMember | null>(null);
 
   useEffect(() => {
@@ -49,18 +50,20 @@ export function AssigneeBadge({ assigneeId, size = "sm" }: AssigneeBadgeProps) {
   return (
     <div className="flex items-center gap-1.5 group/assignee">
       <div
-        className={`flex items-center justify-center rounded-full font-medium uppercase shrink-0 transition-all duration-150 group-hover/assignee:ring-2 group-hover/assignee:ring-zinc-400 :ring-zinc-500 ${dotSize} ${
+        className={`flex items-center justify-center rounded-full font-medium uppercase shrink-0 transition-all duration-150 group-hover/assignee:ring-2 group-hover/assignee:ring-zinc-400 :ring-zinc-500 border border-white ${dotSize} ${
           size === "sm"
             ? "bg-zinc-200 text-zinc-500 "
             : "bg-zinc-200 text-zinc-500 "
         }`}
-        title={member.role}
+        title={member.name}
       >
-        {member.avatar}
+        {member.avatar || member.name.charAt(0).toUpperCase()}
       </div>
-      <span className={`${size === "sm" ? "text-[10px]" : "text-sm"} text-zinc-500 truncate group-hover/assignee:text-zinc-700 :text-zinc-300 transition-colors duration-150`}>
-        {member.name}
-      </span>
+      {showName && (
+        <span className={`${size === "sm" ? "text-[10px]" : "text-sm"} text-zinc-500 truncate group-hover/assignee:text-zinc-700 :text-zinc-300 transition-colors duration-150`}>
+          {member.name}
+        </span>
+      )}
     </div>
   );
 }

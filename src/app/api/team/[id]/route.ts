@@ -76,11 +76,7 @@ export async function DELETE(
 ) {
   const { id } = await params;
   try {
-    // Unassign all tasks before deleting
-    await prisma.task.updateMany({
-      where: { assigneeId: id },
-      data: { assigneeId: null },
-    });
+    // Prisma implicit many-to-many automatically removes relation records when deleted.
     await prisma.teamMember.delete({ where: { id } });
     return NextResponse.json({ success: true });
   } catch (error) {

@@ -28,7 +28,7 @@ export async function GET(
         tasks: { 
           where: isOwnerOrAdmin ? {} : { 
             OR: [
-              { assigneeId: userId },
+              { assignees: { some: { id: userId } } },
               { subTasks: { some: { assigneeId: userId } } }
             ]
           },
@@ -37,13 +37,13 @@ export async function GET(
               where: isOwnerOrAdmin ? {} : {
                 OR: [
                   { assigneeId: userId },
-                  { task: { assigneeId: userId } }
+                  { task: { assignees: { some: { id: userId } } } }
                 ]
               },
               orderBy: { order: "asc" }, 
               include: { assigneeMember: true } 
             }, 
-            assigneeMember: true 
+            assignees: true 
           }, 
           orderBy: { order: "asc" } 
         } 

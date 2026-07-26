@@ -10,32 +10,68 @@ import { getProgressColor } from "@/lib/progress-utils";
 function getStatusLabel(status: string) {
   if (status === "active") return "Active";
   if (status === "completed") return "Completed";
+  if (status === "backlog") return "Backlog";
   if (status === "draft") return "Draft";
   return status;
 }
 
+function getLatestSprintNum(sprints?: string[]) {
+  if (!sprints || sprints.length === 0) return 0;
+  const latest = sprints[0];
+  const numMatch = latest.match(/\d+/);
+  return numMatch ? parseInt(numMatch[0], 10) : 0;
+}
+
 export function ProjectList({ projects: initialProjects }: { projects: ProjectItem[] }) {
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
-  const [sortBy, setSortBy] = useState<SortBy>("newest");
-  const [filterStatus, setFilterStatus] = useState<FilterStatus>("all");
+  const [sortBy, setSortBy] = useState<SortBy>("sprint");
+  const [filterStatus, setFilterStatus] = useState<FilterStatus | "backlog">("active");
+  const [filterSprint, setFilterSprint] = useState<string>("all");
+  const [filterAssignee, setFilterAssignee] = useState<string>("all");
+
+  const allSprints = useMemo(() => {
+    const s = new Set<string>();
+    initialProjects.forEach(p => p.sprints?.forEach(sp => s.add(sp)));
+    return Array.from(s).sort((a, b) => getLatestSprintNum([b]) - getLatestSprintNum([a]));
+  }, [initialProjects]);
+
+  const allAssignees = useMemo(() => {
+    const a = new Set<string>();
+    initialProjects.forEach(p => p.assignees?.forEach(ass => a.add(ass)));
+    return Array.from(a).sort();
+  }, [initialProjects]);
 
   const filtered = useMemo(() => {
     let result = [...initialProjects];
     if (filterStatus !== "all") {
       result = result.filter((p) => p.status === filterStatus);
     }
+    if (filterSprint !== "all") {
+      result = result.filter((p) => p.sprints?.includes(filterSprint));
+    }
+    if (filterAssignee !== "all") {
+      result = result.filter((p) => p.assignees?.includes(filterAssignee));
+    }
     switch (sortBy) {
+      case "sprint": 
+        result.sort((a, b) => {
+          const sDiff = getLatestSprintNum(b.sprints) - getLatestSprintNum(a.sprints);
+          if (sDiff !== 0) return sDiff;
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        });
+        break;
       case "newest": result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()); break;
       case "oldest": result.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()); break;
       case "progress": result.sort((a, b) => b.progress - a.progress); break;
       case "name": result.sort((a, b) => a.title.localeCompare(b.title)); break;
     }
     return result;
-  }, [filterStatus, sortBy, initialProjects]);
+  }, [filterStatus, filterSprint, filterAssignee, sortBy, initialProjects]);
 
   const filterOptions = [
-    { value: "all" as FilterStatus, label: "All Projects", count: initialProjects.length },
     { value: "active" as FilterStatus, label: "Active", count: initialProjects.filter((p) => p.status === "active").length },
+    { value: "all" as FilterStatus, label: "All Projects", count: initialProjects.length },
+    { value: "backlog" as FilterStatus, label: "Backlog", count: initialProjects.filter((p) => p.status === "backlog").length },
     { value: "completed" as FilterStatus, label: "Completed", count: initialProjects.filter((p) => p.status === "completed").length },
     { value: "draft" as FilterStatus, label: "Draft", count: initialProjects.filter((p) => p.status === "draft").length },
   ];
@@ -50,6 +86,12 @@ export function ProjectList({ projects: initialProjects }: { projects: ProjectIt
         setSortBy={setSortBy}
         viewMode={viewMode}
         setViewMode={setViewMode}
+        filterSprint={filterSprint}
+        setFilterSprint={setFilterSprint}
+        allSprints={allSprints}
+        filterAssignee={filterAssignee}
+        setFilterAssignee={setFilterAssignee}
+        allAssignees={allAssignees}
       />
 
       {/* ── Results ── */}
@@ -100,9 +142,11 @@ function TableRow({ project }: { project: ProjectItem }) {
   const statusBadge =
     project.status === "active"
       ? "bg-surface-soft text-ink border-hairline"
-      : project.status === "completed"
-        ? "bg-black/5 text-ink/60 border-hairline"
-        : "bg-black/5 text-ink/50 border-hairline";
+      : project.status === "backlog"
+        ? "bg-amber-50 text-amber-700 border-amber-200"
+        : project.status === "completed"
+          ? "bg-black/5 text-ink/60 border-hairline"
+          : "bg-black/5 text-ink/50 border-hairline";
 
   return (
     <tr
@@ -110,13 +154,64 @@ function TableRow({ project }: { project: ProjectItem }) {
       onClick={() => router.push(`/project/${project.id}`)}
     >
       <td className="px-5 py-4">
-        <div className="font-medium text-ink group-hover:text-ink/80 transition-colors">{project.title}</div>
+        <div className="font-medium text-ink group-hover:text-ink/80 transition-colors flex flex-wrap items-center gap-2">
+          {project.title}
+          {project.sprints && project.sprints.length > 0 && (
+            <span className="inline-flex items-center rounded bg-blue-50/50 px-1.5 py-0.5 text-[9px] font-medium text-blue-600 border border-blue-100">
+              {project.sprints[project.sprints.length - 1]}
+            </span>
+          )}
+        </div>
         <div className="text-xs text-ink/60 line-clamp-1 mt-1">{project.description}</div>
+        {project.assignees && project.assignees.length > 0 && (
+          <div className="flex items-center gap-1.5 mt-2">
+            <div className="flex -space-x-1">
+              {project.assignees.slice(0, 3).map((name, i) => (
+                <div key={i} className="w-4 h-4 rounded-full bg-white text-[7px] font-medium text-ink flex items-center justify-center border border-hairline ring-1 ring-black/5 z-10" title={name}>
+                  {name.substring(0, 2).toUpperCase()}
+                </div>
+              ))}
+              {project.assignees.length > 3 && (
+                <div className="w-4 h-4 rounded-full bg-black/5 text-[7px] font-medium text-ink/60 flex items-center justify-center border border-hairline ring-1 ring-black/5 z-0" title={`${project.assignees.length - 3} more`}>
+                  +{project.assignees.length - 3}
+                </div>
+              )}
+            </div>
+            <span className="text-[10px] text-ink/50 truncate max-w-[120px]">
+              {project.assignees.length === 1 ? project.assignees[0] : `${project.assignees.length} assignees`}
+            </span>
+          </div>
+        )}
       </td>
       <td className="px-5 py-4 hidden sm:table-cell">
-        <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-medium ${statusBadge}`}>
-          {statusLabel}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-medium ${statusBadge}`}>
+            {statusLabel}
+          </span>
+          {project.status === "backlog" && (
+            <button
+              onClick={async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                try {
+                  const res = await fetch(`/api/projects/${project.id}`, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ status: "active" })
+                  });
+                  if (res.ok) {
+                    router.refresh();
+                  }
+                } catch (error) {
+                  console.error("Failed to make active", error);
+                }
+              }}
+              className="px-2 py-0.5 rounded text-[10px] font-medium border border-ink/10 text-ink hover:bg-ink hover:text-canvas transition-colors"
+            >
+              Make Active
+            </button>
+          )}
+        </div>
       </td>
       <td className="px-5 py-4 text-ink/60 hidden md:table-cell font-mono text-xs">
         {project.taskSummary?.done || 0}/{project.taskSummary?.total || 0}

@@ -8,18 +8,61 @@ import { InsightsPanel } from "@/components/dashboard/insights-panel";
 import { ProjectItem } from "@/components/dashboard/types";
 import { UploadStatusBanner } from "@/components/dashboard/upload-status-banner";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+import { prisma } from "@/lib/db";
 
 async function fetchProjects(): Promise<ProjectItem[]> {
   try {
     const cookieStore = await cookies();
-    const res = await fetch(`${BASE_URL}/api/projects`, { 
-      cache: "no-store",
-      headers: { Cookie: cookieStore.toString() }
+    const userId = cookieStore.get("mock_user_id")?.value || "admin-001";
+    
+    const isAdmin = userId === "admin-001";
+
+    const projects = await prisma.project.findMany({
+      where: isAdmin ? {} : {
+        OR: [
+          { userId: userId },
+          { tasks: { some: { assignees: { some: { id: userId } } } } },
+        ]
+      },
+      include: {
+        tasks: {
+          where: isAdmin ? {} : { assignees: { some: { id: userId } } },
+          select: { id: true, status: true, assignee: true },
+        },
+      },
+      orderBy: { createdAt: "desc" },
     });
-    if (!res.ok) return [];
-    return await res.json();
-  } catch {
+
+    const enriched = projects.map((p) => {
+      const total = p.tasks.length;
+      const done = p.tasks.filter((t) => t.status === "done").length;
+      const inProgress = p.tasks.filter((t) => t.status === "in-progress").length;
+      const todo = p.tasks.filter((t) => t.status === "todo").length;
+      
+      const assigneesSet = new Set<string>();
+      p.tasks.forEach((t) => {
+        if (t.assignee) {
+          t.assignee.split(",").forEach(a => assigneesSet.add(a.trim()));
+        }
+      });
+
+      let parsedSprints: string[] = [];
+      try { parsedSprints = JSON.parse(p.sprints); } catch(e) {}
+
+      return {
+        ...p,
+        progress: total > 0 ? Math.round((done / total) * 100) : 0,
+        taskSummary: { total, done, inProgress, todo },
+        assignees: Array.from(assigneesSet),
+        sprints: parsedSprints,
+      };
+    });
+
+    // Need to parse Date objects to string if ProjectItem expects string, or just pass as is.
+    // The previous API returned JSON strings.
+    return JSON.parse(JSON.stringify(enriched));
+  } catch (error) {
+    console.error("Failed to fetch projects:", error);
     return [];
   }
 }

@@ -22,25 +22,14 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
+import { getProjectForUser, getDiagramForProject } from "@/lib/project-fetcher";
+
 async function fetchProject(id: string): Promise<ApiProject | null> {
-  try {
-    const res = await fetch(`${BASE_URL}/api/projects/${id}`, { cache: "no-store" });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return { id: data.id, title: data.title };
-  } catch {
-    return null;
-  }
+  return await getProjectForUser(id);
 }
 
 async function fetchDiagram(id: string): Promise<DiagramData | null> {
-  try {
-    const res = await fetch(`${BASE_URL}/api/projects/${id}/diagram`, { cache: "no-store" });
-    if (!res.ok) return null;
-    return await res.json();
-  } catch {
-    return null;
-  }
+  return await getDiagramForProject(id);
 }
 
 export default async function DiagramPage({ params }: PageProps) {

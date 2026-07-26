@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
 
 export type ViewMode = "grid" | "list";
-export type SortBy = "newest" | "oldest" | "progress" | "name";
-export type FilterStatus = "all" | "active" | "completed" | "draft";
+export type SortBy = "sprint" | "newest" | "oldest" | "progress" | "name";
+export type FilterStatus = "all" | "active" | "backlog" | "completed" | "draft";
 
 interface FilterOption {
   value: FilterStatus;
@@ -18,6 +18,12 @@ interface ProjectToolbarProps {
   setSortBy: Dispatch<SetStateAction<SortBy>>;
   viewMode: ViewMode;
   setViewMode: Dispatch<SetStateAction<ViewMode>>;
+  filterSprint: string;
+  setFilterSprint: Dispatch<SetStateAction<string>>;
+  allSprints: string[];
+  filterAssignee: string;
+  setFilterAssignee: Dispatch<SetStateAction<string>>;
+  allAssignees: string[];
 }
 
 export function ProjectToolbar({
@@ -27,7 +33,13 @@ export function ProjectToolbar({
   sortBy,
   setSortBy,
   viewMode,
-  setViewMode
+  setViewMode,
+  filterSprint,
+  setFilterSprint,
+  allSprints,
+  filterAssignee,
+  setFilterAssignee,
+  allAssignees
 }: ProjectToolbarProps) {
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
@@ -73,13 +85,53 @@ export function ProjectToolbar({
       </div>
 
       {/* View Toggle & Sort */}
-      <div className="flex items-center gap-3 shrink-0">
+      <div className="flex items-center gap-3 shrink-0 flex-wrap">
+        
+        {/* Sprint Filter */}
+        {allSprints.length > 0 && (
+          <div className="relative group">
+            <select
+              value={filterSprint}
+              onChange={(e) => setFilterSprint(e.target.value)}
+              className="appearance-none h-9 pl-4 pr-8 rounded-full bg-surface-soft border border-hairline text-xs font-medium text-ink focus:outline-none focus:ring-2 focus:ring-ink/10 focus:border-ink/30 transition-all cursor-pointer hover:bg-black/5"
+            >
+              <option value="all">All Sprints</option>
+              {allSprints.map(s => (
+                <option key={s} value={s}>{s}</option>
+              ))}
+            </select>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute right-3 top-1/2 -translate-y-1/2 text-ink/60 pointer-events-none">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+        )}
+
+        {/* Assignee Filter */}
+        {allAssignees.length > 0 && (
+          <div className="relative group">
+            <select
+              value={filterAssignee}
+              onChange={(e) => setFilterAssignee(e.target.value)}
+              className="appearance-none h-9 pl-4 pr-8 rounded-full bg-surface-soft border border-hairline text-xs font-medium text-ink focus:outline-none focus:ring-2 focus:ring-ink/10 focus:border-ink/30 transition-all cursor-pointer hover:bg-black/5 max-w-[150px] truncate"
+            >
+              <option value="all">All Assignees</option>
+              {allAssignees.map(a => (
+                <option key={a} value={a}>{a}</option>
+              ))}
+            </select>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute right-3 top-1/2 -translate-y-1/2 text-ink/60 pointer-events-none">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </div>
+        )}
+
         <div className="relative group">
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as SortBy)}
             className="appearance-none h-9 pl-4 pr-8 rounded-full bg-surface-soft border border-hairline text-xs font-medium text-ink focus:outline-none focus:ring-2 focus:ring-ink/10 focus:border-ink/30 transition-all cursor-pointer hover:bg-black/5"
           >
+            <option value="sprint">Latest Sprint</option>
             <option value="newest">Newest First</option>
             <option value="oldest">Oldest First</option>
             <option value="progress">Highest Progress</option>

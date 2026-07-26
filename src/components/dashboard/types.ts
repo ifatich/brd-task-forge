@@ -8,4 +8,6 @@ export interface ProjectItem {
   createdAt: string;
   updatedAt: string;
   fileUrl?: string;
+  assignees?: string[];
+  sprints?: string[];
 }

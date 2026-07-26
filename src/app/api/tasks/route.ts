@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
       include: {
         subTasks: { orderBy: { order: "asc" }, include: { assigneeMember: true } },
         project: { select: { id: true, title: true } },
-        assigneeMember: true,
+        assignees: true,
       },
       orderBy: [{ projectId: "asc" }, { order: "asc" }],
     });
@@ -41,14 +41,6 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    let assigneeName = body.assignee || null;
-    let assigneeId = body.assigneeId || null;
-
-    // Resolve name from assigneeId if name not provided
-    if (assigneeId && !assigneeName) {
-      const member = await prisma.teamMember.findUnique({ where: { id: assigneeId } });
-      if (member) assigneeName = member.name;
-    }
 
     const task = await prisma.task.create({
       data: {
@@ -59,11 +51,11 @@ export async function POST(request: Request) {
         definitionOfDone: body.definitionOfDone || "",
         status: body.status || "todo",
         priority: body.priority || "medium",
-        assignee: assigneeName,
-        assigneeId,
+        assignee: body.assignee || null,
+        assignees: body.assignees ? { connect: body.assignees.map((id: string) => ({ id })) } : undefined,
         order: body.order ?? 0,
       },
-      include: { subTasks: true, assigneeMember: true },
+      include: { subTasks: true, assignees: true },
     });
     return NextResponse.json(task, { status: 201 });
   } catch (error: any) {

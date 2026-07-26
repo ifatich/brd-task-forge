@@ -16,8 +16,36 @@ export function DashboardHeader() {
           Good Morning
         </h1>
       </div>
-      
+
       <div className="flex items-center gap-3 shrink-0">
+        <button
+          onClick={async () => {
+            const sheetName = prompt("Masukkan nama tab (atau 'ALL' untuk semua sprint):", "ALL");
+            if (!sheetName) return;
+            try {
+              const res = await fetch("/api/integrations/google-sheets/sync", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ sheetName }),
+              });
+              const data = await res.json();
+              if (res.ok) {
+                alert(`Sukses: ${data.message}`);
+                window.location.reload(); // Reload to show new projects
+              } else {
+                alert(`Error: ${data.error}`);
+              }
+            } catch (err) {
+              alert("Terjadi kesalahan jaringan.");
+            }
+          }}
+          className="hidden sm:flex px-4 py-2.5 rounded-[24px] bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 text-sm font-medium transition-all active:scale-[0.98]"
+        >
+          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Sync Sheets
+        </button>
         <button
           onClick={() => router.push("/upload")}
           className="hidden sm:flex px-4 py-2.5 rounded-[24px] bg-surface-soft border border-hairline hover:border-hairline hover:bg-hairline text-sm font-medium text-ink transition-all active:scale-[0.98]"

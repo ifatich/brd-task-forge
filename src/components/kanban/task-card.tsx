@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { AssigneeBadge } from "./assignee-badge";
 import { TeamMemberPicker } from "./team-member-picker";
 import { TaskDetailModal } from "./task-detail-modal";
+import { PopoverPortal } from "@/components/ui/popover-portal";
 
 type TaskStatus = "todo" | "in-progress" | "done";
 
@@ -29,10 +30,11 @@ interface TaskItem {
   status: TaskStatus;
   priority: string;
   assignee: string | null;
-  assigneeId: string | null;
+  assignees: any[];
   order: number;
   subTasks: SubTaskItem[];
-  assigneeMember?: any;
+  isCarryOver?: boolean;
+  sprints?: string[];
 }
 
 function getPriorityColor(priority: string): string {
@@ -73,8 +75,10 @@ export function TaskCard({ task, onToggleSubTask, onCompleteTask, onDataChange }
     isDragging,
   } = useSortable({
     id: task.id,
-    data: { type: "task", task },
+    data: { type: "Task", task },
   });
+
+  const assigneeButtonRef = useRef<HTMLButtonElement>(null);
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -94,13 +98,25 @@ export function TaskCard({ task, onToggleSubTask, onCompleteTask, onDataChange }
       <div
           {...attributes}
           {...listeners}
-          className="flex items-center justify-between px-3.5 pt-3 pb-1 cursor-grab active:cursor-grabbing select-none"
+          className="flex items-center justify-between p-3.5 pb-2 cursor-grab active:cursor-grabbing select-none"
         >
-          <span
-            className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${getPriorityColor(task.priority)}`}
-          >
-            {getPriorityLabel(task.priority)}
-          </span>
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span
+              className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${getPriorityColor(task.priority)}`}
+            >
+              {getPriorityLabel(task.priority)}
+            </span>
+            {task.isCarryOver && (
+              <span className="inline-flex items-center rounded-full bg-red-50 px-2 py-0.5 text-[10px] font-medium text-red-600 border border-red-100" title="This task carries over from a previous sprint">
+                Carryover
+              </span>
+            )}
+            {task.sprints && task.sprints.length > 0 && (
+              <span className="inline-flex items-center rounded bg-blue-50/50 px-1.5 py-0.5 text-[9px] font-medium text-blue-600 border border-blue-100 truncate max-w-[100px]" title={task.sprints.join(", ")}>
+                {task.sprints[0]}
+              </span>
+            )}
+          </div>
           <svg
             width="12"
             height="12"
@@ -218,33 +234,71 @@ export function TaskCard({ task, onToggleSubTask, onCompleteTask, onDataChange }
           {/* Footer: Assignee & Task ID */}
           <div className="flex items-center justify-between pt-2 border-t border-zinc-100 relative">
             <button
+              ref={assigneeButtonRef}
               onClick={(e) => {
                 e.stopPropagation();
                 setShowAssignPicker(!showAssignPicker);
               }}
-              className="hover:opacity-80 transition-opacity"
+              className="hover:opacity-80 transition-opacity flex items-center gap-2 group/assignee"
             >
-              <AssigneeBadge assigneeId={task.assigneeId} size="sm" />
+              {task.assignees?.length > 0 ? (
+                <>
+                  <div className="flex -space-x-1.5">
+                    {task.assignees.slice(0, 4).map((assignee) => (
+                      <div
+                        key={assignee.id}
+                        className="flex items-center justify-center rounded-full font-medium uppercase shrink-0 transition-all duration-150 h-5 w-5 text-[9px] bg-zinc-200 text-zinc-500 border border-white ring-1 ring-zinc-200/50"
+                        title={assignee.name}
+                      >
+                        {assignee.avatar || assignee.name.charAt(0).toUpperCase()}
+                      </div>
+                    ))}
+                    {task.assignees.length > 4 && (
+                      <div className="flex items-center justify-center rounded-full font-medium shrink-0 h-5 w-5 text-[9px] bg-zinc-100 text-zinc-400 border border-white z-10">
+                        +{task.assignees.length - 4}
+                      </div>
+                    )}
+                  </div>
+                  <span className="text-[10px] text-zinc-500 truncate max-w-[120px] group-hover/assignee:text-zinc-700 transition-colors duration-150">
+                    {task.assignees.map((a: any) => a.name).join(", ")}
+                  </span>
+                </>
+              ) : (
+                <AssigneeBadge assigneeId={null} size="sm" />
+              )}
             </button>
             <span className="text-[9px] text-zinc-300 font-mono">
               {task.id}
             </span>
 
           {/* Inline assignee picker */}
-          {showAssignPicker && (
-            <div
-              className="absolute bottom-full left-0 mb-1 z-40 min-w-[220px]"
-              onClick={(e) => e.stopPropagation()}
-            >
+          <PopoverPortal
+            isOpen={showAssignPicker}
+            onClose={() => setShowAssignPicker(false)}
+            triggerRef={assigneeButtonRef}
+          >
+            <div onClick={(e) => e.stopPropagation()}>
               <TeamMemberPicker
-                selectedId={task.assigneeId}
+                selectedIds={task.assignees?.map((a) => a.id) || []}
+                multiple
                 onSelect={async (id) => {
-                  setShowAssignPicker(false);
+                  if (!id) return;
+                  
+                  const currentIds = task.assignees?.map((a) => a.id) || [];
+                  const isRemoving = currentIds.includes(id);
+                  const newIds = isRemoving 
+                    ? currentIds.filter(existingId => existingId !== id)
+                    : [...currentIds, id];
+
                   try {
                     await fetch(`/api/tasks/${task.id}`, {
                       method: "PATCH",
                       headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ assigneeId: id }),
+                      body: JSON.stringify({ 
+                        assignees: {
+                          set: newIds.map(i => ({ id: i }))
+                        } 
+                      }),
                     });
                   } catch {}
                   onDataChange?.();
@@ -252,7 +306,7 @@ export function TaskCard({ task, onToggleSubTask, onCompleteTask, onDataChange }
                 onClose={() => setShowAssignPicker(false)}
               />
             </div>
-          )}
+          </PopoverPortal>
         </div>
       </div>
 

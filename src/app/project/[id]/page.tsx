@@ -32,18 +32,10 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
+import { getProjectForUser } from "@/lib/project-fetcher";
+
 async function fetchProject(id: string): Promise<ApiProject | null> {
-  try {
-    const cookieStore = await cookies();
-    const res = await fetch(`${BASE_URL}/api/projects/${id}`, {
-      cache: "no-store",
-      headers: { Cookie: cookieStore.toString() }
-    });
-    if (!res.ok) return null;
-    return await res.json();
-  } catch {
-    return null;
-  }
+  return await getProjectForUser(id);
 }
 
 export default async function ProjectDetailPage({ params }: PageProps) {

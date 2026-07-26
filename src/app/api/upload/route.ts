@@ -28,6 +28,10 @@ export async function POST(request: Request) {
 
     const fileUrl = `/uploads/${fileName}`;
 
+    const { cookies } = await import("next/headers");
+    const cookieStore = await cookies();
+    const userId = cookieStore.get("mock_user_id")?.value || "admin-001";
+
     // Create a draft project
     const project = await prisma.project.create({
       data: {
@@ -35,6 +39,7 @@ export async function POST(request: Request) {
         description: notes || `BRD document: ${file.name}`,
         status: "draft",
         fileUrl,
+        userId: userId,
       },
     });
 

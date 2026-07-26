@@ -40,14 +40,10 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
+import { getProjectForUser } from "@/lib/project-fetcher";
+
 async function fetchProject(id: string): Promise<ApiProject | null> {
-  try {
-    const res = await fetch(`${BASE_URL}/api/projects/${id}`, { cache: "no-store" });
-    if (!res.ok) return null;
-    return await res.json();
-  } catch {
-    return null;
-  }
+  return await getProjectForUser(id);
 }
 
 export default async function ManageProjectPage({ params }: PageProps) {

@@ -42,13 +42,15 @@ export default function LoginPage() {
     const user = { id: "user-001", name: "Demo User", email: "demo@example.com" };
     localStorage.setItem("brd_auth_user", JSON.stringify(user));
     localStorage.removeItem("brd-admin-auth");
+    document.cookie = `mock_user_id=user-001; path=/`;
     window.location.href = "/";
   };
 
   const mockLoginAsAdmin = () => {
-    const user = { id: "user-001", name: "Admin User", email: "admin@example.com" };
+    const user = { id: "admin-001", name: "Admin User", email: "admin@example.com" };
     localStorage.setItem("brd_auth_user", JSON.stringify(user));
     localStorage.setItem("brd-admin-auth", "authenticated");
+    document.cookie = `mock_user_id=admin-001; path=/`;
     window.location.href = "/admin";
   };
 

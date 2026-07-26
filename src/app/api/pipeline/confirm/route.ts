@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { prisma } from "@/lib/db";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
@@ -34,6 +35,9 @@ export async function POST(request: Request) {
       }
     }
 
+    const cookieStore = await cookies();
+    const userId = cookieStore.get("mock_user_id")?.value || "admin-001";
+
     // Create the project
     const project = await prisma.project.create({
       data: {
@@ -45,6 +49,7 @@ export async function POST(request: Request) {
         reasoning: reasoning || "",
         erdMermaid: erdMermaid || "",
         flowMermaid: flowMermaid || "",
+        userId: userId,
       },
     });
 

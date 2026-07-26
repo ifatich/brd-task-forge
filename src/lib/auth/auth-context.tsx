@@ -84,6 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const userData = { ...data.user, role: "user" as const };
         setUser(userData);
         localStorage.setItem("brd_auth_user", JSON.stringify(userData));
+        document.cookie = `mock_user_id=${userData.id}; path=/`;
         return true;
       }
       return false;
@@ -105,6 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const userData = { ...data.user, role: "user" as const };
         setUser(userData);
         localStorage.setItem("brd_auth_user", JSON.stringify(userData));
+        document.cookie = `mock_user_id=${userData.id}; path=/`;
         return true;
       }
       return false;
@@ -118,6 +120,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.removeItem("brd_auth_user");
       localStorage.removeItem("brd-admin-auth");
+      document.cookie = "mock_user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     } catch { }
   }, []);
 

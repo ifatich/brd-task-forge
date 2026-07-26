@@ -34,9 +34,11 @@ interface Task {
   status: TaskStatus;
   priority: string;
   assignee: string | null;
-  assigneeId: string | null;
+  assignees: { id: string; name: string; avatar: string; role: string; isActive: boolean }[];
   order: number;
   subTasks: SubTask[];
+  sprints: string[];
+  isCarryOver: boolean;
 }
 
 const COLUMNS: { id: TaskStatus; title: string; color: string }[] = [
@@ -70,6 +72,31 @@ export function KanbanBoard({ projectId = "proj-001", onDataChange }: KanbanBoar
     fetchTasks();
   }, [fetchTasks]);
 
+  const allSprints = useMemo(() => {
+    const sprintSet = new Set<string>();
+    tasks.forEach(t => t.sprints?.forEach(s => sprintSet.add(s)));
+    const sorted = Array.from(sprintSet).sort((a, b) => {
+      const numA = parseInt(a.match(/\d+/)?.[0] || "0", 10);
+      const numB = parseInt(b.match(/\d+/)?.[0] || "0", 10);
+      return numB - numA;
+    });
+    return sorted;
+  }, [tasks]);
+
+  const [selectedSprint, setSelectedSprint] = useState<string>("ALL");
+
+  useEffect(() => {
+    // Auto-select latest sprint if available and currently on "ALL"
+    if (selectedSprint === "ALL" && allSprints.length > 0) {
+      setSelectedSprint(allSprints[0]);
+    }
+  }, [allSprints, selectedSprint]);
+
+  const filteredTasks = useMemo(() => {
+    if (selectedSprint === "ALL") return tasks;
+    return tasks.filter((t) => t.sprints?.includes(selectedSprint));
+  }, [tasks, selectedSprint]);
+
   const getTasksByStatus = (taskList: Task[], status: TaskStatus) =>
     taskList.filter((t) => t.status === status).sort((a, b) => a.order - b.order);
 
@@ -77,9 +104,9 @@ export function KanbanBoard({ projectId = "proj-001", onDataChange }: KanbanBoar
     () =>
       COLUMNS.map((col) => ({
         ...col,
-        tasks: getTasksByStatus(tasks, col.id),
+        tasks: getTasksByStatus(filteredTasks, col.id),
       })),
-    [tasks]
+    [filteredTasks]
   );
 
   const findColumn = useCallback(
@@ -229,17 +256,33 @@ export function KanbanBoard({ projectId = "proj-001", onDataChange }: KanbanBoar
   }, [fetchTasks]);
 
   const getTotalTasks = (status: TaskStatus) =>
-    tasks.filter((t) => t.status === status).length;
+    filteredTasks.filter((t) => t.status === status).length;
 
   return (
-    <DndContext
-      collisionDetection={closestCorners}
-      onDragStart={handleDragStart}
-      onDragOver={handleDragOver}
-      onDragEnd={handleDragEnd}
-      onDragCancel={handleDragCancel}
-    >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 min-h-[600px]">
+    <div className="flex flex-col gap-2">
+      {allSprints.length > 0 && (
+        <div className="flex items-center justify-end mb-2 pr-1">
+          <label className="text-xs font-semibold text-zinc-500 mr-2 uppercase tracking-wider">Sprint</label>
+          <select 
+            value={selectedSprint} 
+            onChange={(e) => setSelectedSprint(e.target.value)}
+            className="text-sm font-medium text-zinc-700 bg-zinc-50/80 border border-zinc-200 rounded-md px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-zinc-900 cursor-pointer hover:bg-zinc-100 transition-colors"
+          >
+            <option value="ALL">All Sprints</option>
+            {allSprints.map((s) => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+        </div>
+      )}
+      <DndContext
+        collisionDetection={closestCorners}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 min-h-[600px]">
         {columns.map((column) => {
           const isOver = overColumnId === column.id && activeTask?.status !== column.id;
 
@@ -321,6 +364,7 @@ export function KanbanBoard({ projectId = "proj-001", onDataChange }: KanbanBoar
           </div>
         ) : null}
       </DragOverlay>
-    </DndContext>
+      </DndContext>
+    </div>
   );
 }

@@ -5,9 +5,13 @@ import { prisma } from "@/lib/db";
  * GET /api/team
  * Returns all team members with task counts.
  */
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const all = searchParams.get("all") === "true";
+    
     const members = await prisma.teamMember.findMany({
+      where: all ? undefined : { isActive: true },
       include: {
         _count: { select: { tasks: true } },
       },

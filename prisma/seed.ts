@@ -94,7 +94,7 @@ Modul Laporan: Halaman Laporan Bulanan, Halaman Export Data`,
       status: "in-progress",
       priority: "high",
       assignee: dev1.name,
-      assigneeId: dev1.id, // Assigned to Siti
+      assignees: { connect: [{ id: dev1.id }] }, // Assigned to Siti
       order: 0,
     },
   });
@@ -160,7 +160,7 @@ Modul Laporan: Halaman Laporan Bulanan, Halaman Export Data`,
       status: "todo",
       priority: "high",
       assignee: dev2.name,
-      assigneeId: dev2.id, // Assigned to Agus
+      assignees: { connect: [{ id: dev2.id }] }, // Assigned to Agus
       order: 1,
     },
   });

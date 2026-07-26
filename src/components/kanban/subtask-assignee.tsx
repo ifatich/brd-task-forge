@@ -16,7 +16,12 @@ interface SubTaskAssigneeProps {
 export function SubTaskAssignee({ subTask, taskId, onDataChange }: SubTaskAssigneeProps) {
   const [showPicker, setShowPicker] = useState(false);
   const [assigneeId, setAssigneeId] = useState<string | null>(subTask.assigneeId ?? null);
-  const [memberName, setMemberName] = useState<string | null>(subTask.assignee ?? null);
+  const [memberName, setMemberName] = useState<string | null>(subTask.assigneeMember?.name ?? subTask.assignee ?? null);
+
+  useEffect(() => {
+    setAssigneeId(subTask.assigneeId ?? null);
+    setMemberName(subTask.assigneeMember?.name ?? subTask.assignee ?? null);
+  }, [subTask.assigneeId, subTask.assigneeMember, subTask.assignee]);
 
   const handleChange = async (newId: string | null) => {
     setAssigneeId(newId);

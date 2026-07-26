@@ -10,15 +10,19 @@ interface TeamMember {
 }
 
 interface TeamMemberPickerProps {
-  selectedId: string | null;
+  selectedId?: string | null;
+  selectedIds?: string[];
   onSelect: (memberId: string | null) => void;
   onClose: () => void;
+  multiple?: boolean;
 }
 
 export function TeamMemberPicker({
   selectedId,
+  selectedIds = [],
   onSelect,
   onClose,
+  multiple = false,
 }: TeamMemberPickerProps) {
   const [search, setSearch] = useState("");
   const [team, setTeam] = useState<TeamMember[]>([]);
@@ -50,7 +54,9 @@ export function TeamMemberPicker({
 
   const handleSelect = (id: string | null) => {
     onSelect(id);
-    onClose();
+    if (!multiple) {
+      onClose();
+    }
   };
 
   return (
@@ -89,7 +95,7 @@ export function TeamMemberPicker({
         <button
           onClick={() => handleSelect(null)}
           className={`w-full flex items-center gap-2 px-3 py-2.5 text-xs transition-colors ${
-            selectedId === null
+            (selectedId === null && selectedIds.length === 0)
               ? "bg-zinc-100 text-zinc-900 "
               : "text-zinc-500 hover:bg-zinc-50 :bg-zinc-900"
           }`}
@@ -110,14 +116,14 @@ export function TeamMemberPicker({
               key={member.id}
               onClick={() => handleSelect(member.id)}
               className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-xs transition-colors ${
-                selectedId === member.id
+                (selectedId === member.id || selectedIds.includes(member.id))
                   ? "bg-zinc-100 "
                   : "hover:bg-zinc-50 :bg-zinc-900"
               }`}
             >
               <div
                 className={`flex h-7 w-7 items-center justify-center rounded-full font-medium text-[10px] uppercase shrink-0 ${
-                  selectedId === member.id
+                  (selectedId === member.id || selectedIds.includes(member.id))
                     ? "bg-zinc-900 text-white "
                     : "bg-zinc-200 text-zinc-500 "
                 }`}
@@ -127,7 +133,7 @@ export function TeamMemberPicker({
               <div className="text-left flex-1 min-w-0">
                 <span
                   className={`block truncate ${
-                    selectedId === member.id
+                    (selectedId === member.id || selectedIds.includes(member.id))
                       ? "font-medium text-zinc-900 "
                       : "text-zinc-700 "
                   }`}
@@ -138,7 +144,7 @@ export function TeamMemberPicker({
                   {member.role}
                 </span>
               </div>
-              {selectedId === member.id && (
+              {(selectedId === member.id || selectedIds.includes(member.id)) && (
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-zinc-900 ">
                   <polyline points="4 8 7 11 12 5" />
                 </svg>

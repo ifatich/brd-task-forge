@@ -14,19 +14,25 @@ export async function GET(
   const { id } = await params;
   try {
     const tasks = await prisma.task.findMany({
-      where: { projectId: id },
-      include: { subTasks: { orderBy: { order: "asc" }, include: { assigneeMember: true } }, assigneeMember: true },
+      where: { projectId: id, status: { not: "archived" } },
+      include: { subTasks: { orderBy: { order: "asc" }, include: { assigneeMember: true } }, assignees: true },
       orderBy: { order: "asc" },
     });
 
+    const parsedTasks = tasks.map((t) => {
+      let sprints = [];
+      try { sprints = JSON.parse(t.sprints); } catch(e) {}
+      return { ...t, sprints };
+    });
+
     const summary = {
-      total: tasks.length,
-      done: tasks.filter((t) => t.status === "done").length,
-      inProgress: tasks.filter((t) => t.status === "in-progress").length,
-      todo: tasks.filter((t) => t.status === "todo").length,
+      total: parsedTasks.length,
+      done: parsedTasks.filter((t) => t.status === "done").length,
+      inProgress: parsedTasks.filter((t) => t.status === "in-progress").length,
+      todo: parsedTasks.filter((t) => t.status === "todo").length,
     };
 
-    return NextResponse.json({ tasks, summary });
+    return NextResponse.json({ tasks: parsedTasks, summary });
   } catch (error) {
     console.error("Failed to fetch tasks:", error);
     return NextResponse.json({ error: "Failed to fetch tasks" }, { status: 500 });

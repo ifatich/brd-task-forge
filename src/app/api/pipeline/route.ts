@@ -73,11 +73,16 @@ export async function POST(request: Request) {
       const filePath = path.join(uploadDir, fileName);
       await writeFile(filePath, buffer);
 
+      const { cookies } = await import("next/headers");
+      const cookieStore = await cookies();
+      const userId = cookieStore.get("mock_user_id")?.value || "admin-001";
+
       const project = await prisma.project.create({
         data: {
           title,
           description: extractedText,
           status: "active",
+          userId: userId,
           fileUrl: `/uploads/${fileName}`,
           drafts: JSON.stringify(aiResult.drafts || []),
           reasoning: aiResult.reasoning || "",

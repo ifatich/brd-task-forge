@@ -20,8 +20,10 @@ interface Task {
   status: TaskStatus;
   priority: string;
   assignee: string | null;
+  assignees: any[];
   order: number;
   subTasks: SubTask[];
+  sprints?: string[];
 }
 
 function getPriorityColor(priority: string): string {
@@ -63,8 +65,31 @@ export function TaskList({ projectId }: TaskListProps) {
       .catch(() => setLoading(false));
   }, [projectId]);
 
+  const allSprints = useMemo(() => {
+    const sprintSet = new Set<string>();
+    allTasks.forEach(t => t.sprints?.forEach(s => sprintSet.add(s)));
+    const sorted = Array.from(sprintSet).sort((a, b) => {
+      const numA = parseInt(a.match(/\d+/)?.[0] || "0", 10);
+      const numB = parseInt(b.match(/\d+/)?.[0] || "0", 10);
+      return numB - numA;
+    });
+    return sorted;
+  }, [allTasks]);
+
+  const [selectedSprint, setSelectedSprint] = useState<string>("ALL");
+
+  useEffect(() => {
+    if (selectedSprint === "ALL" && allSprints.length > 0) {
+      setSelectedSprint(allSprints[0]);
+    }
+  }, [allSprints, selectedSprint]);
+
   const tasks = useMemo(() => {
     let result = allTasks;
+
+    if (selectedSprint !== "ALL") {
+      result = result.filter(t => t.sprints?.includes(selectedSprint));
+    }
 
     if (filterStatus !== "all") {
       result = result.filter((t) => t.status === filterStatus);
@@ -95,6 +120,21 @@ export function TaskList({ projectId }: TaskListProps) {
     <div className="rounded-[24px] border border-zinc-200 overflow-hidden">
       {/* Toolbar */}
       <div className="p-4 border-b border-zinc-200 space-y-3">
+        {allSprints.length > 0 && (
+          <div className="flex items-center justify-end mb-1">
+            <label className="text-xs font-semibold text-zinc-500 mr-2 uppercase tracking-wider">Sprint</label>
+            <select 
+              value={selectedSprint} 
+              onChange={(e) => setSelectedSprint(e.target.value)}
+              className="text-sm font-medium text-zinc-700 bg-zinc-50/80 border border-zinc-200 rounded-md px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-zinc-900 cursor-pointer hover:bg-zinc-100 transition-colors"
+            >
+              <option value="ALL">All Sprints</option>
+              {allSprints.map((s) => (
+                <option key={s} value={s}>{s}</option>
+              ))}
+            </select>
+          </div>
+        )}
         {/* Search */}
         <div className="relative">
           <svg

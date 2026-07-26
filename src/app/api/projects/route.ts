@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/db";
+import { filterTasksByLatestSprint } from "@/lib/sprint-utils";
 
 export async function GET() {
   try {
@@ -13,26 +14,47 @@ export async function GET() {
     const projects = await prisma.project.findMany({
       where: isAdmin ? {} : {
         OR: [
-          { userId: userId }, // Owner
-          { tasks: { some: { assigneeId: userId } } }, // Assigned to at least one task
+          { userId: userId },
+          { tasks: { some: { assignees: { some: { id: userId } } } } },
         ]
       },
       include: {
         tasks: {
-          where: isAdmin ? {} : { assigneeId: userId },
-          select: { id: true, status: true },
+          where: isAdmin ? { status: { not: "archived" } } : { status: { not: "archived" }, assignees: { some: { id: userId } } },
+          select: { id: true, status: true, sprints: true, assignee: true, assignees: { select: { name: true } } },
         },
       },
       orderBy: { createdAt: "desc" },
     });
 
     const enriched = projects.map((p) => {
-      const total = p.tasks.length;
-      const done = p.tasks.filter((t) => t.status === "done").length;
-      const inProgress = p.tasks.filter((t) => t.status === "in-progress").length;
-      const todo = p.tasks.filter((t) => t.status === "todo").length;
+      const latestSprintTasks = filterTasksByLatestSprint(p.tasks, p.sprints);
+      const total = latestSprintTasks.length;
+      const done = latestSprintTasks.filter((t) => t.status === "done").length;
+      const inProgress = latestSprintTasks.filter((t) => t.status === "in-progress").length;
+      const todo = latestSprintTasks.filter((t) => t.status === "todo").length;
+      let parsedSprints = [];
+      try { parsedSprints = JSON.parse(p.sprints); } catch (e) {}
+      
+      const allAssignees = new Set<string>();
+      p.tasks.forEach((t: any) => {
+        if (t.assignee) {
+          t.assignee.split(",").forEach((a: string) => {
+            const trimmed = a.trim();
+            if (trimmed) allAssignees.add(trimmed);
+          });
+        }
+        if (t.assignees) {
+          t.assignees.forEach((a: {name: string}) => {
+            if (a.name) allAssignees.add(a.name);
+          });
+        }
+      });
+
       return {
         ...p,
+        sprints: parsedSprints,
+        assignees: Array.from(allAssignees),
         progress: total > 0 ? Math.round((done / total) * 100) : 0,
         taskSummary: { total, done, inProgress, todo },
       };
@@ -46,6 +68,8 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    const cookieStore = await cookies();
+    const userId = cookieStore.get("mock_user_id")?.value || "admin-001";
     const body = await request.json();
     const project = await prisma.project.create({
       data: {
@@ -53,6 +77,7 @@ export async function POST(request: Request) {
         description: body.description || "",
         status: body.status || "draft",
         fileUrl: body.fileUrl || "",
+        userId: userId,
       },
     });
     return NextResponse.json(project, { status: 201 });

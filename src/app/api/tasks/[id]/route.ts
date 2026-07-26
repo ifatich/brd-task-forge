@@ -38,7 +38,7 @@ export async function PATCH(
       const task = await prisma.task.update({
         where: { id },
         data: { status: newStatus },
-        include: { subTasks: { orderBy: { order: "asc" }, include: { assigneeMember: true } }, assigneeMember: true },
+        include: { subTasks: { orderBy: { order: "asc" }, include: { assigneeMember: true } }, assignees: true },
       });
 
       // Log sub-task toggle
@@ -58,7 +58,7 @@ export async function PATCH(
       const task = await prisma.task.update({
         where: { id },
         data: { status: "done" },
-        include: { subTasks: { orderBy: { order: "asc" }, include: { assigneeMember: true } }, assigneeMember: true },
+        include: { subTasks: { orderBy: { order: "asc" }, include: { assigneeMember: true } }, assignees: true },
       });
 
       // Log completion
@@ -79,18 +79,8 @@ export async function PATCH(
     if (body.status !== undefined) data.status = body.status;
     if (body.priority !== undefined) data.priority = body.priority;
     if (body.assignee !== undefined) data.assignee = body.assignee;
-    if (body.assigneeId !== undefined) {
-      // Validate team membership and resolve name
-      if (body.assigneeId) {
-        const member = await prisma.teamMember.findUnique({ where: { id: body.assigneeId } });
-        if (!member) {
-          return NextResponse.json({ error: "Anggota tim tidak ditemukan" }, { status: 400 });
-        }
-        data.assignee = member.name; // sync name field
-      } else {
-        data.assignee = null; // cleared
-      }
-      data.assigneeId = body.assigneeId;
+    if (body.assignees !== undefined) {
+      data.assignees = body.assignees;
     }
     if (body.order !== undefined) data.order = body.order;
     if (body.goals !== undefined) data.goals = JSON.stringify(body.goals);
@@ -99,7 +89,7 @@ export async function PATCH(
     const task = await prisma.task.update({
       where: { id },
       data,
-        include: { subTasks: { orderBy: { order: "asc" }, include: { assigneeMember: true } }, assigneeMember: true },
+        include: { subTasks: { orderBy: { order: "asc" }, include: { assigneeMember: true } }, assignees: true },
     });
     return NextResponse.json(task);
   } catch (error) {
